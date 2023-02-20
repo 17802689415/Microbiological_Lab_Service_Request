@@ -64,11 +64,35 @@
     <el-container>
       <el-header style="text-align: 30px; font-size: 30px" >
         <!-- 展开菜单 -->
-        <div class="toolbar">
+        <!-- <div class="toolbar">
             <el-button id="list" :icon="List" circle @click="showMenu"/>
+        </div>
+        <div class="toolbar">
+            <el-tooltip content="logout" placement="right" effect="light">
+            <el-button id="logout" circle @click="logout">
+            <el-icon><Lock /></el-icon>
+            </el-button>
+            </el-tooltip>
+        </div> -->
+        <div id="header">
+        <el-page-header :icon="null" >
+            <template #content>
+            <div class="flex items-center">
+                <el-avatar
+                :size="32"
+                class="mr-3"
+                src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+                />
+                <span class="text-large font-600 mr-3"> User </span>
+                
+                <el-tag @click="logout">logout</el-tag>
+            </div>
+            </template>
+        </el-page-header>
         </div>
         
       </el-header>
+      <el-divider />
 
       <el-main>
         <router-view></router-view>
@@ -96,6 +120,9 @@ export default {
         showMenu(){
             this.isCollapse=!this.isCollapse;
         },
+        logout(){
+
+        }
        
     }
 }
@@ -109,6 +136,13 @@ export default {
     float: left;
     margin-top: 10px ;
 }
-
+#logout{
+    float: right;
+    margin-top: 10px ;
+    margin-right:50px ;
+}
+#header{
+    margin-top: 30px;
+}
 
 </style>
