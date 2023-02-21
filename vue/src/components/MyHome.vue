@@ -12,7 +12,7 @@
             <span>JABIL</span> -->
           <el-sub-menu index="1">
             <template #title>
-              <el-icon><House /></el-icon>
+              <el-icon @click="showMenu"><House /></el-icon>
               <sapn v-show="!isCollapse">Case</sapn>
             </template>
             <!-- case -->
@@ -37,7 +37,7 @@
           <!-- user -->
           <el-sub-menu index="2">
             <template #title>
-                <el-icon><Search /></el-icon>
+                <el-icon @click="showMenu"><Search /></el-icon>
                 <sapn v-show="!isCollapse">UserManagement</sapn>
             </template>
             <el-menu-item-group>
@@ -48,7 +48,7 @@
           <!-- setting -->
           <el-sub-menu index="3">
             <template #title>
-              <el-icon><setting /></el-icon>
+              <el-icon @click="showMenu"><setting /></el-icon>
               <sapn v-show="!isCollapse">Setting</sapn>
             </template>
             <el-menu-item-group>
@@ -97,6 +97,7 @@
       <el-main>
         <router-view></router-view>
       </el-main>
+      
     </el-container>
   </el-container>
 </template>
@@ -136,11 +137,7 @@ export default {
     float: left;
     margin-top: 10px ;
 }
-#logout{
-    float: right;
-    margin-top: 10px ;
-    margin-right:50px ;
-}
+
 #header{
     margin-top: 30px;
 }
