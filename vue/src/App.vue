@@ -1,5 +1,8 @@
 <template>
-  <myHome></myHome>
+  <div>
+    <myHome></myHome>
+  </div>
+  
 </template>
 
 <script>
@@ -14,5 +17,9 @@ export default {
 </script>
 
 <style>
+div{
+  -webkit-user-select: none;
+  user-select: none;
+}
 
 </style>
