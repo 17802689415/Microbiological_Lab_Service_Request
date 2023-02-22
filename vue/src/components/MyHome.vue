@@ -9,7 +9,7 @@
           <el-sub-menu index="1">
             <template #title>
               <el-icon @click="showMenu"><House /></el-icon>
-              <sapn v-show="!isCollapse">Case</sapn>
+              <span v-show="!isCollapse" class="span">Case</span>
             </template>
             <!-- case -->
             <el-menu-item-group>
@@ -25,7 +25,7 @@
                 </el-menu-item>
                 <el-menu-item index="/handleCase" >
                     <el-tooltip content="handleCase" placement="right" effect="light">
-                <sapn>handleCase</sapn>
+                <span>handleCase</span>
                     </el-tooltip>
                 </el-menu-item>
             </el-menu-item-group>
@@ -34,7 +34,7 @@
           <el-sub-menu index="2">
             <template #title>
                 <el-icon @click="showMenu"><Search /></el-icon>
-                <sapn v-show="!isCollapse">UserManagement</sapn>
+                <span v-show="!isCollapse" class="span">UserManagement</span>
             </template>
             <el-menu-item-group>
               <el-menu-item index="2-1" >Authority</el-menu-item>
@@ -45,7 +45,7 @@
           <el-sub-menu index="3">
             <template #title>
               <el-icon @click="showMenu"><setting /></el-icon>
-              <sapn v-show="!isCollapse">Setting</sapn>
+              <span v-show="!isCollapse" class="span">Setting</span>
             </template>
             <el-menu-item-group>
               <el-menu-item index="3-1" >Setting 1</el-menu-item>
@@ -144,6 +144,11 @@ export default {
 }
 #footer{
   text-align: center;
+}
+.span{
+  font-size: 20px;
+  font-weight: 300;
+  
 }
 
 
