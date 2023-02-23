@@ -1,0 +1,37 @@
+.layout-container-demo{
+    height: 100%;
+    width: 100%;
+    top: 0px;
+    left: 0px;
+    position: absolute;
+}
+
+
+#main{
+    background-color: aliceblue;
+}
+#user{
+    margin-left: 30px ;
+}
+#footer{
+    text-align: center;
+}
+.span{
+    font-size: 20px;
+    font-weight: 700;
+    color:white;
+    margin: 10px;
+}
+.span-children{
+    font-weight: 700;
+    /* color:white; */
+}
+.username{
+    font-size: 15px;
+    font-weight: 400;
+    margin: 10px;
+}
+.flex-grow{
+    flex-grow: 1;
+}
+
