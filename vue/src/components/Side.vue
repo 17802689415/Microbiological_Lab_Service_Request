@@ -38,14 +38,9 @@
                 <span class="span">UserManagement</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="2-1" >
-                <el-tooltip content="authority" placement="right" effect="light">
-                <span class="span-children">authority</span>
-                </el-tooltip>
-              </el-menu-item>
-              <el-menu-item index="2-2" >
-                <el-tooltip content="account" placement="right" effect="light">
-                <span class="span-children">account</span>
+              <el-menu-item index="userManager" >
+                <el-tooltip content="userManager" placement="right" effect="light">
+                <span class="span-children">userManager</span>
                 </el-tooltip>
               </el-menu-item>
             </el-menu-item-group>
