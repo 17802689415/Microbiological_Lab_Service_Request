@@ -1,4 +1,5 @@
 <template>
+  <div id="aa">
   <el-menu class="el-menu-vertical-demo" 
         :collapse="this.$store.state.isCollapse" 
         :router="isRouter"
@@ -69,6 +70,7 @@
             </el-menu-item-group>
           </el-sub-menu>
         </el-menu>
+        </div>
 </template>
 
 <script>
@@ -83,6 +85,9 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+#aa{
+  display: flex;
+}
 </style>
+
