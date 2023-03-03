@@ -43,6 +43,11 @@
                 <span class="span-children">userManager</span>
                 </el-tooltip>
               </el-menu-item>
+              <el-menu-item index="userPremission" >
+                <el-tooltip content="userPremission" placement="right" effect="light">
+                <span class="span-children">userPremission</span>
+                </el-tooltip>
+              </el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
           <!-- setting -->

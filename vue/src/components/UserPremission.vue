@@ -1,9 +1,9 @@
 <template>
-    <div>
+  <div>
         <el-collapse>
-            <el-collapse-item title="Username" name="1">
+            <el-collapse-item title="Premission" name="1">
                 <div>
-                    <el-tag class="ml-2" type="info" v-for="item in tableData" :key="item.username" @click="handleSelect(item.username)">{{ item.username }}</el-tag>
+                    <el-tag class="ml-2" type="info" v-for="item in premission" :key="item" @click="handleSelect(item)">{{ item }}</el-tag>
                 </div>
             </el-collapse-item>
         </el-collapse>
@@ -22,29 +22,21 @@
             style="width: 100%;">
             <el-table-column
             prop="username"
-            label="用户名"
+            label="username"
             >
             </el-table-column>
             <el-table-column
             prop="jobId"
-            label="工号"
+            label="jobId"
             >
             </el-table-column>
             <el-table-column
-            prop="department"
-            label="部门">
+            prop="role"
+            label="role">
             </el-table-column>
             <el-table-column
-            prop="jobTitle"
-            label="职位">
-            </el-table-column>
-            <el-table-column
-            prop="responsibility"
-            label="职责">
-            </el-table-column>
-            <el-table-column
-            prop="status"
-            label="状态">
+            prop="station"
+            label="station">
             </el-table-column>
             <el-table-column
             fixed="right"
@@ -65,45 +57,22 @@
 
 <script>
 export default {
-    name:'userManager',
+    name:'userPremission',
     data(){
         return{
             tableData:[
                 {
-                username:"zhanglei",
-                jobId:"3554536",
-                department:"te",
-                jobTitle:"/",
-                responsibility:"/",
-                status:"正常",
-                },
-                {
-                username:"zl",
-                jobId:"3554536",
-                department:"te",
-                jobTitle:"/",
-                responsibility:"/",
-                status:"正常",
-                },
-            ]
+                    username:'zl',
+                    jobId:'3554536',
+                    role:'admin',
+                    station:'te',
+
+                }
+            ],
+            premission:['admin','member']
         }
     },
     methods:{
-        init(){
-
-        },
-        modify(row){
-            console.log(row)
-            this.$router.push({name:'modifyUser',query:{rowData:JSON.stringify(row)}})
-        },
-        add(row){
-            console.log(row)
-            this.$router.push('/addUser')
-        },
-        deleteUser(row){
-            console.log(row)
-            this.init()
-        },
         handleSelect(key){
             console.log(key)
         }
@@ -112,6 +81,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>

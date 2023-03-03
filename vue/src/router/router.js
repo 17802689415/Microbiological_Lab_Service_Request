@@ -8,6 +8,7 @@ import mainView from '../components/MainView.vue'
 import userManager from '../components/UserManager.vue'
 import modifyUser from '../components/ModifyUser.vue'
 import addUser from '../components/AddUser.vue'
+import userPremission from '../components/UserPremission.vue'
 const router = createRouter({
     history:createWebHashHistory(),
     routes:[
@@ -22,6 +23,7 @@ const router = createRouter({
         {name:'userManager',path:'/userManager',component:userManager},
         {name:'modifyUser',path:'/modifyUser',component:modifyUser,props:true},
         {name:'addUser',path:'/addUser',component:addUser},
+        {name:'userPremission',path:'/userPremission',component:userPremission},
         {path:'/',redirect:'/login'},
       
       
