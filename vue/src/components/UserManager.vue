@@ -43,6 +43,13 @@
             label="职责">
             </el-table-column>
             <el-table-column
+            prop="backup"
+            label="backup for">
+            <template #default="scope">
+                <el-button type="primary" size="small" @click="backup(scope.row)"><el-icon><Pointer /></el-icon>for</el-button>
+            </template>
+            </el-table-column>
+            <el-table-column
             prop="status"
             label="状态">
             </el-table-column>
@@ -60,6 +67,25 @@
             </el-table-column>
             
         </el-table>
+    </div>
+    <div id="">
+        <el-drawer v-model="drawer" >
+            <template #header>
+                <h4>backup for</h4>
+            </template>
+            <template #default>
+                <div>
+                    <el-radio-group v-model="radio" v-for="item in tableData" :key="item.username">
+                    <el-radio :label="item.username" :name="item.username">{{ item.username }}</el-radio><br>
+                    </el-radio-group>
+                </div>
+            </template>
+            <template #footer>
+                <div style="flex: auto">
+                    <el-button type="primary" @click="confirmClick">confirm</el-button>
+                </div>
+            </template>
+        </el-drawer>
     </div>
 </template>
 
@@ -85,7 +111,9 @@ export default {
                 responsibility:"/",
                 status:"正常",
                 },
-            ]
+            ],
+            drawer:false,
+            radio:""
         }
     },
     methods:{
@@ -104,8 +132,18 @@ export default {
             console.log(row)
             this.init()
         },
+        backup(row){
+            console.log(row)
+            this.drawer=true
+        },
         handleSelect(key){
             console.log(key)
+        },
+        handleBackup(key){
+            console.log(key)
+        },
+        confirmClick(){
+            console.log(this.radio)
         }
     }
 
