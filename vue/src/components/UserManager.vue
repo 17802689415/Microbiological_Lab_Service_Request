@@ -12,12 +12,15 @@
         <el-table
         :header-cell-style="{
             backgroundColor:'#06426e',
-            color:'#fff'
+            color:'#fff',
+            'text-align':'center'
         }"
         :cell-style="{
             backgroundColor:'#06426e',
-            color:'#fff'
+            color:'#fff',
+            textAlign:'center'
         }"
+            :border="isBorder"
             :data="tableData"
             style="width: 100%;">
             <el-table-column
@@ -64,9 +67,17 @@
                 <el-button type="success" size="small" @click="add(scope.row)"><el-icon><Plus /></el-icon>添加</el-button>
                 <el-button type="danger" size="small" @click="deleteUser(scope.row)"><el-icon><Delete /></el-icon>删除</el-button>
             </template>
-            </el-table-column>
-            
+            </el-table-column>    
         </el-table>
+        <el-pagination
+        v-model:current-page="currentPage"
+        v-model:page-size="pageSize"
+        :page-sizes="[10, 15, 20, 25]"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        />
     </div>
     <div id="">
         <el-drawer v-model="drawer" >
@@ -94,6 +105,7 @@ export default {
     name:'userManager',
     data(){
         return{
+            isBorder:true,
             tableData:[
                 {
                 username:"zhanglei",
@@ -113,7 +125,10 @@ export default {
                 },
             ],
             drawer:false,
-            radio:""
+            radio:"",
+            currentPage:1,
+            pageSize:1,
+            total:0
         }
     },
     methods:{
@@ -144,6 +159,14 @@ export default {
         },
         confirmClick(){
             console.log(this.radio)
+        },
+        handleSizeChange(val){
+            console.log(val)
+            this.pageSize=val
+        },
+        handleCurrentChange(val){
+            console.log(val)
+            this.currentPage=val
         }
     }
 

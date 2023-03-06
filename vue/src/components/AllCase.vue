@@ -86,7 +86,7 @@
 
 <script>
 export default {
-    name:'myCase',
+    name:'allCase',
     data(){
         return{
             isBorder:true,
@@ -97,7 +97,21 @@ export default {
                     consignor:'zl',
                     sendDate:'2023 3 1',
                     status:'已完结',
-                }
+                },
+                {
+                    applyNo:'456',
+                    testType:'纯化水测试',
+                    consignor:'zl',
+                    sendDate:'2023 3 1',
+                    status:'未完结',
+                },
+                {
+                    applyNo:'789',
+                    testType:'洁净室环境测试',
+                    consignor:'zl',
+                    sendDate:'2023 3 1',
+                    status:'未完结',
+                },
             ],
             options_type:['样品测试','纯化水测试','洁净室环境测试'],
             options_status:['已完结','未完结'],
@@ -111,6 +125,7 @@ export default {
     methods:{
         view(row){
             console.log(row)
+            this.$router.push({name:'testInfo',query:{testType:JSON.stringify(row.testType)}})
         },
         action(row){
             console.log(row)
@@ -128,6 +143,7 @@ export default {
             this.currentPage=val
         }
     }
+
 
 }
 </script>

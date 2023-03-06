@@ -12,12 +12,15 @@
         <el-table
         :header-cell-style="{
             backgroundColor:'#06426e',
-            color:'#fff'
+            color:'#fff',
+            'text-align':'center'
         }"
         :cell-style="{
             backgroundColor:'#06426e',
-            color:'#fff'
+            color:'#fff',
+            textAlign:'center'
         }"
+            :border="isBorder"
             :data="tableData"
             style="width: 100%;">
             <el-table-column
@@ -50,8 +53,16 @@
                 <el-button type="danger" size="small" @click="deleteUser(scope.row)"><el-icon><Delete /></el-icon>删除</el-button>
             </template>
             </el-table-column>
-            
         </el-table>
+        <el-pagination
+        v-model:current-page="currentPage"
+        v-model:page-size="pageSize"
+        :page-sizes="[10, 15, 20, 25]"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="total"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        />
     </div>
 </template>
 
@@ -60,6 +71,7 @@ export default {
     name:'userPremission',
     data(){
         return{
+            isBorder:true,
             tableData:[
                 {
                     username:'zl',
@@ -69,12 +81,23 @@ export default {
 
                 }
             ],
-            premission:['admin','member']
+            premission:['admin','member'],
+            currentPage:1,
+            pageSize:1,
+            total:0
         }
     },
     methods:{
         handleSelect(key){
             console.log(key)
+        },
+        handleSizeChange(val){
+            console.log(val)
+            this.pageSize=val
+        },
+        handleCurrentChange(val){
+            console.log(val)
+            this.currentPage=val
         }
     }
 

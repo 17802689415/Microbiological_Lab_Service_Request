@@ -29,6 +29,11 @@
                 <span class="span-children">handleCase</span>
                     </el-tooltip>
                 </el-menu-item>
+                <el-menu-item index="allCase" >
+                    <el-tooltip content="allCase" placement="right" effect="light">
+                <span class="span-children">allCase</span>
+                    </el-tooltip>
+                </el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
           <!-- user -->
