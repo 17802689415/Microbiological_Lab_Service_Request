@@ -8,7 +8,7 @@
             <el-input v-model="ruleForm.password" type="password"/>
         </el-form-item>
         <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')">立即创建</el-button>
+            <el-button type="primary" @click="submitForm()">登录</el-button>
             <el-button @click="resetForm('ruleForm')">重置</el-button>
         </el-form-item>
     </el-form>
@@ -29,7 +29,7 @@ export default {
                     { required: true, message: 'Please enter the username', trigger: 'blur' },
                 ],
                 password: [
-                    { required: true, message: 'Please enter the username', trigger: 'blur' },
+                    { required: true, message: 'Please enter the password', trigger: 'blur' },
                 ],
             }
         }
@@ -37,6 +37,22 @@ export default {
     methods:{
         resetForm(formName) {
             this.$refs[formName].resetFields();
+        },
+        submitForm(){
+            let that = this
+            let formData = new FormData()
+            formData.append('username',this.ruleForm.username)
+            formData.append('password',this.ruleForm.password)
+            this.$axios.post('http://localhost:8099/lab/login',formData).then(function (res){
+                console.log(res)
+                if(res.data.code==1){
+                    // console.log(JSON.stringify(that.ruleForm.username))
+                    localStorage.setItem('username',that.ruleForm.username)
+                    that.$router.push('myHome')
+                }else{
+                    alert(res.data.msg)
+                }
+            })
         }
     }
 

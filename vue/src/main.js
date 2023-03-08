@@ -8,7 +8,7 @@ import axios from 'axios'
 const app = createApp(App)
 app.use(router)
 app.use(store)
-axios.defaults.baseURL = 'https://localhost:8090'
+axios.defaults.baseURL = 'https://localhost:8099'
 app.config.globalProperties.$axios=axios
 //引入icon
 Object.keys(ElIconModules).forEach(function (key) {

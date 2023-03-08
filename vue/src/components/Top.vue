@@ -17,7 +17,7 @@
                     <el-sub-menu index="3">
                       <template #title >
                         <img src="../icons/005-newspaper.svg">
-                        <span class="username"> User </span>
+                        <span class="username"> {{ username }} </span>
                       </template>
                       <el-menu-item index="2-1" @click="login"><el-icon><Open /></el-icon>login</el-menu-item>
                       <el-menu-item index="2-1" @click="logout"><el-icon><TurnOff /></el-icon>logout</el-menu-item>
@@ -41,11 +41,13 @@ export default {
     name:'topBar',
     data(){
         return{
-            value:0
+            value:0,
+            username:localStorage.getItem('username')
         }
     },
     created(){
       this.init()
+      console.log(this.username)
     },
     methods:{
         init(){
