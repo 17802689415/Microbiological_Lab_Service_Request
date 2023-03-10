@@ -160,8 +160,18 @@
                     </el-form-item>
                 </el-col>
             </el-row>
-            
         </el-form>
+        <el-card class="box-card">
+            <template #header>
+                <div class="card-header">
+                    <span>测试项目</span>
+                </div>
+            </template>
+                <div v-for="o in test_item_list" :key="o" class="text item">
+                    <span>测试项目：{{ o.testItem }},数量：{{ o.quantity }},备注{{ o.remark }}</span>
+                    <el-button circle size="small" @click="cancel_test_info"><el-icon><Close /></el-icon></el-button><br>
+                </div>
+        </el-card>
     </div>
     <div id="water" v-show="isShow==2">
         <h4>测试信息</h4>
@@ -192,6 +202,17 @@
                 </el-col>
             </el-row>
         </el-form>
+        <el-card class="box-card">
+            <template #header>
+                <div class="card-header">
+                    <span>测试项目</span>
+                </div>
+            </template>
+                <div v-for="o in test_item_list" :key="o" class="text item">
+                    <span>测试项目：{{ o.testItem }},纯化水编号：{{ o.waterNo }},方法号{{ o.WINo }}</span>
+                    <el-button circle size="small" @click="cancel_test_info"><el-icon><Close /></el-icon></el-button><br>
+                </div>
+        </el-card>
     </div>
     <div id="cleanroom" v-show="isShow==3">
         <h4>测试信息</h4>
@@ -214,11 +235,22 @@
                 </el-col>
                 <el-col :span="3">
                     <el-form-item>
-                        <el-button type="info" @click="postWaterTestInfo('cleanroomTestInfo')">+1</el-button>
+                        <el-button type="info" @click="postCleanroomTestInfo('cleanroomTestInfo')">+1</el-button>
                     </el-form-item> 
                 </el-col>
             </el-row>
         </el-form>
+        <el-card class="box-card">
+            <template #header>
+                <div class="card-header">
+                    <span>测试项目</span>
+                </div>
+            </template>
+                <div v-for="o in test_item_list" :key="o" class="text item">
+                    <span>测试项目：{{ o.testItem }},洁净室名称：{{ o.cleanroomName }},方法号：{{ o.WINo }}</span>
+                    <el-button circle size="small" @click="cancel_test_info"><el-icon><Close /></el-icon></el-button><br>
+                </div>
+        </el-card>
     </div>
     <div id="btn">
         <el-row>
@@ -266,6 +298,7 @@ export default {
                 testItem:"",
                 wiNo:"",
                 limitValue:0,
+                remark:""
             },
             water_test_info:{
                 waterNo:'',
@@ -277,6 +310,7 @@ export default {
                 testItem:'',
                 WINo:''
             },
+            test_item_list:[],
             rules:{
                 consignorId: [
                     { required: true, message: '请输入', trigger: 'blur' },
@@ -297,9 +331,6 @@ export default {
                     { required: true, message: '请选择', trigger: 'blur' },
                 ],
                 testPurpose: [
-                    { required: true, message: '请输入', trigger: 'blur' },
-                ],
-                sampleName: [
                     { required: true, message: '请输入', trigger: 'blur' },
                 ],
                 sampleQuantity: [
@@ -333,27 +364,55 @@ export default {
             })
         },
         postTestInfo(testInfo){
-            let that = this
-            let formData = new FormData()
-            formData.append('applyNum',this.applyNo)
-            formData.append('sampleName',this.sample_info.sampleName)
-            formData.append('model',this.test_info.model)
-            formData.append('lotNo',this.test_info.lotNo)
-            formData.append('quantity',this.test_info.quantity)
-            formData.append('testItem',this.test_info.testItem)
-            formData.append('wiNo',this.test_info.wiNo)
-            formData.append('limitValue',this.test_info.limitValue)
-            that.$axios.post('http://localhost:8099/lab/postTestInfo',formData).then(function (res){
-                if(res.data.code==1){
-                    alert(res.data.data)
-                }else{
-                    alert(res.data.msg)
-                }
-            })
+            // let that = this
+            // let formData = new FormData()
+            // formData.append('applyNum',this.applyNo)
+            // formData.append('sampleName',this.sample_info.sampleName)
+            // formData.append('model',this.test_info.model)
+            // formData.append('lotNo',this.test_info.lotNo)
+            // formData.append('quantity',this.test_info.quantity)
+            // formData.append('testItem',this.test_info.testItem)
+            // formData.append('wiNo',this.test_info.wiNo)
+            // formData.append('limitValue',this.test_info.limitValue)
+            // that.$axios.post('http://localhost:8099/lab/postTestInfo',formData).then(function (res){
+            //     if(res.data.code==1){
+            //         alert(res.data.data)
+            //     }else{
+            //         alert(res.data.msg)
+            //     }
+            // })
+            let obj={
+                model:this.test_info.model,
+                lotNo:this.test_info.lotNo,
+                quantity:this.test_info.quantity,
+                testItem:this.test_info.testItem,
+                wiNo:this.test_info.wiNo,
+                limitValue:this.test_info.limitValue,
+                remark:this.test_info.remark,
+            }
+            this.test_item_list.push(obj)
             this.$refs[testInfo].resetFields();
         },
         postWaterTestInfo(waterTestInfo){
+            let obj={
+                waterNo:this.water_test_info.waterNo,
+                testItem:this.water_test_info.testItem,
+                WINo:this.water_test_info.WINo,
+            }
+            this.test_item_list.push(obj)
             this.$refs[waterTestInfo].resetFields();
+        },
+        postCleanroomTestInfo(cleanroomInfo){
+            let obj={
+                cleanroomName:this.cleanroom_test_info.cleanroomName,
+                testItem:this.cleanroom_test_info.testItem,
+                WINo:this.cleanroom_test_info.WINo,
+            }
+            this.test_item_list.push(obj)
+            this.$refs[cleanroomInfo].resetFields();
+        },
+        cancel_test_info(){
+            
         }
     }
 }
@@ -381,5 +440,14 @@ export default {
 }
 .item3{
     width: 600px;
+}
+.close{
+    margin-left: 30px;
+}
+.item {
+  padding: 18px 0;
+}
+.box-card{
+    width: 70%;
 }
 </style>
