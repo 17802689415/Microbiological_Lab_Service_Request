@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DatabaseBrowserManager">
@@ -36,7 +36,54 @@ password varchar(50),
 premission varchar(50)
 );
 
-insert into login values (1,'zhanglei','123456','admin')]]></console>
+insert into login values (1,'zhanglei','123456','admin')
+
+create table consignor_form(
+id int primary key auto_increment,
+apply_num varchar(50),
+consignorId varchar(50),
+phone_num varchar(50),
+work_cell varchar(50),
+department varchar(50),
+apply_date date,
+send_date date
+);
+select * from consignor_form
+drop table consignor_form
+
+create table sample_form(
+id int primary key auto_increment,
+apply_num varchar(50),
+test_purpose varchar(200),
+sample_name varchar(50),
+sample_quantity double,
+batch_no varchar(50),
+disposal varchar(100),
+storage_condition varchar(100)
+);
+
+create table test_info(
+id int primary key auto_increment,
+apply_num varchar(50),
+sample_name varchar(50),
+model varchar(50),
+lot_no varchar(50),
+quantity double,
+test_item varchar(100),
+wi_no varchar(50),
+limit_value double
+);
+
+select * from test_info
+
+create table apply_form(
+id int primary key auto_increment,
+apply_num varchar(50),
+consignorId varchar(50),
+sample_name varchar(50),
+apply_date date,
+status varchar(50)
+);]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
