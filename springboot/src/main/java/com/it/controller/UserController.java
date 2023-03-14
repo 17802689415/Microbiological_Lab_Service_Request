@@ -1,11 +1,11 @@
 package com.it.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.it.pojo.ConsignorForm;
 import com.it.pojo.Login;
+import com.it.pojo.SampleForm;
 import com.it.pojo.SampleTestInfo;
-import com.it.service.LoginService;
-import com.it.service.TestInfoService;
-import com.it.service.UserService;
+import com.it.service.*;
 import com.it.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
+import java.util.List;
 import java.util.UUID;
 
 @Slf4j
@@ -31,7 +31,13 @@ public class UserController {
     private LoginService loginService;
 
     @Autowired
-    private TestInfoService testInfoService;
+    private SampleTestInfoService testInfoService;
+
+    @Autowired
+    private SampleFormService sampleFormService;
+
+    @Autowired
+    private ConsignorFormService consignorFormService;
     @Autowired
     RedisTemplate redisTemplate;
 
@@ -70,19 +76,39 @@ public class UserController {
         return R.success(shortBuffer.toString());
     }
 
-    @PostMapping("/postTestInfo")
+    @PostMapping("/postSampleTestInfo")
     @ResponseBody
-    public R<String> postSampleTestInfo(SampleTestInfo testInfo){
-        System.out.println(testInfo);
+    public R<String> postSampleTestInfo(@RequestBody List<SampleTestInfo> testInfo){
+        for (SampleTestInfo s: testInfo) {
+            System.out.println(s);
+            if (s.getQuantity()>s.getLimitValue()){
+                return R.error("超出接收限值");
+            }
+            boolean save = testInfoService.save(s);
+            if (!save){
+                return R.error("error");
 
-//        if (testInfo.getQuantity()>testInfo.getLimitValue()){
-//            return R.error("超出接收限值");
-//        }
-//        boolean save = testInfoService.save(testInfo);
-//        if (save){
-//            redisTemplate.opsForValue().set(testInfo.getId(),testInfo.toString());
-//            return R.success("success");
-//        }
+            }
+        }
+        return R.success("success");
+    }
+
+    @PostMapping("/postSampleInfo")
+    @ResponseBody
+    public R<String> postSampleInfo(SampleForm sampleForm){
+        boolean save = sampleFormService.save(sampleForm);
+        if (save){
+            return R.success("success");
+        }
+        return R.success("error");
+    }
+    @PostMapping("/postConsignorInfo")
+    @ResponseBody
+    public R<String> postConsignorInfo(ConsignorForm consignorForm){
+        boolean save = consignorFormService.save(consignorForm);
+        if (save){
+            return R.success("success");
+        }
         return R.error("error");
     }
 }

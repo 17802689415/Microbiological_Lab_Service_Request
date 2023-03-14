@@ -41,7 +41,8 @@
                         <el-date-picker
                             v-model="consignor_info.applyDate"
                             type="date"
-                            placeholder="选择日期">
+                            placeholder="选择日期"
+                            value-format="YYYY-MM-DD">
                         </el-date-picker>
                     </el-form-item>    
                 </el-col>
@@ -50,7 +51,8 @@
                         <el-date-picker
                             v-model="consignor_info.sendDate"
                             type="date"
-                            placeholder="选择日期">
+                            placeholder="选择日期"
+                            value-format="YYYY-MM-DD">
                         </el-date-picker>
                     </el-form-item>
                 </el-col>
@@ -62,7 +64,7 @@
     </div>
     <div id="sample" v-show="isShow==1">
         <h4>样品信息</h4>
-        <el-form :model="sample_info" :rules="rules" label-width="120px" class="demo-ruleForm" size="small">
+        <el-form :model="sample_info"  label-width="120px" class="demo-ruleForm" size="small">
             <el-form-item label="测试目的" prop="testPurpose">
                 <el-input v-model="sample_info.testPurpose" type="textarea" class="item3"></el-input>
             </el-form-item>
@@ -107,7 +109,7 @@
             </el-form-item>
         </el-form>
         <h4>测试信息</h4>
-        <el-form :model="sample_test_info" :rules="rules" label-width="120px" class="demo-ruleForm"  ref="sampleTestInfo" size="small">
+        <el-form :model="sample_test_info"  label-width="120px" class="demo-ruleForm"  ref="sampleTestInfo" size="small">
             <el-row>
                 <el-col :span="6">
                     <el-form-item label="样品名称" prop="sampleName">
@@ -175,7 +177,7 @@
     </div>
     <div id="water" v-show="isShow==2">
         <h4>测试信息</h4>
-        <el-form :model="water_test_info" :rules="rules" label-width="120px" class="demo-ruleForm"  ref="waterTestInfo" size="small">
+        <el-form :model="water_test_info" label-width="120px" class="demo-ruleForm"  ref="waterTestInfo" size="small">
             <el-form-item label="纯化水编号" prop="waterNo">
                 <el-input v-model="water_test_info.waterNo" class="item2"></el-input>
             </el-form-item>
@@ -216,7 +218,7 @@
     </div>
     <div id="cleanroom" v-show="isShow==3">
         <h4>测试信息</h4>
-        <el-form :model="cleanroom_test_info" :rules="rules" label-width="120px" class="demo-ruleForm"  ref="cleanroomTestInfo" size="small">
+        <el-form :model="cleanroom_test_info"  label-width="120px" class="demo-ruleForm"  ref="cleanroomTestInfo" size="small">
             <el-form-item label="洁净室名称" prop="cleanroomName">
                 <el-input v-model="cleanroom_test_info.cleanroomName" class="item2"></el-input>
             </el-form-item>
@@ -345,6 +347,8 @@ export default {
                 return
             }
             let obj={
+                sampleName:this.sample_info.sampleName,
+                applyNum:this.applyNo,
                 model:this.sample_test_info.model,
                 lotNo:this.sample_test_info.lotNo,
                 quantity:this.sample_test_info.quantity,
@@ -384,8 +388,10 @@ export default {
         },
         postForm(){
             let that = this
+            console.log(this.consignor_info.applyDate)
             // 委托人数据
             let consignorInfo = new FormData()
+            consignorInfo.append('applyNum',this.applyNo)
             consignorInfo.append('consignorId',this.consignor_info.consignorId)
             consignorInfo.append('phoneNum',this.consignor_info.phoneNum)
             consignorInfo.append('workCell',this.consignor_info.workCell)
@@ -395,31 +401,36 @@ export default {
             consignorInfo.append('urgent',this.consignor_info.urgent)
             // 样品信息
             let sampleInfo = new FormData()
+            sampleInfo.append('applyNum',this.applyNo)
             sampleInfo.append('testPurpose',this.sample_info.testPurpose)
             sampleInfo.append('sampleName',this.sample_info.sampleName)
             sampleInfo.append('sampleQuantity',this.sample_info.sampleQuantity)
             sampleInfo.append('batchNo',this.sample_info.batchNo)
             sampleInfo.append('disposal',this.sample_info.disposal)
             sampleInfo.append('storageCondition',this.sample_info.storageCondition)
-            // 样品测试信息
-            let sampleTestInfo = new FormData()
-            // sampleTestInfo.append('applyNum',this.applyNo)
-            // sampleTestInfo.append('sampleName',this.sample_info.sampleName)
-            // sampleTestInfo.append('model',this.sample_test_info.model)
-            // sampleTestInfo.append('lotNo',this.sample_test_info.lotNo)
-            // sampleTestInfo.append('quantity',this.sample_test_info.quantity)
-            // sampleTestInfo.append('testItem',this.sample_test_info.testItem)
-            // sampleTestInfo.append('wiNo',this.sample_test_info.wiNo)
-            // sampleTestInfo.append('limitValue',this.sample_test_info.limitValue)
-            // sampleTestInfo.append('remark',this.sample_test_info.remark)
-            sampleTestInfo.append('list',this.test_item_list)
-            that.$axios.post('http://localhost:8099/lab/postTestInfo',sampleTestInfo).then(function (res){
-                if(res.data.code==1){
-                    alert(res.data.data)
-                }else{
-                    alert(res.data.msg)
+            
+            
+            that.$axios.post('http://localhost:8099/lab/postSampleTestInfo',this.test_item_list).then(function (res){
+                if(res.data.code==0){
+                    alert("error")
+                    return
                 }
             })
+
+            that.$axios.post('http://localhost:8099/lab/postSampleInfo',sampleInfo).then(function (res){
+                if(res.data.code==1){
+                    alert("error")
+                    return
+                }
+            })
+
+            that.$axios.post('http://localhost:8099/lab/postConsignorInfo',consignorInfo).then(function (res){
+                if(res.data.code==1){
+                    alert("error")
+                    return
+                }
+            })
+            alert('success')
         }
         
     }

@@ -24,7 +24,7 @@ public class SampleTestInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "TestInfo{" +
+        return "SampleTestInfo{" +
                 "id=" + id +
                 ", applyNum='" + applyNum + '\'' +
                 ", sampleName='" + sampleName + '\'' +
@@ -34,6 +34,7 @@ public class SampleTestInfo implements Serializable {
                 ", testItem='" + testItem + '\'' +
                 ", wiNo='" + wiNo + '\'' +
                 ", limitValue=" + limitValue +
+                ", remark='" + remark + '\'' +
                 '}';
     }
 

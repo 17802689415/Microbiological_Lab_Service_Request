@@ -41,7 +41,7 @@ insert into login values (1,'zhanglei','123456','admin')
 create table consignor_form(
 id int primary key auto_increment,
 apply_num varchar(50),
-consignorId varchar(50),
+consignor_id varchar(50),
 phone_num varchar(50),
 work_cell varchar(50),
 department varchar(50),
@@ -63,6 +63,8 @@ disposal varchar(100),
 storage_condition varchar(100)
 );
 
+select * from  sample_form
+delete from sample_form
 create table sample_test_info(
 id int primary key auto_increment,
 apply_num varchar(50),
@@ -75,10 +77,10 @@ wi_no varchar(50),
 limit_value double,
 remark varchar(200)
 );
-
+delete from sample_test_info
 drop table test_info;
 
-select * from test_info
+select * from sample_test_info
 
 create table apply_form(
 id int primary key auto_increment,
