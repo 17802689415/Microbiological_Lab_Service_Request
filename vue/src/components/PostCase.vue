@@ -10,7 +10,7 @@
     <div id="consignor">
         <h6>applyNo:  {{ applyNo }}</h6>
         <h4>委托人信息</h4>
-        <el-form :model="consignor_info" :rules="rules" label-width="120px" class="demo-ruleForm" size="small">
+        <el-form :model="consignor_info" label-width="120px" class="demo-ruleForm" size="small">
             <el-row>
                 <el-col :span="6">
                     <el-form-item label="委托人工号" prop="consignorId">
@@ -107,7 +107,7 @@
             </el-form-item>
         </el-form>
         <h4>测试信息</h4>
-        <el-form :model="test_info" :rules="rules" label-width="120px" class="demo-ruleForm"  ref="testInfo" size="small">
+        <el-form :model="sample_test_info" :rules="rules" label-width="120px" class="demo-ruleForm"  ref="sampleTestInfo" size="small">
             <el-row>
                 <el-col :span="6">
                     <el-form-item label="样品名称" prop="sampleName">
@@ -116,34 +116,34 @@
                 </el-col>
                 <el-col :span="6">
                     <el-form-item label="规格" prop="model">
-                        <el-input v-model="test_info.model" class="item1"></el-input>
+                        <el-input v-model="sample_test_info.model" class="item1"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="6">
                     <el-form-item label="批号" prop="lotNo">
-                        <el-input v-model="test_info.lotNo" class="item1"></el-input>
+                        <el-input v-model="sample_test_info.lotNo" class="item1"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="6">
                     <el-form-item label="数量" prop="quantity">
-                        <el-input v-model="test_info.quantity" class="item1"></el-input>
+                        <el-input v-model="sample_test_info.quantity" class="item1"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-form-item label="测试项目" prop="testItem">
-                <el-input v-model="test_info.testItem" class="item3"></el-input>
+                <el-input v-model="sample_test_info.testItem" class="item3"></el-input>
             </el-form-item>
             <el-row>
                 <el-col :span="6">
                     <el-form-item label="接收限值" prop="limitValue">
-                        <el-input v-model="test_info.limitValue" class="item1"></el-input>
+                        <el-input v-model="sample_test_info.limitValue" class="item1"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="6">
                     <el-form-item label="测试方法号" prop="wiNo">
-                        <el-input v-model="test_info.wiNo" class="item1"></el-input>
+                        <el-input v-model="sample_test_info.wiNo" class="item1"></el-input>
                     </el-form-item>
                 </el-col>
                 
@@ -151,12 +151,12 @@
             <el-row>
                 <el-col :span="12">
                     <el-form-item label="备注" prop="remark">
-                        <el-input v-model="test_info.remark" class="item3" type="textarea"></el-input>
+                        <el-input v-model="sample_test_info.remark" class="item3" type="textarea"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="3">
                      <el-form-item>
-                        <el-button type="info" @click="postTestInfo('testInfo')">+1</el-button>
+                        <el-button type="info" @click="postSampleTestInfo('sampleTestInfo')">+1</el-button>
                     </el-form-item>
                 </el-col>
             </el-row>
@@ -169,7 +169,7 @@
             </template>
                 <div v-for="o in test_item_list" :key="o" class="text item">
                     <span>测试项目：{{ o.testItem }},数量：{{ o.quantity }},备注{{ o.remark }}</span>
-                    <el-button circle size="small" @click="cancel_test_info"><el-icon><Close /></el-icon></el-button><br>
+                    <el-button circle size="small" @click="cancel_test_info(o)"><el-icon><Close /></el-icon></el-button><br>
                 </div>
         </el-card>
     </div>
@@ -209,8 +209,8 @@
                 </div>
             </template>
                 <div v-for="o in test_item_list" :key="o" class="text item">
-                    <span>测试项目：{{ o.testItem }},纯化水编号：{{ o.waterNo }},方法号{{ o.WINo }}</span>
-                    <el-button circle size="small" @click="cancel_test_info"><el-icon><Close /></el-icon></el-button><br>
+                        <span>测试项目：{{ o.testItem }},纯化水编号：{{ o.waterNo }},方法号{{ o.WINo }}</span>
+                        <el-button circle size="small" @click="cancel_test_info(o)"><el-icon><Close /></el-icon></el-button><br>
                 </div>
         </el-card>
     </div>
@@ -255,10 +255,10 @@
     <div id="btn">
         <el-row>
             <el-col :span="6">
-                <el-button type="primary" class="sub">提交</el-button>
+                <el-button type="primary" class="sub" @click="postForm">提交</el-button>
             </el-col>
             <el-col :span="6">
-                <el-button type="primary" class="sub">取消</el-button>
+                <el-button type="primary" class="sub" @click="cancle">取消</el-button>
             </el-col>
         </el-row>
         
@@ -282,6 +282,7 @@ export default {
                 department:"",
                 applyDate:"",
                 sendDate:"",
+                urgent:false
             },
             sample_info:{
                 testPurpose:"",
@@ -291,7 +292,7 @@ export default {
                 disposal:"",
                 storageCondition:""
             },
-            test_info:{
+            sample_test_info:{
                 model:"",
                 lotNo:"",
                 quantity:0,
@@ -311,39 +312,9 @@ export default {
                 WINo:''
             },
             test_item_list:[],
-            rules:{
-                consignorId: [
-                    { required: true, message: '请输入', trigger: 'blur' },
-                ],
-                phoneNum: [
-                    { required: true, message: '请输入', trigger: 'blur' },
-                ],
-                workCell: [
-                    { required: true, message: '请输入', trigger: 'blur' },
-                ],
-                department: [
-                    { required: true, message: '请输入', trigger: 'blur' },
-                ],
-                applyDate: [
-                    { required: true, message: '请选择', trigger: 'blur' },
-                ],
-                sendDate: [
-                    { required: true, message: '请选择', trigger: 'blur' },
-                ],
-                testPurpose: [
-                    { required: true, message: '请输入', trigger: 'blur' },
-                ],
-                sampleQuantity: [
-                    { required: true, message: '请输入', trigger: 'blur' },
-                ],
-                batchNo: [
-                    { required: true, message: '请输入', trigger: 'blur' },
-                ],
-                storageCondition: [
-                    { required: true, message: '请输入', trigger: 'blur' },
-                ],
-            },
             applyNo:'',
+            quantity_sum:0,
+
         }
     },
     created(){
@@ -351,6 +322,7 @@ export default {
     },
     methods:{
         handleSelect(index){
+            this.test_item_list=[]
             this.isShow=index
         },
         getNo(){
@@ -363,36 +335,28 @@ export default {
                 }
             })
         },
-        postTestInfo(testInfo){
-            // let that = this
-            // let formData = new FormData()
-            // formData.append('applyNum',this.applyNo)
-            // formData.append('sampleName',this.sample_info.sampleName)
-            // formData.append('model',this.test_info.model)
-            // formData.append('lotNo',this.test_info.lotNo)
-            // formData.append('quantity',this.test_info.quantity)
-            // formData.append('testItem',this.test_info.testItem)
-            // formData.append('wiNo',this.test_info.wiNo)
-            // formData.append('limitValue',this.test_info.limitValue)
-            // that.$axios.post('http://localhost:8099/lab/postTestInfo',formData).then(function (res){
-            //     if(res.data.code==1){
-            //         alert(res.data.data)
-            //     }else{
-            //         alert(res.data.msg)
-            //     }
-            // })
+        postSampleTestInfo(sampleTestInfo){
+            
+            this.quantity_sum=Number(this.quantity_sum)+Number(this.sample_test_info.quantity)
+            console.log(this.quantity_sum)
+            if(this.quantity_sum>this.sample_info.sampleQuantity){
+                alert('数量超出')
+                this.quantity_sum=this.quantity_sum-this.sample_test_info.quantity
+                return
+            }
             let obj={
-                model:this.test_info.model,
-                lotNo:this.test_info.lotNo,
-                quantity:this.test_info.quantity,
-                testItem:this.test_info.testItem,
-                wiNo:this.test_info.wiNo,
-                limitValue:this.test_info.limitValue,
-                remark:this.test_info.remark,
+                model:this.sample_test_info.model,
+                lotNo:this.sample_test_info.lotNo,
+                quantity:this.sample_test_info.quantity,
+                testItem:this.sample_test_info.testItem,
+                wiNo:this.sample_test_info.wiNo,
+                limitValue:this.sample_test_info.limitValue,
+                remark:this.sample_test_info.remark,
             }
             this.test_item_list.push(obj)
-            this.$refs[testInfo].resetFields();
+            this.$refs[sampleTestInfo].resetFields();
         },
+
         postWaterTestInfo(waterTestInfo){
             let obj={
                 waterNo:this.water_test_info.waterNo,
@@ -409,11 +373,55 @@ export default {
                 WINo:this.cleanroom_test_info.WINo,
             }
             this.test_item_list.push(obj)
+
             this.$refs[cleanroomInfo].resetFields();
         },
-        cancel_test_info(){
-            
+        cancel_test_info(info){
+            console.log(info)
+            this.quantity_sum=this.quantity_sum-info.quantity
+            this.test_item_list.splice(this.test_item_list.indexOf(info),1)
+
+        },
+        postForm(){
+            let that = this
+            // 委托人数据
+            let consignorInfo = new FormData()
+            consignorInfo.append('consignorId',this.consignor_info.consignorId)
+            consignorInfo.append('phoneNum',this.consignor_info.phoneNum)
+            consignorInfo.append('workCell',this.consignor_info.workCell)
+            consignorInfo.append('department',this.consignor_info.department)
+            consignorInfo.append('applyDate',this.consignor_info.applyDate)
+            consignorInfo.append('sendDate',this.consignor_info.sendDate)
+            consignorInfo.append('urgent',this.consignor_info.urgent)
+            // 样品信息
+            let sampleInfo = new FormData()
+            sampleInfo.append('testPurpose',this.sample_info.testPurpose)
+            sampleInfo.append('sampleName',this.sample_info.sampleName)
+            sampleInfo.append('sampleQuantity',this.sample_info.sampleQuantity)
+            sampleInfo.append('batchNo',this.sample_info.batchNo)
+            sampleInfo.append('disposal',this.sample_info.disposal)
+            sampleInfo.append('storageCondition',this.sample_info.storageCondition)
+            // 样品测试信息
+            let sampleTestInfo = new FormData()
+            // sampleTestInfo.append('applyNum',this.applyNo)
+            // sampleTestInfo.append('sampleName',this.sample_info.sampleName)
+            // sampleTestInfo.append('model',this.sample_test_info.model)
+            // sampleTestInfo.append('lotNo',this.sample_test_info.lotNo)
+            // sampleTestInfo.append('quantity',this.sample_test_info.quantity)
+            // sampleTestInfo.append('testItem',this.sample_test_info.testItem)
+            // sampleTestInfo.append('wiNo',this.sample_test_info.wiNo)
+            // sampleTestInfo.append('limitValue',this.sample_test_info.limitValue)
+            // sampleTestInfo.append('remark',this.sample_test_info.remark)
+            sampleTestInfo.append('list',this.test_item_list)
+            that.$axios.post('http://localhost:8099/lab/postTestInfo',sampleTestInfo).then(function (res){
+                if(res.data.code==1){
+                    alert(res.data.data)
+                }else{
+                    alert(res.data.msg)
+                }
+            })
         }
+        
     }
 }
 </script>
@@ -440,9 +448,6 @@ export default {
 }
 .item3{
     width: 600px;
-}
-.close{
-    margin-left: 30px;
 }
 .item {
   padding: 18px 0;

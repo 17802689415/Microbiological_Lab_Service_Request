@@ -2,7 +2,7 @@ package com.it.pojo;
 
 import java.io.Serializable;
 
-public class TestInfo implements Serializable {
+public class SampleTestInfo implements Serializable {
     private int id;
     private String applyNum;
     private String sampleName;
@@ -12,7 +12,15 @@ public class TestInfo implements Serializable {
     private String testItem;
     private String wiNo;
     private double limitValue;
+    private String remark;
 
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     @Override
     public String toString() {

@@ -2,21 +2,19 @@ package com.it.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.it.pojo.Login;
-import com.it.pojo.TestInfo;
-import com.it.pojo.User;
+import com.it.pojo.SampleTestInfo;
 import com.it.service.LoginService;
 import com.it.service.TestInfoService;
 import com.it.service.UserService;
 import com.it.utils.R;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.UUID;
 
 @Slf4j
@@ -74,22 +72,17 @@ public class UserController {
 
     @PostMapping("/postTestInfo")
     @ResponseBody
-    public R<String> postTestInfo(TestInfo testInfo){
-        if (testInfo.getQuantity()>testInfo.getLimitValue()){
-            return R.error("超出接收限值");
-        }
-        LambdaQueryWrapper<TestInfo> queryWrapper = new LambdaQueryWrapper();
-        queryWrapper.eq(TestInfo::getApplyNum,testInfo.getApplyNum());
-        double sum = 0;
-        for (TestInfo info : testInfoService.list(queryWrapper)) {
-            sum+=info.getQuantity();
-        }
+    public R<String> postSampleTestInfo(SampleTestInfo testInfo){
+        System.out.println(testInfo);
 
-        boolean save = testInfoService.save(testInfo);
-        if (save){
-            redisTemplate.opsForValue().set(testInfo.getId(),testInfo.toString());
-            return R.success("success");
-        }
+//        if (testInfo.getQuantity()>testInfo.getLimitValue()){
+//            return R.error("超出接收限值");
+//        }
+//        boolean save = testInfoService.save(testInfo);
+//        if (save){
+//            redisTemplate.opsForValue().set(testInfo.getId(),testInfo.toString());
+//            return R.success("success");
+//        }
         return R.error("error");
     }
 }

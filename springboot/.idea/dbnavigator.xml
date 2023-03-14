@@ -46,7 +46,8 @@ phone_num varchar(50),
 work_cell varchar(50),
 department varchar(50),
 apply_date date,
-send_date date
+send_date date,
+urgent boolean
 );
 select * from consignor_form
 drop table consignor_form
@@ -62,7 +63,7 @@ disposal varchar(100),
 storage_condition varchar(100)
 );
 
-create table test_info(
+create table sample_test_info(
 id int primary key auto_increment,
 apply_num varchar(50),
 sample_name varchar(50),
@@ -71,8 +72,11 @@ lot_no varchar(50),
 quantity double,
 test_item varchar(100),
 wi_no varchar(50),
-limit_value double
+limit_value double,
+remark varchar(200)
 );
+
+drop table test_info;
 
 select * from test_info
 
