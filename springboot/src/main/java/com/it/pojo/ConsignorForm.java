@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class ConsignorForm implements Serializable {
     public int id;
+    private String applyNum;
     private String consignorId;
     private String phoneNum;
     private String workCell;
@@ -11,6 +12,14 @@ public class ConsignorForm implements Serializable {
     private String applyDate;
     private String sendDate;
     private boolean urgent;
+
+    public String getApplyNum() {
+        return applyNum;
+    }
+
+    public void setApplyNum(String applyNum) {
+        this.applyNum = applyNum;
+    }
 
     @Override
     public String toString() {

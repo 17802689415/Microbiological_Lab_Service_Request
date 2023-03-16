@@ -1,9 +1,9 @@
 <template>
     <div id="menu">
         <el-menu class="el-menu-demo" mode="horizontal" @select="handleSelect">
-            <el-menu-item index="1">SampleTest</el-menu-item>
-            <el-menu-item index="2">Purified Water Test </el-menu-item>
-            <el-menu-item index="3">Cleanroom Environment Test</el-menu-item>
+            <el-menu-item index="SampleTest">SampleTest</el-menu-item>
+            <el-menu-item index="Purified Water Test">Purified Water Test </el-menu-item>
+            <el-menu-item index="Cleanroom Environment Test">Cleanroom Environment Test</el-menu-item>
         </el-menu>
     </div>
     <div class="form">
@@ -62,7 +62,7 @@
             </el-form-item>
         </el-form>
     </div>
-    <div id="sample" v-show="isShow==1">
+    <div id="sample" v-show="isShow=='SampleTest'">
         <h4>样品信息</h4>
         <el-form :model="sample_info"  label-width="120px" class="demo-ruleForm" size="small">
             <el-form-item label="测试目的" prop="testPurpose">
@@ -175,7 +175,7 @@
                 </div>
         </el-card>
     </div>
-    <div id="water" v-show="isShow==2">
+    <div id="water" v-show="isShow=='Purified Water Test'">
         <h4>测试信息</h4>
         <el-form :model="water_test_info" label-width="120px" class="demo-ruleForm"  ref="waterTestInfo" size="small">
             <el-form-item label="纯化水编号" prop="waterNo">
@@ -216,7 +216,7 @@
                 </div>
         </el-card>
     </div>
-    <div id="cleanroom" v-show="isShow==3">
+    <div id="cleanroom" v-show="isShow=='Cleanroom Environment Test'">
         <h4>测试信息</h4>
         <el-form :model="cleanroom_test_info"  label-width="120px" class="demo-ruleForm"  ref="cleanroomTestInfo" size="small">
             <el-form-item label="洁净室名称" prop="cleanroomName">
@@ -275,7 +275,7 @@ export default {
     name:'postCase',
     data(){
         return{
-            isShow:0,
+            isShow:'',
             isInLine:true,
             consignor_info:{
                 consignorId:"",
@@ -388,7 +388,7 @@ export default {
         },
         postForm(){
             let that = this
-            console.log(this.consignor_info.applyDate)
+            
             // 委托人数据
             let consignorInfo = new FormData()
             consignorInfo.append('applyNum',this.applyNo)
@@ -408,6 +408,12 @@ export default {
             sampleInfo.append('batchNo',this.sample_info.batchNo)
             sampleInfo.append('disposal',this.sample_info.disposal)
             sampleInfo.append('storageCondition',this.sample_info.storageCondition)
+            //mycaseTable信息
+            let caseTable = new FormData()
+            caseTable.append('applyNum',this.applyNo)
+            caseTable.append('testType',this.isShow)
+            caseTable.append('consignor',this.consignor_info.consignorId)
+            caseTable.append('sendDate',this.consignor_info.sendDate)
             
             
             that.$axios.post('http://localhost:8099/lab/postSampleTestInfo',this.test_item_list).then(function (res){
@@ -418,18 +424,26 @@ export default {
             })
 
             that.$axios.post('http://localhost:8099/lab/postSampleInfo',sampleInfo).then(function (res){
-                if(res.data.code==1){
+                if(res.data.code==0){
                     alert("error")
                     return
                 }
             })
 
             that.$axios.post('http://localhost:8099/lab/postConsignorInfo',consignorInfo).then(function (res){
-                if(res.data.code==1){
+                if(res.data.code==0){
                     alert("error")
                     return
                 }
             })
+
+            that.$axios.post('http://localhost:8099/lab/postCase',caseTable).then(function (res){
+                if(res.data.code==0){
+                    alert("error")
+                    return
+                }
+            })
+
             alert('success')
         }
         

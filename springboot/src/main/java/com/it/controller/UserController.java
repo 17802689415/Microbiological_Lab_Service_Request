@@ -1,11 +1,10 @@
 package com.it.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.it.pojo.ConsignorForm;
-import com.it.pojo.Login;
-import com.it.pojo.SampleForm;
-import com.it.pojo.SampleTestInfo;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.it.pojo.*;
 import com.it.service.*;
+import com.it.utils.PageCommon;
 import com.it.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,6 +38,8 @@ public class UserController {
 
     @Autowired
     private ConsignorFormService consignorFormService;
+    @Autowired
+    private CaseTabService caseTabService;
     @Autowired
     RedisTemplate redisTemplate;
 
@@ -110,5 +112,48 @@ public class UserController {
             return R.success("success");
         }
         return R.error("error");
+    }
+
+    @PostMapping("/postCase")
+    @ResponseBody
+    public R<String> postCase(MyCaseTab myCaseTab){
+        boolean save = caseTabService.save(myCaseTab);
+        if (save){
+            return R.success("success");
+        }
+        return R.error("error");
+    }
+
+    @PostMapping("/selectCase")
+    @ResponseBody
+    public R<Page> selectCase(PageCommon pageCommon){
+        //分页构造器
+        Page pageInfo = new Page(pageCommon.getPage(),pageCommon.getPageSize());
+
+        LambdaQueryWrapper<MyCaseTab> queryWrapper =new LambdaQueryWrapper<>();
+        queryWrapper.orderByAsc(MyCaseTab::getSendDate);
+        caseTabService.page(pageInfo,queryWrapper);
+        return R.success(pageInfo);
+    }
+
+    @PostMapping("/selectUrgentCase")
+    @ResponseBody
+    public R<List<SampleTestInfo>> selectUrgentCase(){
+        List<SampleTestInfo> list =new ArrayList<>();
+        LambdaQueryWrapper<ConsignorForm> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(ConsignorForm::isUrgent,true);
+        for (ConsignorForm consignorForm : consignorFormService.list(queryWrapper)) {
+            LambdaQueryWrapper<SampleTestInfo> queryWrapper1 =new LambdaQueryWrapper<>();
+            queryWrapper1.eq(SampleTestInfo::getApplyNum,consignorForm.getApplyNum());
+            for (SampleTestInfo sampleTestInfo : testInfoService.list(queryWrapper1)) {
+                boolean add = list.add(sampleTestInfo);
+                if (!add){
+                    return R.error("error");
+                }
+            }
+
+        }
+
+        return R.success(list);
     }
 }

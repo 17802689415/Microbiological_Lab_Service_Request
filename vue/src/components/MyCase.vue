@@ -34,7 +34,7 @@
             :data="tableData"
             style="width: 100%;">
             <el-table-column
-            prop="applyNo"
+            prop="applyNum"
             label="申请单编号"
             >
             </el-table-column>
@@ -91,13 +91,7 @@ export default {
         return{
             isBorder:true,
             tableData:[
-                {
-                    applyNo:'123',
-                    testType:'样品测试',
-                    consignor:'zl',
-                    sendDate:'2023 3 1',
-                    status:'已完结',
-                }
+               
             ],
             options_type:['样品测试','纯化水测试','洁净室环境测试'],
             options_status:['已完结','未完结'],
@@ -108,7 +102,22 @@ export default {
             total:0
         }
     },
+    created(){
+        this.init()
+    },
     methods:{
+        init(){
+            let that = this
+            let pageInfo = new FormData()
+            pageInfo.append('page',this.currentPage)
+            pageInfo.append('pageSize',this.pageSize)
+            that.$axios.post('http://localhost:8099/lab/selectCase',pageInfo).then(function (res){
+                if(res.data.code==1){
+                    that.tableData = res.data.data.records;
+                    that.total = res.data.data.total;
+                }
+            })
+        },
         view(row){
             console.log(row)
         },
@@ -122,10 +131,12 @@ export default {
         handleSizeChange(val){
             console.log(val)
             this.pageSize=val
+            this.init()
         },
         handleCurrentChange(val){
             console.log(val)
             this.currentPage=val
+            this.init()
         }
     }
 

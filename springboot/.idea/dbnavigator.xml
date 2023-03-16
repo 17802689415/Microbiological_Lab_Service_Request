@@ -52,6 +52,7 @@ urgent boolean
 select * from consignor_form
 drop table consignor_form
 
+
 create table sample_form(
 id int primary key auto_increment,
 apply_num varchar(50),
@@ -89,7 +90,17 @@ consignorId varchar(50),
 sample_name varchar(50),
 apply_date date,
 status varchar(50)
-);]]></console>
+);
+select * from apply_form;
+
+create table my_case_tab(
+id int primary key auto_increment,
+apply_num varchar(50),
+test_type varchar(100),
+consignor varchar(50),
+send_date date,
+status varchar(50)
+)]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">

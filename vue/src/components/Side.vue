@@ -14,6 +14,11 @@
             </template>
             <!-- case -->
             <el-menu-item-group>
+              <el-menu-item index="mainView" >
+                    <el-tooltip content="mainView" placement="right" effect="light">
+                <span class="span-children">mainView</span>
+                    </el-tooltip>
+                </el-menu-item>
                 <el-menu-item index="postCase" >
                     <el-tooltip content="Case+" placement="right" effect="light">
                 <span class="span-children">case+</span>
