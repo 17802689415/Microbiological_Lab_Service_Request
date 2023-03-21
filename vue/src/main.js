@@ -1,9 +1,11 @@
+
 import { createApp } from 'vue'
 import App from './App.vue'
 import * as ElIconModules from '@element-plus/icons-vue'
 import router from './router/router.js'
 import store from './store/store.js'
 import axios from 'axios'
+import '@/request/index.js'
 
 const app = createApp(App)
 app.use(router)

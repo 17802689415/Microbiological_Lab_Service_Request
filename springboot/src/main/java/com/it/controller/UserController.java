@@ -9,6 +9,7 @@ import com.it.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -52,8 +53,8 @@ public class UserController {
 
     @PostMapping("/login")
     @ResponseBody
-//    @CachePut(value = "userCache",key = "#log.username")
-    @Cacheable(value = "userCache",key = "#log.username")
+    @CachePut(value = "userCache",key = "#log.username")
+//    @Cacheable(value = "userCache",key = "#log.username")
     public R<Login> userManager(Login log){
         LambdaQueryWrapper<Login> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Login::getUsername,log.getUsername());
