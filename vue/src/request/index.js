@@ -1,14 +1,14 @@
 import axios from 'axios'
-import store from '@/store/store.js'
-import {setToken,getToken} from '@/request/token.js'
+import {setToken,getToken, setUid} from '@/request/token.js'
 import router from '@/router/router.js'
 // 1、请求拦截
 axios.interceptors.request.use(function(config){
     console.log('请求即将开始');
     if(getToken()){
-        console.log(store.state.token)
+        config.headers.Authorization=getToken()
     }else{
         router.push("/")
+        
     }
     return config;
 },function(err){
@@ -21,7 +21,8 @@ axios.interceptors.response.use(function(response){
     console.log('即将返回我们想要的数据');
     console.log(response);
     if(response.data.code == 1){
-        setToken(response.data.data)
+        setToken(response.headers.token)
+        setUid(response.headers.uid)
     }
     
     

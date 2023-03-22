@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.it.pojo.*;
 import com.it.service.*;
+import com.it.utils.MyUserDetailsService;
 import com.it.utils.PageCommon;
 import com.it.utils.R;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +13,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,7 +21,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Slf4j
-@CrossOrigin
+//@CrossOrigin
 @RestController
 @RequestMapping("/lab")
 public class UserController {
@@ -44,6 +46,8 @@ public class UserController {
     @Autowired
     RedisTemplate redisTemplate;
 
+    @Autowired
+    private MyUserDetailsService myUserDetailsService;
     public static String[] chars = new String[] { "a", "b", "c", "d", "e", "f",
             "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
             "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5",
@@ -62,7 +66,14 @@ public class UserController {
         if (one!=null&one.getPassword().equals(log.getPassword())){
             return R.success(one);
         }
-        return R.error("登录失败");
+//        UserDetails userDetails = myUserDetailsService.loadUserByUsername(log.getUsername());
+//        System.out.println(userDetails==null);
+//        if (userDetails!=null){
+//            return R.success(userDetails);
+//        }
+
+
+        return R.error("error");
     }
 
     @GetMapping("/getNo")
