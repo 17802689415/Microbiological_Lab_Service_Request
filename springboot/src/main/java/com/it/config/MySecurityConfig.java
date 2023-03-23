@@ -54,33 +54,6 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    //定义登陆成功返回信息
-    private class AjaxAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-        @Override
-        public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-            System.out.println("用户[" + SecurityContextHolder.getContext().getAuthentication().getPrincipal() +"]登陆成功！");
-            response.setContentType("application/json;charset=utf-8");
-            PrintWriter out = response.getWriter();
-            out.write("{\"status\":\"ok\",\"msg\":\"登录成功\"}");
-            out.flush();
-            out.close();
-
-        }
-    }
-
-    //定义登陆失败返回信息
-    private class AjaxAuthFailHandler extends SimpleUrlAuthenticationFailureHandler {
-        @Override
-        public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-            System.out.println("用户登陆失败  AjaxAuthFailHandler");
-            response.setContentType("application/json;charset=utf-8");
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            PrintWriter out = response.getWriter();
-            out.write("{\"status\":\"error\",\"msg\":\"请检查用户名、密码或验证码是否正确\"}");
-            out.flush();
-            out.close();
-        }
-    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -97,17 +70,14 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.csrf()
                 .disable()  //关闭csrf
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authorizeRequests()
-                .antMatchers("/lab/login").permitAll()
-
+                .antMatchers("/lab/login").anonymous()
                 .anyRequest().authenticated()
                 .and()
-                .addFilter(new JWTAuthorizationFilter(authenticationManager()));
+                        .addFilter(new JWTAuthorizationFilter());
 
-        //登录配置
-        http.formLogin()
-                .successHandler(new AjaxAuthSuccessHandler())
-                .failureHandler(new AjaxAuthFailHandler());
 
 
         http.cors(Customizer.withDefaults());

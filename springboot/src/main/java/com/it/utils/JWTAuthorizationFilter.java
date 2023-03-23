@@ -6,6 +6,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -20,11 +22,12 @@ import java.util.Collections;
  * @auther Mr.Xiong
  * @create 2021-08-14 13:44:03
  */
-public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
+@Component
+public class JWTAuthorizationFilter extends OncePerRequestFilter {
 
-    public JWTAuthorizationFilter(AuthenticationManager authenticationManager) {
-        super(authenticationManager);
-    }
+//    public JWTAuthorizationFilter(AuthenticationManager authenticationManager) {
+//        super(authenticationManager);
+//    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -33,12 +36,15 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
         String tokenHeader = request.getHeader(JwtTokenUtils.TOKEN_HEADER);
         // 如果请求头中没有Authorization信息则直接放行了
         if (tokenHeader == null || !tokenHeader.startsWith(JwtTokenUtils.TOKEN_PREFIX)) {
+            System.out.println("have not");
             chain.doFilter(request, response);
             return;
         }
         // 如果请求头中有token，则进行解析，并且设置认证信息
         try {
+            System.out.println(tokenHeader);
             SecurityContextHolder.getContext().setAuthentication(getAuthentication(tokenHeader));
+
         } catch (Exception e) {
             //返回json形式的错误信息
             response.setCharacterEncoding("UTF-8");
@@ -49,7 +55,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
             response.getWriter().flush();
             return;
         }
-        super.doFilterInternal(request, response, chain);
+//        super.doFilterInternal(request, response, chain);
     }
 
     // 这里从token中获取用户信息并新建一个token

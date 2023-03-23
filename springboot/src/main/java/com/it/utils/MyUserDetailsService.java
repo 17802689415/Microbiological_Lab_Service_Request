@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.Objects;
  * @auther Mr.Xiong
  * @create 2021-05-13 21:45:39
  */
-@Component
+@Service
 public class MyUserDetailsService implements UserDetailsService {
 
     @Autowired

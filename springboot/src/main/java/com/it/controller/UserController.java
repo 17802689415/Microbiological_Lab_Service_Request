@@ -57,15 +57,15 @@ public class UserController {
 
     @PostMapping("/login")
     @ResponseBody
-    @CachePut(value = "userCache",key = "#log.username")
+//    @CachePut(value = "userCache",key = "#log.username")
 //    @Cacheable(value = "userCache",key = "#log.username")
-    public R<Login> userManager(Login log){
-        LambdaQueryWrapper<Login> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Login::getUsername,log.getUsername());
-        Login one = loginService.getOne(queryWrapper);
-        if (one!=null&one.getPassword().equals(log.getPassword())){
-            return R.success(one);
-        }
+    public R<UserDetails> userManager(Login log){
+//        LambdaQueryWrapper<Login> queryWrapper = new LambdaQueryWrapper<>();
+//        queryWrapper.eq(Login::getUsername,log.getUsername());
+//        Login one = loginService.getOne(queryWrapper);
+//        if (one!=null&one.getPassword().equals(log.getPassword())){
+//            return R.success(one);
+//        }
 //        UserDetails userDetails = myUserDetailsService.loadUserByUsername(log.getUsername());
 //        System.out.println(userDetails==null);
 //        if (userDetails!=null){
@@ -73,7 +73,7 @@ public class UserController {
 //        }
 
 
-        return R.error("error");
+        return loginService.login(log);
     }
 
     @GetMapping("/getNo")

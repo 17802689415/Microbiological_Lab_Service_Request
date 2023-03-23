@@ -21,7 +21,7 @@ axios.interceptors.response.use(function(response){
     console.log('即将返回我们想要的数据');
     console.log(response);
     if(response.data.code == 1){
-        setToken(response.headers.token)
+        setToken(response.data.data.token)
         setUid(response.headers.uid)
     }
     

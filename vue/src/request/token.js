@@ -13,7 +13,7 @@ export function getToken() {
   }
   
   export function removeToken() {
-    return sessionStorage.removeItem('token')
+    return sessionStorage.removeItem('token') 
   }
   export function removeUid() {
     return sessionStorage.removeItem('uId')
