@@ -13,6 +13,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -77,6 +78,7 @@ public class UserController {
     }
 
     @GetMapping("/getNo")
+    @PreAuthorize("hasAuthority('test')")
     @ResponseBody
     public R<String> getNo(){
         StringBuffer shortBuffer = new StringBuffer();
@@ -96,11 +98,11 @@ public class UserController {
         for (SampleTestInfo s: testInfo) {
             System.out.println(s);
             if (s.getQuantity()>s.getLimitValue()){
-                return R.error("超出接收限值");
+                return R.error("超出接收限值",0);
             }
             boolean save = testInfoService.save(s);
             if (!save){
-                return R.error("error");
+                return R.error("error",0);
 
             }
         }
@@ -114,7 +116,7 @@ public class UserController {
         if (save){
             return R.success("success",1);
         }
-        return R.error("error");
+        return R.error("error",0);
     }
     @PostMapping("/postConsignorInfo")
     @ResponseBody
@@ -123,7 +125,7 @@ public class UserController {
         if (save){
             return R.success("success",1);
         }
-        return R.error("error");
+        return R.error("error",0);
     }
 
     @PostMapping("/postCase")
@@ -133,7 +135,7 @@ public class UserController {
         if (save){
             return R.success("success",1);
         }
-        return R.error("error");
+        return R.error("error",0);
     }
 
     @PostMapping("/selectCase")
@@ -160,7 +162,7 @@ public class UserController {
             for (SampleTestInfo sampleTestInfo : testInfoService.list(queryWrapper1)) {
                 boolean add = list.add(sampleTestInfo);
                 if (!add){
-                    return R.error("error");
+                    return R.error("error",0);
                 }
             }
 

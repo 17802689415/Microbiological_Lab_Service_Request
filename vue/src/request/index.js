@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {setToken,getToken, setUid} from '@/request/token.js'
+import {setToken,getToken} from '@/request/token.js'
 import router from '@/router/router.js'
 // 1、请求拦截
 axios.interceptors.request.use(function(config){
@@ -23,9 +23,13 @@ axios.interceptors.response.use(function(response){
     console.log(response);
     if(response.data.code == 200){
         setToken(response.data.data.token)
-        setUid(response.headers.uid)
     }
-    
+    if(response.data.code == 3){
+        alert(response.data.msg)
+    }
+    if(response.data.code == 4){
+        alert(response.data.msg)
+    }
     
     return response
 },function(err){

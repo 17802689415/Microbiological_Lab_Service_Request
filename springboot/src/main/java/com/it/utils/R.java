@@ -43,10 +43,10 @@ public class R<T> implements Serializable {
     }
 
 
-    public static <T> R<T> error(String msg) {
+    public static <T> R<T> error(String msg,int code) {
         R<T> r = new R<T>();
         r.msg = msg;
-        r.code = 0;
+        r.code = code;
         return r;
     }
 

@@ -2,6 +2,8 @@ package com.it.config;
 
 
 
+import com.it.utils.AccessDeniedHandler;
+import com.it.utils.AuthenticationEntryPoint;
 import com.it.utils.JWTAuthorizationFilter;
 import com.it.utils.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -44,6 +47,7 @@ import java.util.Arrays;
  */
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
@@ -51,6 +55,10 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private  JWTAuthorizationFilter jwtAuthorizationFilter;
+    @Autowired
+    private AccessDeniedHandler accessDeniedHandler;
+    @Autowired
+    private AuthenticationEntryPoint authenticationEntryPoint;
 
     @Bean
     @Override
@@ -86,6 +94,8 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 
+        http.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).
+                accessDeniedHandler(accessDeniedHandler);
 
         http.cors(Customizer.withDefaults());
     }
