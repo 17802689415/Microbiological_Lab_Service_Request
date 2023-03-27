@@ -38,11 +38,11 @@ public class LoginServiceImpl extends ServiceImpl<LoginMapper, Login> implements
         }
         JwtUser jwtUser=(JwtUser) authenticate.getPrincipal();
         String jwtUserName = jwtUser.getUsername();
-        String jwtUserRole = jwtUser.getAuthorities().toString();
-        String jwt = JwtTokenUtils.createToken(jwtUserName,jwtUserRole);
+//        Integer userId = jwtUser.getId();
+        String jwt = JwtTokenUtils.createJWT(jwtUserName);
         redisCache.setCacheObject("login:"+jwtUserName,jwtUser);
         HashMap<String,String> map = new HashMap<>();
         map.put("token",jwt);
-        return R.success(map);
+        return R.success(map,200);
     }
 }

@@ -35,10 +35,10 @@ public class R<T> implements Serializable {
         this.data = data;
     }
 
-    public static <T> R<T> success(T object) {
+    public static <T> R<T> success(T object,int code) {
         R<T> r = new R<T>();
         r.data = object;
-        r.code = 1;
+        r.code = code;
         return r;
     }
 

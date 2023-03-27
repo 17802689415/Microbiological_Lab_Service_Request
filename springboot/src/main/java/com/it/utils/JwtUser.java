@@ -18,13 +18,32 @@ import java.util.Collections;
  * @auther Mr.Xiong
  * @create 2021-08-14 13:17:07
  */
-@Getter
-@Setter
+
 public class JwtUser implements UserDetails {
     private Integer id;
     private String username;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
 
     public JwtUser(Login login) {
         id = login.getId();

@@ -87,7 +87,7 @@ public class UserController {
             int x = Integer.parseInt(str, 16);
             shortBuffer.append(chars[x % 62]);
         }
-        return R.success(shortBuffer.toString());
+        return R.success(shortBuffer.toString(),1);
     }
 
     @PostMapping("/postSampleTestInfo")
@@ -104,7 +104,7 @@ public class UserController {
 
             }
         }
-        return R.success("success");
+        return R.success("success",1);
     }
 
     @PostMapping("/postSampleInfo")
@@ -112,16 +112,16 @@ public class UserController {
     public R<String> postSampleInfo(SampleForm sampleForm){
         boolean save = sampleFormService.save(sampleForm);
         if (save){
-            return R.success("success");
+            return R.success("success",1);
         }
-        return R.success("error");
+        return R.error("error");
     }
     @PostMapping("/postConsignorInfo")
     @ResponseBody
     public R<String> postConsignorInfo(ConsignorForm consignorForm){
         boolean save = consignorFormService.save(consignorForm);
         if (save){
-            return R.success("success");
+            return R.success("success",1);
         }
         return R.error("error");
     }
@@ -131,7 +131,7 @@ public class UserController {
     public R<String> postCase(MyCaseTab myCaseTab){
         boolean save = caseTabService.save(myCaseTab);
         if (save){
-            return R.success("success");
+            return R.success("success",1);
         }
         return R.error("error");
     }
@@ -145,7 +145,7 @@ public class UserController {
         LambdaQueryWrapper<MyCaseTab> queryWrapper =new LambdaQueryWrapper<>();
         queryWrapper.orderByAsc(MyCaseTab::getSendDate);
         caseTabService.page(pageInfo,queryWrapper);
-        return R.success(pageInfo);
+        return R.success(pageInfo,1);
     }
 
     @PostMapping("/selectUrgentCase")
@@ -166,6 +166,6 @@ public class UserController {
 
         }
 
-        return R.success(list);
+        return R.success(list,1);
     }
 }

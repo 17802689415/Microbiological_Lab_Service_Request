@@ -5,7 +5,8 @@ import router from '@/router/router.js'
 axios.interceptors.request.use(function(config){
     console.log('请求即将开始');
     if(getToken()){
-        config.headers.Authorization=getToken()
+        config.headers.Authorization = sessionStorage.getItem("token");
+        console.log(config.headers.Authorization)
     }else{
         router.push("/")
         
@@ -20,7 +21,7 @@ axios.interceptors.response.use(function(response){
     //对返回的数据进行操作
     console.log('即将返回我们想要的数据');
     console.log(response);
-    if(response.data.code == 1){
+    if(response.data.code == 200){
         setToken(response.data.data.token)
         setUid(response.headers.uid)
     }
@@ -28,5 +29,8 @@ axios.interceptors.response.use(function(response){
     
     return response
 },function(err){
+    alert("please login")
     return Promise.reject(err)
 })
+
+export default axios;
