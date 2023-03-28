@@ -51,6 +51,7 @@ export default {
                 if(res.data.code==200){
                     console.log(JSON.stringify(that.ruleForm.username))
                     // localStorage.setItem('username',that.ruleForm.username)
+                    sessionStorage.setItem('username',that.ruleForm.username)
                     that.$router.push('myHome')
                 }else{
                     alert(res.data.msg)

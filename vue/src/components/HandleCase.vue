@@ -17,7 +17,18 @@
         />
     </el-select>
     <el-button type="warning" size="small" @click="search" class="m-2"><el-icon><Search /></el-icon>查询</el-button>
+    <el-select v-model="statusValue" class="m-2" placeholder="测试员" size="small">
+        <el-option
+        v-for="item in testUser"
+        :key="item"
+        :label="item"
+        :value="item"
+        />
+    </el-select>
+    <el-button @click="toggleSelection()" class="m-2" size="small">批量分配</el-button>
   </div>
+    
+
   <div id="allCase">
         <el-table
         :header-cell-style="{
@@ -30,9 +41,12 @@
             color:'#fff',
             textAlign:'center'
         }"
+            ref="multipleTableRef"
             :border="isBorder"
             :data="tableData"
+            @selection-change="handleSelectionChange"
             style="width: 100%;">
+            <el-table-column type="selection" width="55" />
             <el-table-column
             prop="applyNo"
             label="申请单编号"
@@ -101,11 +115,13 @@ export default {
             ],
             options_type:['样品测试','纯化水测试','洁净室环境测试'],
             options_status:['已完结','未完结'],
+            testUser:['zl','leo'],
             typeValue:'',
             statusValue:'',
             currentPage:1,
             pageSize:1,
-            total:0
+            total:0,
+            multipleSelection:[]
         }
     },
     methods:{
@@ -126,7 +142,11 @@ export default {
         handleCurrentChange(val){
             console.log(val)
             this.currentPage=val
-        }
+        },
+        handleSelectionChange(val){
+            this.multipleSelection=val
+            console.log(this.multipleSelection)
+        },
     }
 
 }

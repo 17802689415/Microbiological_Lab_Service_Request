@@ -5,7 +5,7 @@
         <myHeader></myHeader>
       </el-header>
       <el-main>
-        <myMain></myMain>
+        <router-view></router-view>
       </el-main>
       <el-footer>
         <myFoot></myFoot>
@@ -16,13 +16,11 @@
 
 <script>
 import myHeader from './MyHeader.vue'
-import myMain from './MainContainer.vue'
 import myFoot from './FooterContainer.vue'
 export default {
   name:'mainHome',
   components:{
     myHeader,
-    myMain,
     myFoot
   }
 

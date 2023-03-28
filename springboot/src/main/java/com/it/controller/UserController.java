@@ -78,7 +78,7 @@ public class UserController {
     }
 
     @GetMapping("/getNo")
-    @PreAuthorize("hasAuthority('test')")
+//    @PreAuthorize("hasAuthority('admin')")
     @ResponseBody
     public R<String> getNo(){
         StringBuffer shortBuffer = new StringBuffer();

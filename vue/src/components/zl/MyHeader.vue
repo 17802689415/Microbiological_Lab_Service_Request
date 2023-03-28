@@ -10,18 +10,22 @@
     background-color="white"
     
   >
-    <el-menu-item index="0">Logo</el-menu-item>
+    <el-menu-item >Logo</el-menu-item>
     <div class="flex-grow"></div>
-    <el-menu-item index="1"><span>Home</span></el-menu-item>
+    <el-menu-item>
+      <el-input v-model="keyWord" placeholder="搜索" class="search"></el-input>
+      <el-button @click="serach" class="search"><el-icon><Search /></el-icon></el-button>
+    </el-menu-item>
+    <el-menu-item index="myMain"><span>Home</span></el-menu-item>
     <el-menu-item index="2"><span>收藏</span></el-menu-item>
     <el-menu-item index="3"><span>购物车</span></el-menu-item>
     <el-menu-item index="4"><span>我的旧物</span></el-menu-item>
-    <el-menu-item index="5">
+    <el-menu-item index="mainLogin">
                     <el-sub-menu index="6">
                       <template #title >
                         <img src="../svg/114-user.svg">
                         <!-- <el-avatar size="30" src="../../icons/p5.png" /> -->
-                        <span class="username"> User </span>
+                        <span class="username"> {{ user }} </span>
                       </template>
                       <el-menu-item index="6-1" @click="login"><el-icon><Open /></el-icon>login</el-menu-item>
                       <el-menu-item index="6-2" @click="logout"><el-icon><TurnOff /></el-icon>logout</el-menu-item>
@@ -36,8 +40,10 @@ export default {
     name:'myHeader',
     data(){
         return{
-            isRouter:false,
-            isEllipsis:false
+            isRouter:true,
+            isEllipsis:false,
+            user:'登录',
+            keyWord:''
         }
     }
 
@@ -61,5 +67,8 @@ export default {
 }
 .username{
     margin-right:15px ;
+}
+.search{
+  margin-top: 15px;
 }
 </style>

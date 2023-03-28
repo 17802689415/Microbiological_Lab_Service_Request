@@ -12,6 +12,8 @@ import userPremission from '../components/UserPremission.vue'
 import allCase from '../components/AllCase.vue'
 import testInfo from '../components/TestInfo.vue'
 import mainHome from '../components/zl/MainHome.vue'
+import myMain from '../components/zl/MainContainer.vue'
+import mainLogin from '../components/zl/MainLogin.vue'
 import myHome from '../components/MyHome.vue'
 const router = createRouter({
     history:createWebHashHistory(),
@@ -32,6 +34,8 @@ const router = createRouter({
         {name:'testInfo',path:'/testInfo',component:testInfo},
         {name:'mainHome',path:'/mainHome',component:mainHome},
         {name:'myHome',path:'/myHome',component:myHome},
+        {name:'myMain',path:'/myMain',component:myMain},
+        {name:'mainLogin',path:'/mainLogin',component:mainLogin},
         {path:'/',redirect:'/login'},
       
       

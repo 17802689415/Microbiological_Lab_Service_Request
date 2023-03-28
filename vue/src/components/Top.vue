@@ -42,7 +42,7 @@ export default {
     data(){
         return{
             value:0,
-            username:localStorage.getItem('username')
+            username:sessionStorage.getItem('username')
         }
     },
     created(){

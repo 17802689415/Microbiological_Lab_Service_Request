@@ -32,7 +32,9 @@
         }"
             :border="isBorder"
             :data="tableData"
+            @selection-change="handleSelectionChange"
             style="width: 100%;">
+            <el-table-column type="selection" width="55" />
             <el-table-column
             prop="applyNum"
             label="申请单编号"
@@ -137,7 +139,11 @@ export default {
             console.log(val)
             this.currentPage=val
             this.init()
-        }
+        },
+        handleSelectionChange(val){
+            this.multipleSelection=val
+            console.log(this.multipleSelection)
+        },
     }
 
 }
