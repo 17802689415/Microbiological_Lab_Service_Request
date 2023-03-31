@@ -6,6 +6,7 @@
         background-color="#163e6a"
         text-color="white"
         active-text-color="#559867"
+       
         >
           <el-sub-menu index="1">
             <template #title>
@@ -37,6 +38,11 @@
                 <el-menu-item index="allCase" >
                     <el-tooltip content="allCase" placement="right" effect="light">
                 <span class="span-children">allCase</span>
+                    </el-tooltip>
+                </el-menu-item>
+                <el-menu-item index="reportCase" >
+                    <el-tooltip content="result" placement="right" effect="light">
+                <span class="span-children">result</span>
                     </el-tooltip>
                 </el-menu-item>
             </el-menu-item-group>

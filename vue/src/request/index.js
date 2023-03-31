@@ -1,6 +1,8 @@
 import axios from 'axios'
 import {setToken,getToken} from '@/request/token.js'
 import router from '@/router/router.js'
+import {load} from '@/request/loader.js'
+
 // 1、请求拦截
 axios.interceptors.request.use(function(config){
     console.log('请求即将开始');
@@ -11,6 +13,7 @@ axios.interceptors.request.use(function(config){
         router.push("/")
         
     }
+    load.show("拼命加载中")
     return config;
 },function(err){
     //请求错误之前可以进行处理
@@ -18,6 +21,7 @@ axios.interceptors.request.use(function(config){
 });
 // 2、拦截响应
 axios.interceptors.response.use(function(response){
+    load.hide()
     //对返回的数据进行操作
     console.log('即将返回我们想要的数据');
     console.log(response);

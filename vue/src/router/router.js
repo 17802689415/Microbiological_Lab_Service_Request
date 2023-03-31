@@ -14,7 +14,12 @@ import testInfo from '../components/TestInfo.vue'
 import mainHome from '../components/zl/MainHome.vue'
 import myMain from '../components/zl/MainContainer.vue'
 import mainLogin from '../components/zl/MainLogin.vue'
+import mainMall from '../components/zl/MallInterface.vue'
+import goodsDetail from '../components/zl/GoodsDetail.vue'
+import loaderVue from '../components/zl/LoaderVue.vue'
 import myHome from '../components/MyHome.vue'
+import reportCase from '../components/ReportCase.vue'
+
 const router = createRouter({
     history:createWebHashHistory(),
     routes:[
@@ -36,6 +41,10 @@ const router = createRouter({
         {name:'myHome',path:'/myHome',component:myHome},
         {name:'myMain',path:'/myMain',component:myMain},
         {name:'mainLogin',path:'/mainLogin',component:mainLogin},
+        {name:'reportCase',path:'/reportCase',component:reportCase},
+        {name:'goodsDetail',path:'/goodsDetail',component:goodsDetail},
+        {name:'mainMall',path:'/mainMall',component:mainMall},
+        {name:'loaderVue',path:'/loaderVue',component:loaderVue},
         {path:'/',redirect:'/login'},
       
       

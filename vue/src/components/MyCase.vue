@@ -17,6 +17,7 @@
         />
     </el-select>
     <el-button type="warning" size="small" @click="search" class="m-2"><el-icon><Search /></el-icon>查询</el-button>
+    <el-button @click="toggleSelection()" class="m-2" size="small">批量接收</el-button>
   </div>
   <div id="allCase">
         <el-table
@@ -101,7 +102,8 @@ export default {
             statusValue:'',
             currentPage:1,
             pageSize:1,
-            total:0
+            total:0,
+            multipleSelection:[]
         }
     },
     created(){
@@ -144,6 +146,9 @@ export default {
             this.multipleSelection=val
             console.log(this.multipleSelection)
         },
+        toggleSelection(){
+            console.log(this.multipleSelection)
+        }
     }
 
 }

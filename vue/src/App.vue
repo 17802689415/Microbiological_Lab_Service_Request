@@ -18,7 +18,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 div{
   -webkit-user-select: none;
   user-select: none;

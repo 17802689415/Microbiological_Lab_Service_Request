@@ -17,7 +17,8 @@
         />
     </el-select>
     <el-button type="warning" size="small" @click="search" class="m-2"><el-icon><Search /></el-icon>查询</el-button>
-    <el-select v-model="statusValue" class="m-2" placeholder="测试员" size="small">
+    <div></div>
+    <el-select v-model="testUserValue" class="m-2" placeholder="测试员" size="small">
         <el-option
         v-for="item in testUser"
         :key="item"
@@ -118,6 +119,7 @@ export default {
             testUser:['zl','leo'],
             typeValue:'',
             statusValue:'',
+            testUserValue:'',
             currentPage:1,
             pageSize:1,
             total:0,
@@ -147,6 +149,10 @@ export default {
             this.multipleSelection=val
             console.log(this.multipleSelection)
         },
+        toggleSelection(){
+            console.log(this.multipleSelection)
+            console.log(this.testUserValue)
+        }
     }
 
 }

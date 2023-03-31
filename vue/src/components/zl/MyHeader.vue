@@ -14,7 +14,7 @@
     <div class="flex-grow"></div>
     <el-menu-item>
       <el-input v-model="keyWord" placeholder="搜索" class="search"></el-input>
-      <el-button @click="serach" class="search"><el-icon><Search /></el-icon></el-button>
+      <el-button @click="search" class="search"><el-icon><Search /></el-icon></el-button>
     </el-menu-item>
     <el-menu-item index="myMain"><span>Home</span></el-menu-item>
     <el-menu-item index="2"><span>收藏</span></el-menu-item>
@@ -45,7 +45,26 @@ export default {
             user:'登录',
             keyWord:''
         }
+    },
+    methods:{
+      search(){
+             
+        this.$axios.post('http://localhost:8099/lab/postSampleTestInfo',this.test_item_list).then(function (res){
+                if(res.data.code==0){
+                    alert("error")
+                    return
+                }
+            })
+      },
+      logout(){
+
+      },
+      login(){
+        
+      }
     }
+    
+
 
 }
 </script>

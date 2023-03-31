@@ -459,7 +459,8 @@ export default {
 
 #btn{
     width: 1200px;
-    margin: auto;
+    margin-top: 10px;
+    
 }
 .sub{
     display: block;

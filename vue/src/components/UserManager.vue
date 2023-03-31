@@ -50,6 +50,7 @@
             label="backup for">
             <template #default="scope">
                 <el-button type="primary" size="small" @click="backup(scope.row)"><el-icon><Pointer /></el-icon>for</el-button>
+                <!-- <el-button type="primary" size="small" @click="backup(scope.row)"></el-button> -->
             </template>
             </el-table-column>
             <el-table-column
@@ -79,7 +80,7 @@
         @current-change="handleCurrentChange"
         />
     </div>
-    <div id="">
+    <!-- <div id="">
         <el-drawer v-model="drawer" >
             <template #header>
                 <h4>backup for</h4>
@@ -97,10 +98,11 @@
                 </div>
             </template>
         </el-drawer>
-    </div>
+    </div> -->
 </template>
 
 <script>
+import { ElMessageBox } from 'element-plus'
 export default {
     name:'userManager',
     data(){
@@ -124,7 +126,6 @@ export default {
                 status:"正常",
                 },
             ],
-            drawer:false,
             radio:"",
             currentPage:1,
             pageSize:1,
@@ -149,7 +150,21 @@ export default {
         },
         backup(row){
             console.log(row)
-            this.drawer=true
+        ElMessageBox.prompt('请输入工号', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+        }).then(({ value }) => {
+        ElMessageBox({
+            type: 'success',
+            message: 'backup for: ' + value
+          });
+        }).catch(() => {
+        ElMessageBox({
+            type: 'info',
+            message: '取消输入'
+          });       
+        });
+
         },
         handleSelect(key){
             console.log(key)

@@ -1,81 +1,28 @@
 <template>
-  <el-row>
-    <el-col :span="10">
-    <el-scrollbar>
-      <el-table
-        :header-cell-style="{
-            backgroundColor:'#06426e',
-            color:'#fff',
-            'text-align':'center'
-        }"
-        :cell-style="{
-            backgroundColor:'#06426e',
-            color:'#fff',
-            textAlign:'center'
-        }"
-            :border="isBorder"
-            :data="urgentList"
-            style="width: 100%;">
-            <el-table-column
-            prop="testItem"
-            label="加急项目"
-            >
-            </el-table-column>
-            <el-table-column
-            fixed="right"
-            prop="action"
-            label="操作"
-            >
-            <template #default="scope"> 
-                <el-button type="warning" size="small" @click="action(scope.row)"><el-icon><Tools /></el-icon>操作</el-button>
-            </template>
-            </el-table-column>
-      </el-table>
-    </el-scrollbar>
-    </el-col>
-    <el-col :span="4"></el-col>
-    <el-col :span="10">
-      <el-scrollbar>
-      <el-table
-        :header-cell-style="{
-            backgroundColor:'#06426e',
-            color:'#fff',
-            'text-align':'center'
-        }"
-        :cell-style="{
-            backgroundColor:'#06426e',
-            color:'#fff',
-            textAlign:'center'
-        }"
-            :border="isBorder"
-            :data="testList"
-            style="width: 100%;">
-            <el-table-column
-            prop="testItem"
-            label="待测项目"
-            >
-            </el-table-column>
-            <el-table-column
-            fixed="right"
-            prop="action"
-            label="操作"
-            >
-            <template #default="scope"> 
-                <el-button type="warning" size="small" @click="action(scope.row)"><el-icon><Tools /></el-icon>操作</el-button>
-            </template>
-            </el-table-column>
-      </el-table>
-    </el-scrollbar>
-    </el-col>
-  </el-row>
 
+  <el-card class="box-card">
+    <div class="clearfix">
+    <b>加急任务</b>
+  </div>
+    <div v-for="o in urgentList" :key="o.index" class="text item">
+      {{'项目： ' + o.item }}
+    </div>
+  </el-card>
 
-  <el-transfer
-    v-model="value"
-    :data="data"
-    target-order="push"
-    :titles="titles">
-  </el-transfer>
+  <el-scrollbar height="600px">
+  <el-divider content-position="right">待测列表</el-divider>
+  <div class="block">
+    <el-timeline>
+      <el-timeline-item v-for="o in waitList" :key="o.index" :timestamp="o.date" placement="top">
+        <el-card>
+          <h4>检测员：{{ o.user }}</h4>
+          <p>检测项目：{{ o.item }}</p>
+          <p>接收检测</p>
+        </el-card>
+      </el-timeline-item>
+    </el-timeline>
+  </div>
+</el-scrollbar>
 
 </template>
 
@@ -84,37 +31,31 @@ export default {
     name:'mainView',
     data(){
       return{
-            isBorder:true,
-            urgentList:[
-               
-            ],
-            testList:[
-
-            ],
-            value: [],
-            data:[],
-            titles:['任务','待测队列']
+            urgentList:[{index:0,item:'test01'},{index:1,item:'test02'}],
+            waitList:[{index:0,date:'2023 3 1',user:'zl',item:'test01'},{index:1,date:'2023 3 5',user:'zl',item:'test01'},{index:2,date:'2023 3 10',user:'zl',item:'test01'},
+            {index:3,date:'2023 3 12',user:'zl',item:'test01'},{index:4,date:'2023 3 15',user:'zl',item:'test01'},{index:5,date:'2023 3 19',user:'zl',item:'test01'}
+          ]
       }
     },
     created(){
-      this.init()
+      // this.init()
     },
     methods:{
-      init(){
-        let that = this
-        this.$axios.post('http://localhost:8099/lab/selectUrgentCase').then(function (res){
-                if(res.data.code==1){
-                    that.urgentList = res.data.data;
-                    console.log(res)
-                    for (let i = 0; i <= res.data.data.length; i++) {
-                      that.data.push({
-                        key: i,
-                        label: res.data.data[i].testItem,
-                      });
-                    }
-                }
-            })
-      },
+      // init(){
+      //   let that = this
+      //   this.$axios.post('http://localhost:8099/lab/selectUrgentCase').then(function (res){
+      //           if(res.data.code==1){
+      //               that.urgentList = res.data.data;
+      //               console.log(res)
+      //               for (let i = 0; i <= res.data.data.length; i++) {
+      //                 that.data.push({
+      //                   key: i,
+      //                   label: res.data.data[i].testItem,
+      //                 });
+      //               }
+      //           }
+      //       })
+      // },
     }
 
 }
