@@ -17,6 +17,7 @@ import mainLogin from '../components/zl/MainLogin.vue'
 import mainMall from '../components/zl/MallInterface.vue'
 import goodsDetail from '../components/zl/GoodsDetail.vue'
 import loaderVue from '../components/zl/LoaderVue.vue'
+import shopCar from '../components/zl/ShopCar.vue'
 import myHome from '../components/MyHome.vue'
 import reportCase from '../components/ReportCase.vue'
 
@@ -45,6 +46,7 @@ const router = createRouter({
         {name:'goodsDetail',path:'/goodsDetail',component:goodsDetail},
         {name:'mainMall',path:'/mainMall',component:mainMall},
         {name:'loaderVue',path:'/loaderVue',component:loaderVue},
+        {name:'shopCar',path:'/shopCar',component:shopCar},
         {path:'/',redirect:'/login'},
       
       

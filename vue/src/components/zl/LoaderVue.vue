@@ -12,7 +12,7 @@
 <script>
 export default {
     name:'loaderVue',
-    prop:{
+    props:{
       msg : Object
     },
     data(){

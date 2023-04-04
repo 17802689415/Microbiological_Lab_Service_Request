@@ -18,7 +18,7 @@
     </el-menu-item>
     <el-menu-item index="myMain"><span>Home</span></el-menu-item>
     <el-menu-item index="2"><span>收藏</span></el-menu-item>
-    <el-menu-item index="3"><span>购物车</span></el-menu-item>
+    <el-menu-item index="shopCar"><span>购物车</span></el-menu-item>
     <el-menu-item index="4"><span>我的旧物</span></el-menu-item>
     <el-menu-item index="mainLogin">
                     <el-sub-menu index="6">

@@ -39,33 +39,6 @@
         :span="3"
         :offset="1"
         >
-        <!-- <el-card :body-style="{ padding: '0px' }" class="card">
-            <el-tag
-            class="mx-1"
-            effect="dark"
-            type="success"
-            >
-            {{ item.type }}
-            </el-tag>
-            <img
-            :src="item.imgUrl"
-            class="image"
-            />
-            <div style="padding: 14px">
-            <span class="name">{{ item.goodsName }}</span>
-            <el-divider direction="vertical"></el-divider>
-            <span class="price">￥{{ item.price }}</span>
-            <div class="bottom">
-                <el-row>
-                    <el-col :span="8"><el-tag class="ml-2" type="warning">{{ item.attritionRate }}</el-tag></el-col>
-                    <el-col :span="8"><el-tag class="ml-2" type="warning">{{ item.despatch }}</el-tag></el-col>
-                </el-row>
-                <span class="description">{{ item.goodsDescription }}</span><br>
-                <time class="time">{{ item.uploadTime }}</time>
-                <el-button text class="button" @click="viewDetail(item.index)"><span class="view">查看详情</span></el-button>
-            </div>
-            </div>
-        </el-card> -->
         <div class="card" @click="viewDetail(item.index)">
         <div class="card-img">
             <img
