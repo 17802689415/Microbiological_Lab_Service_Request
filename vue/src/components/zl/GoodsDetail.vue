@@ -129,7 +129,14 @@ export default {
             value:0
         };
     },
+    created(){
+        this.init()
+    },
     methods: {
+        init(){
+            console.log(JSON.parse(this.$route.query.id))
+            alert(JSON.parse(this.$route.query.id))
+        },
         showImgViewer(){
             this.isShow = true;
             const m = (e) => { e.preventDefault() };

@@ -1,6 +1,6 @@
 <template>
   <button>
-    <span>去结算</span>
+    <span>结算</span>
 </button>
 </template>
 

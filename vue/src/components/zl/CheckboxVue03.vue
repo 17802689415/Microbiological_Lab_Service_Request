@@ -13,7 +13,7 @@ export default {
     data(){
       return{
         arr:[],
-        i:this.index
+
       }
     },
     methods:{
@@ -21,7 +21,7 @@ export default {
         console.log('子组件中arr')
         console.log(this.index)
        
-        this.$emit('child-arr',)
+        this.$emit('child-arr',this.index,this.arr)
       }
     }
 

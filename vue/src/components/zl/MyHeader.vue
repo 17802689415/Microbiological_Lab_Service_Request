@@ -12,6 +12,7 @@
   >
     <el-menu-item >Logo</el-menu-item>
     <div class="flex-grow"></div>
+    <!-- 搜索 -->
     <el-menu-item>
       <el-input v-model="keyWord" placeholder="搜索" class="search"></el-input>
       <el-button @click="search" class="search"><el-icon><Search /></el-icon></el-button>
@@ -49,12 +50,6 @@ export default {
     methods:{
       search(){
              
-        this.$axios.post('http://localhost:8099/lab/postSampleTestInfo',this.test_item_list).then(function (res){
-                if(res.data.code==0){
-                    alert("error")
-                    return
-                }
-            })
       },
       logout(){
 
