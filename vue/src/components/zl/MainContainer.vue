@@ -166,7 +166,7 @@
             <span>Yummy hamburger</span>
             <div class="bottom">
                 <time class="time">${{ currentDate }}</time>
-                <el-button text class="button">查看详情</el-button>
+                <el-button text class="button" @click="viewDetail(item.id)">查看详情</el-button>
             </div>
             </div>
         </el-card>
@@ -199,7 +199,7 @@
             <span>Yummy hamburger</span>
             <div class="bottom">
                 <time class="time">${{ currentDate }}</time>
-                <el-button text class="button">查看详情</el-button>
+                <el-button text class="button" @click="viewMallDetail(item.id)">查看详情</el-button>
             </div>
             </div>
         </el-card>
@@ -250,6 +250,13 @@ export default {
         },
         handleClick(){
 
+        },
+        viewDetail(id){
+            console.log(id)
+            this.$router.push({name:'goodsDetail',query:{id:JSON.stringify(id)}})
+        },
+        viewMallDetail(id){
+            console.log(id)
         }
     }
 }

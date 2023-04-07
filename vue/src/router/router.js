@@ -18,6 +18,9 @@ import mainMall from '../components/zl/MallInterface.vue'
 import goodsDetail from '../components/zl/GoodsDetail.vue'
 import loaderVue from '../components/zl/LoaderVue.vue'
 import shopCar from '../components/zl/ShopCar.vue'
+import userPage from '../components/zl/UserPage.vue'
+import awaitPay from '../components/zl/AwaitPay.vue'
+import trackInformation from '../components/zl/TrackInformation.vue'
 import myHome from '../components/MyHome.vue'
 import reportCase from '../components/ReportCase.vue'
 
@@ -47,6 +50,10 @@ const router = createRouter({
         {name:'mainMall',path:'/mainMall',component:mainMall},
         {name:'loaderVue',path:'/loaderVue',component:loaderVue},
         {name:'shopCar',path:'/shopCar',component:shopCar},
+        {name:'userPage',path:'/userPage',component:userPage,children:[
+            {name:'awaitPay',path:'/awaitPay',component:awaitPay},
+            {name:'trackInformation',path:'/trackInformation',component:trackInformation},
+        ]},
         {path:'/',redirect:'/login'},
       
       
