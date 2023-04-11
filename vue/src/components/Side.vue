@@ -11,38 +11,38 @@
           <el-sub-menu index="1">
             <template #title>
               <img src="../icons/001-home.svg" class="icon" >
-              <span class="span">Case</span>
+              <span class="span">{{ $t('case') }}</span>
             </template>
             <!-- case -->
             <el-menu-item-group>
               <el-menu-item index="mainView" >
-                    <el-tooltip content="mainView" placement="right" effect="light">
-                <span class="span-children">mainView</span>
+                    <el-tooltip :content="$t('mainView')" placement="right" effect="light">
+                <span class="span-children">{{ $t('mainView') }}</span>
                     </el-tooltip>
                 </el-menu-item>
                 <el-menu-item index="postCase" >
-                    <el-tooltip content="Case+" placement="right" effect="light">
-                <span class="span-children">case+</span>
+                    <el-tooltip :content="$t('postCase')" placement="right" effect="light">
+                <span class="span-children">{{ $t('postCase') }}</span>
                     </el-tooltip>
                 </el-menu-item>
                 <el-menu-item index="myCase" >
-                    <el-tooltip content="MyCase" placement="right" effect="light">
-                <span class="span-children">myCase</span>
+                    <el-tooltip :content="$t('myCase')" placement="right" effect="light">
+                <span class="span-children">{{ $t('myCase') }}</span>
                     </el-tooltip>
                 </el-menu-item>
                 <el-menu-item index="handleCase" >
-                    <el-tooltip content="handleCase" placement="right" effect="light">
-                <span class="span-children">handleCase</span>
+                    <el-tooltip :content="$t('handleCase')" placement="right" effect="light">
+                <span class="span-children">{{ $t('handleCase') }}</span>
                     </el-tooltip>
                 </el-menu-item>
                 <el-menu-item index="allCase" >
-                    <el-tooltip content="allCase" placement="right" effect="light">
-                <span class="span-children">allCase</span>
+                    <el-tooltip :content="$t('allCase')" placement="right" effect="light">
+                <span class="span-children">{{ $t('allCase') }}</span>
                     </el-tooltip>
                 </el-menu-item>
                 <el-menu-item index="reportCase" >
-                    <el-tooltip content="result" placement="right" effect="light">
-                <span class="span-children">result</span>
+                    <el-tooltip :content="$t('reportCase')" placement="right" effect="light">
+                <span class="span-children">{{ $t('reportCase') }}</span>
                     </el-tooltip>
                 </el-menu-item>
             </el-menu-item-group>
@@ -51,17 +51,17 @@
           <el-sub-menu index="2">
             <template #title>
               <img src="../icons/119-user-tie.svg" class="icon" >
-                <span class="span">UserManagement</span>
+                <span class="span">{{ $t('userManagement') }}</span>
             </template>
             <el-menu-item-group>
               <el-menu-item index="userManager" >
-                <el-tooltip content="userManager" placement="right" effect="light">
-                <span class="span-children">userManager</span>
+                <el-tooltip :content="$t('userManager')" placement="right" effect="light">
+                <span class="span-children">{{ $t('userManager') }}</span>
                 </el-tooltip>
               </el-menu-item>
               <el-menu-item index="userPremission" >
-                <el-tooltip content="userPremission" placement="right" effect="light">
-                <span class="span-children">userPremission</span>
+                <el-tooltip :content="$t('userPremission')" placement="right" effect="light">
+                <span class="span-children">{{ $t('userPremission') }}</span>
                 </el-tooltip>
               </el-menu-item>
             </el-menu-item-group>
@@ -70,17 +70,17 @@
           <el-sub-menu index="3">
             <template #title>
               <img src="../icons/149-cog.svg" class="icon" >
-              <span class="span">Setting</span>
+              <span class="span">{{ $t('setting') }}</span>
             </template>
             <el-menu-item-group>
               <el-menu-item index="3-1" >
-                <el-tooltip content="setting 1" placement="right" effect="light">
-                <span class="span-children">setting 1</span>
+                <el-tooltip :content="$t('setting1')" placement="right" effect="light">
+                <span class="span-children">{{ $t('setting1') }}</span>
                 </el-tooltip>
               </el-menu-item>
               <el-menu-item index="3-2" >
-                <el-tooltip content="setting 2" placement="right" effect="light">
-                <span class="span-children">setting 2</span>
+                <el-tooltip :content="$t('setting2')" placement="right" effect="light">
+                <span class="span-children">{{ $t('setting2') }}</span>
                 </el-tooltip>
               </el-menu-item>
             </el-menu-item-group>

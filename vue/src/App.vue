@@ -1,19 +1,19 @@
 <template>
   <div>
-    <!-- <myHome></myHome> -->
-    <mainHome></mainHome>
+    <myHome></myHome>
+    <!-- <mainHome></mainHome> -->
   </div>
   
 </template>
 
 <script>
-// import myHome from './components/MyHome.vue'
-import mainHome from './components/zl/MainHome.vue'
+import myHome from './components/MyHome.vue'
+// import mainHome from './components/zl/MainHome.vue'
 
 export default {
   name: 'App',
   components: {
-    mainHome
+    myHome
   }
 }
 </script>

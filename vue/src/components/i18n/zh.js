@@ -1,0 +1,53 @@
+export const lang = {
+    language:'中文',
+    login:'登录',
+    logout:'退出',
+    register:'注册',
+    // 左侧菜单栏
+    mainView:'主页面',
+        //case
+        case:'案例',
+        postCase:'提交案例',
+        myCase:'我的案例',
+        handleCase:'处理案例',
+        allCase:'所有案例',
+        reportCase:'案例报告',
+        //userManagement
+        userManagement:'用户使用管理',
+        userManager:'人员管理',
+        userPremission:'权限管理',
+        //setting
+        setting:'设置',
+        setting1:'设置',
+        setting2:'设置',
+    //提交case页面
+    applyNo:'案例编号',
+        //委托人信息
+        consignorInformation:'委托人信息',
+        consignorId:'委托人工号',
+        phoneNum:'电话',
+        workCell:'项目',
+        department:'部门',
+        applyDate:'申请日期',
+        sendDate:'送样日期',
+        date:'选择日期',
+        urgent:'加急?',
+        //sampleTest
+        sampleInformation:'样品信息',
+        testPurpose:'测试目的',
+        sampleName:'样品名称',
+        sampleQuantity:'样品数量',
+        batchNo:'灭菌批号',
+        sampleTreatment:'样品处理',
+        treatment01:'测试完立即退样',
+        treatment02:'测试完由实验室处理',
+        treatment03:'样品异常时退样',
+        other:'其他',
+        processMode:'指明处理方式',
+        storageCondition:'存储方式',
+        condition01:'常温',
+        condition02:'冷藏',
+        condition03:'冷冻',
+}
+
+

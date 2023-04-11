@@ -5,8 +5,8 @@ import * as ElIconModules from '@element-plus/icons-vue'
 import router from './router/router.js'
 import store from './store/store.js'
 import axios from '@/request/index.js'
-// import Viewer from 'v-viewer'
-// import 'viewerjs/dist/viewer.css'
+import {createI18n} from 'vue-i18n'
+
 
 
 
@@ -14,15 +14,20 @@ import axios from '@/request/index.js'
 const app = createApp(App)
 app.use(router)
 app.use(store)
-// app.use(Viewer,{
-//   defaultOptions:{
-//     zIndex:9999
-//   }
-// })
+
+const VueI18n = createI18n
+const i18n = new VueI18n({
+  locale:'zh',
+  messages:{
+    'zh':require('@/components/i18n/zh.js').lang,
+    'en':require('@/components/i18n/en.js').lang
+  }
+})
+
+app.use(i18n)
 
 
 axios.defaults.baseURL = 'https://localhost:8099'
-
 app.config.globalProperties.$axios=axios
 //引入icon
 Object.keys(ElIconModules).forEach(function (key) {

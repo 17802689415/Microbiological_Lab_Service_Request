@@ -19,9 +19,13 @@
                         <img src="../icons/005-newspaper.svg">
                         <span class="username"> {{ username }} </span>
                       </template>
-                      <el-menu-item index="2-1" @click="login"><el-icon><Open /></el-icon>login</el-menu-item>
-                      <el-menu-item index="2-1" @click="logout"><el-icon><TurnOff /></el-icon>logout</el-menu-item>
+                      <el-menu-item index="2-1" @click="login"><el-icon><Open /></el-icon>{{ $t('login') }}</el-menu-item>
+                      <el-menu-item index="2-1" @click="logout"><el-icon><TurnOff /></el-icon>{{ $t('logout') }}</el-menu-item>
                     </el-sub-menu>
+                    </el-menu-item>
+                    <el-menu-item>
+                      <span @click="changeLan()">{{ $t('language') }}</span>
+
                     </el-menu-item>  
                   </el-menu>
                 </div>
@@ -70,6 +74,13 @@ export default {
         },
         change(){
           this.$store.state.isCollapse=!this.$store.state.isCollapse
+        },
+        changeLan(){
+          if(this.$i18n.locale == 'en'){
+            this.$i18n.locale = 'zh'
+          }else{
+            this.$i18n.locale = 'en'
+          }
         }
        
     }

@@ -8,108 +8,108 @@
     </div>
     <div class="form">
     <div id="consignor">
-        <h6>applyNo:  {{ applyNo }}</h6>
-        <h4>委托人信息</h4>
-        <el-form :model="consignor_info" label-width="120px" class="demo-ruleForm" size="small">
+        <h6>{{ $t('applyNo') }}:  {{ applyNo }}</h6>
+        <h4>{{ $t('consignorInformation') }}</h4>
+        <el-form :model="consignor_info" label-width="150px" class="demo-ruleForm" size="small">
             <el-row>
                 <el-col :span="6">
-                    <el-form-item label="委托人工号" prop="consignorId">
+                    <el-form-item :label="$t('consignorId')" prop="consignorId">
                         <el-input v-model="consignor_info.consignorId" class="item1"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="6">
-                    <el-form-item label="电话" prop="phoneNum">
+                    <el-form-item :label="$t('phoneNum')" prop="phoneNum">
                         <el-input v-model="consignor_info.phoneNum" class="item1"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="6">
-                    <el-form-item label="项目" prop="workCell">
+                    <el-form-item :label="$t('workCell')" prop="workCell">
                         <el-input v-model="consignor_info.workCell" class="item1"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="6">
-                    <el-form-item label="部门" prop="department">
+                    <el-form-item :label="$t('department')" prop="department">
                         <el-input v-model="consignor_info.department" class="item1"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="6">
-                    <el-form-item label="申请日期" prop="applyDate" :inline-message="isInLine">
+                    <el-form-item :label="$t('applyDate')" prop="applyDate" :inline-message="isInLine">
                         <el-date-picker
                             v-model="consignor_info.applyDate"
                             type="date"
-                            placeholder="选择日期"
+                            :placeholder="$t('date')"
                             value-format="YYYY-MM-DD">
                         </el-date-picker>
                     </el-form-item>    
                 </el-col>
                 <el-col :span="6">
-                    <el-form-item label="送样日期" prop="sendDate" :inline-message="isInLine">
+                    <el-form-item :label="$t('sendDate')" prop="sendDate" :inline-message="isInLine">
                         <el-date-picker
                             v-model="consignor_info.sendDate"
                             type="date"
-                            placeholder="选择日期"
+                            :placeholder="$t('date')"
                             value-format="YYYY-MM-DD">
                         </el-date-picker>
                     </el-form-item>
                 </el-col>
             </el-row>
-            <el-form-item label="urgent?" prop="urgent">
+            <el-form-item :label="$t('urgent')" prop="urgent">
                 <el-switch v-model="consignor_info.urgent" />
             </el-form-item>
         </el-form>
     </div>
     <div id="sample" v-show="isShow=='SampleTest'">
-        <h4>样品信息</h4>
-        <el-form :model="sample_info"  label-width="120px" class="demo-ruleForm" size="small">
-            <el-form-item label="测试目的" prop="testPurpose">
+        <h4>{{ $t('sampleInformation') }}</h4>
+        <el-form :model="sample_info"  label-width="150px" class="demo-ruleForm" size="small">
+            <el-form-item :label="$t('testPurpose')" prop="testPurpose">
                 <el-input v-model="sample_info.testPurpose" type="textarea" class="item3"></el-input>
             </el-form-item>
             <el-row>
                 <el-col :span="6">
-                    <el-form-item label="样品名称" prop="sampleName">
+                    <el-form-item :label="$t('sampleName')" prop="sampleName">
                         <el-input v-model="sample_info.sampleName"  class="item1"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="6">
-                    <el-form-item label="样品总数量" prop="sampleQuantity">
+                    <el-form-item :label="$t('sampleQuantity')" prop="sampleQuantity">
                         <el-input v-model="sample_info.sampleQuantity"  class="item1"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="6">
-                    <el-form-item label="灭菌批号" prop="batchNo">
+                    <el-form-item :label="$t('batchNo')" prop="batchNo">
                         <el-input v-model="sample_info.batchNo"  class="item1"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
-            <el-form-item label="样品处理">
+            <el-form-item :label="$t('sampleTreatment')">
                 <el-radio-group v-model="sample_info.disposal">
-                <el-radio label="Return sample after test测试完立即退样" name="type01"></el-radio>
-                <el-radio label="Disposed by Lab after test测试完由实验室处理" name="type02"></el-radio>
-                <el-radio label="Return sample when abnormal样品异常时退样" name="type03"></el-radio>
-                <el-radio label="other" name="type04"></el-radio>
+                <el-radio :label="$t('treatment01')" name="type01"></el-radio>
+                <el-radio :label="$t('treatment01')" name="type02"></el-radio>
+                <el-radio :label="$t('treatment01')" name="type03"></el-radio>
+                <el-radio :label="$t('other')" name="type04"></el-radio>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item label="指明处理方式" prop="disposal"  v-show="sample_info.disposal=='other'">
+            <el-form-item :label="$t('processMode')" prop="disposal"  v-show="sample_info.disposal==$t('other')">
                 <el-input v-model="sample_info.disposal" class="item2"></el-input>
             </el-form-item>
-            <el-form-item label="样品存储条件">
+            <el-form-item :label="$t('storageCondition')">
                 <el-radio-group v-model="sample_info.storageCondition">
-                <el-radio label="Room temperature常温" name="type01"></el-radio>
-                <el-radio label="Cold storage冷藏" name="type02"></el-radio>
-                <el-radio label="Freeze冷冻" name="type03"></el-radio>
-                <el-radio label="other" name="type04"></el-radio>
+                <el-radio :label="$t('condition01')" name="type01"></el-radio>
+                <el-radio :label="$t('condition02')" name="type02"></el-radio>
+                <el-radio :label="$t('condition03')" name="type03"></el-radio>
+                <el-radio :label="$t('other')" name="type04"></el-radio>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item label="指明存储条件" prop="storageCondition"  v-show="sample_info.storageCondition=='other'">
+            <el-form-item label="指明存储条件" prop="storageCondition"  v-show="sample_info.storageCondition==$t('other')">
                 <el-input v-model="sample_info.storageCondition" class="item2"></el-input>
             </el-form-item>
         </el-form>
         <h4>测试信息</h4>
-        <el-form :model="sample_test_info"  label-width="120px" class="demo-ruleForm"  ref="sampleTestInfo" size="small">
+        <el-form :model="sample_test_info"  label-width="150px" class="demo-ruleForm"  ref="sampleTestInfo" size="small">
             <el-row>
                 <el-col :span="6">
                     <el-form-item label="样品名称" prop="sampleName">
@@ -177,7 +177,7 @@
     </div>
     <div id="water" v-show="isShow=='Purified Water Test'">
         <h4>测试信息</h4>
-        <el-form :model="water_test_info" label-width="120px" class="demo-ruleForm"  ref="waterTestInfo" size="small">
+        <el-form :model="water_test_info" label-width="150px" class="demo-ruleForm"  ref="waterTestInfo" size="small">
             <el-form-item label="纯化水编号" prop="waterNo">
                 <el-input v-model="water_test_info.waterNo" class="item2"></el-input>
             </el-form-item>
@@ -218,7 +218,7 @@
     </div>
     <div id="cleanroom" v-show="isShow=='Cleanroom Environment Test'">
         <h4>测试信息</h4>
-        <el-form :model="cleanroom_test_info"  label-width="120px" class="demo-ruleForm"  ref="cleanroomTestInfo" size="small">
+        <el-form :model="cleanroom_test_info"  label-width="150px" class="demo-ruleForm"  ref="cleanroomTestInfo" size="small">
             <el-form-item label="洁净室名称" prop="cleanroomName">
                 <el-input v-model="cleanroom_test_info.cleanroomName" class="item2"></el-input>
             </el-form-item>
