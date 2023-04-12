@@ -25,25 +25,25 @@
             style="width: 100%;">
             <el-table-column
             prop="username"
-            label="用户名"
+            :label="$t('username')"
             >
             </el-table-column>
             <el-table-column
             prop="jobId"
-            label="工号"
+            :label="$t('jobId')"
             >
             </el-table-column>
             <el-table-column
             prop="department"
-            label="部门">
+            :label="$t('department')">
             </el-table-column>
             <el-table-column
             prop="jobTitle"
-            label="职位">
+            :label="$t('jobTitle')">
             </el-table-column>
             <el-table-column
             prop="responsibility"
-            label="职责">
+            :label="$t('responsibility')">
             </el-table-column>
             <el-table-column
             prop="backup"
@@ -55,18 +55,18 @@
             </el-table-column>
             <el-table-column
             prop="status"
-            label="状态">
+            :label="$t('status')">
             </el-table-column>
             <el-table-column
             fixed="right"
             prop="action"
-            label="操作"
+            :label="$t('action')"
             width="300px"
             >
             <template #default="scope"> 
-                <el-button type="warning" size="small" @click="modify(scope.row)"><el-icon><Edit /></el-icon>编辑</el-button>
-                <el-button type="success" size="small" @click="add(scope.row)"><el-icon><Plus /></el-icon>添加</el-button>
-                <el-button type="danger" size="small" @click="deleteUser(scope.row)"><el-icon><Delete /></el-icon>删除</el-button>
+                <el-button type="warning" size="small" @click="modify(scope.row)"><el-icon><Edit /></el-icon>{{ $t('compile') }}</el-button>
+                <el-button type="success" size="small" @click="add(scope.row)"><el-icon><Plus /></el-icon>{{ $t('add') }}</el-button>
+                <el-button type="danger" size="small" @click="deleteUser(scope.row)"><el-icon><Delete /></el-icon>{{ $t('delete') }}</el-button>
             </template>
             </el-table-column>    
         </el-table>
@@ -80,25 +80,6 @@
         @current-change="handleCurrentChange"
         />
     </div>
-    <!-- <div id="">
-        <el-drawer v-model="drawer" >
-            <template #header>
-                <h4>backup for</h4>
-            </template>
-            <template #default>
-                <div>
-                    <el-radio-group v-model="radio" v-for="item in tableData" :key="item.username">
-                    <el-radio :label="item.username" :name="item.username">{{ item.username }}</el-radio><br>
-                    </el-radio-group>
-                </div>
-            </template>
-            <template #footer>
-                <div style="flex: auto">
-                    <el-button type="primary" @click="confirmClick">confirm</el-button>
-                </div>
-            </template>
-        </el-drawer>
-    </div> -->
 </template>
 
 <script>

@@ -1,11 +1,11 @@
 <template>
   <div>
     
-    <el-input type="text" placeholder="测试单号" v-model="testNo" class="m-2" style="width: 200px;"></el-input>
+    <el-input type="text" :placeholder="$t('applyNo')" v-model="testNo" class="m-2" style="width: 200px;"></el-input>
 
-    <el-input type="text" placeholder="委托人" v-model="consignorId" class="m-2" style="width: 200px;"></el-input>
+    <el-input type="text" :placeholder="$t('consignorId')" v-model="consignorId" class="m-2" style="width: 200px;"></el-input>
 
-    <el-select v-model="testTypeValue" placeholder="测试类型" class="m-2" style="width: 200px;">
+    <el-select v-model="testTypeValue" :placeholder="$t('testType')" class="m-2" style="width: 200px;">
         <el-option
         v-for="o in testTypeList"
         :key="o.index"
@@ -14,7 +14,7 @@
         />
     </el-select>
 
-    <el-button @click="toggleSelection()" class="m-2" size="small" type="success" round>查询</el-button>
+    <el-button @click="toggleSelection()" class="m-2" size="small" type="success" round>{{ $t('query') }}</el-button>
 
   </div>
     <el-row>
@@ -22,10 +22,10 @@
                 <el-card :body-style="{ padding: '0px' }">
                 <div style="padding: 14px;">
                     <span>{{ o.testNo }}</span>
-                    <div>
-                        <span>consignorId:{{ o.consignorId }}</span>
+                    <div>{{ $t('') }}
+                        <span>{{ $t('consignorId') }}:{{ o.consignorId }}</span>
                         <br>
-                        <sapn>TestType:{{ o.testTypeValue }}</sapn>
+                        <sapn>{{ $t('testType') }}:{{ o.testTypeValue }}</sapn>
                         <br>
                         <el-upload
                             action="http://localhost:8080/#/reportCase"
@@ -33,9 +33,9 @@
                             :limit="3"
                          
                         >
-                        <el-button class="m-2" size="small" type="success" round>Upload</el-button>
+                        <el-button class="m-2" size="small" type="success" round>{{ $t('upload') }}</el-button>
                         </el-upload>
-                    <el-button type="text" class="button">print</el-button>
+                    <el-button type="text" class="button">{{ $t('print') }}</el-button>
                     </div>
                 </div>
                 </el-card>

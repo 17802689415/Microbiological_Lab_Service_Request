@@ -1,6 +1,6 @@
 <template>
   <div id="query">
-    <el-select v-model="typeValue" class="m-2" placeholder="测试类型" size="small">
+    <el-select v-model="typeValue" class="m-2" :placeholder="$t('testType')" size="small">
         <el-option
         v-for="item in options_type"
         :key="item"
@@ -8,7 +8,7 @@
         :value="item"
         />
     </el-select>
-    <el-select v-model="statusValue" class="m-2" placeholder="状态" size="small">
+    <el-select v-model="statusValue" class="m-2" :placeholder="$t('status')" size="small">
         <el-option
         v-for="item in options_status"
         :key="item"
@@ -16,8 +16,8 @@
         :value="item"
         />
     </el-select>
-    <el-button type="warning" size="small" @click="search" class="m-2"><el-icon><Search /></el-icon>查询</el-button>
-    <el-button @click="toggleSelection()" class="m-2" size="small">批量接收</el-button>
+    <el-button type="warning" size="small" @click="search" class="m-2"><el-icon><Search /></el-icon>{{ $t('query') }}</el-button>
+    <el-button @click="toggleSelection()" class="m-2" size="small">{{ $t('batchReception') }}</el-button>
   </div>
   <div id="allCase">
         <el-table
@@ -38,40 +38,40 @@
             <el-table-column type="selection" width="55" />
             <el-table-column
             prop="applyNum"
-            label="申请单编号"
+            :label="$t('applyNo')"
             >
             </el-table-column>
             <el-table-column
             prop="testType"
-            label="测试类型"
+            :label="$t('testType')"
             >
             </el-table-column>
             <el-table-column
             prop="consignor"
-            label="委托人">
+            :label="$t('consignorId')">
             </el-table-column>
             <el-table-column
             prop="testInfo"
-            label="测试信息">
+            :label="$t('testInfo')">
             <template #default="scope"> 
-                <el-button type="warning" size="small" @click="view(scope.row)"><el-icon><View /></el-icon>查看</el-button>
+                <el-button type="warning" size="small" @click="view(scope.row)"><el-icon><View /></el-icon>{{ $t('view') }}</el-button>
             </template>
             </el-table-column>
             <el-table-column
             prop="sendDate"
-            label="送样日期">
+            :label="$t('sendDate')">
             </el-table-column>
             <el-table-column
             prop="status"
-            label="状态">
+            :label="$t('status')">
             </el-table-column>
             <el-table-column
             fixed="right"
             prop="action"
-            label="操作"
+            :label="$t('action')"
             >
             <template #default="scope"> 
-                <el-button type="warning" size="small" @click="action(scope.row)"><el-icon><Tools /></el-icon>操作</el-button>
+                <el-button type="warning" size="small" @click="action(scope.row)"><el-icon><Tools /></el-icon>{{ $t('action') }}</el-button>
             </template>
             </el-table-column>
         </el-table>

@@ -20,10 +20,10 @@
                         <span class="username"> {{ username }} </span>
                       </template>
                       <el-menu-item index="2-1" @click="login"><el-icon><Open /></el-icon>{{ $t('login') }}</el-menu-item>
-                      <el-menu-item index="2-1" @click="logout"><el-icon><TurnOff /></el-icon>{{ $t('logout') }}</el-menu-item>
+                      <el-menu-item index="2-2" @click="logout"><el-icon><TurnOff /></el-icon>{{ $t('logout') }}</el-menu-item>
                     </el-sub-menu>
                     </el-menu-item>
-                    <el-menu-item>
+                    <el-menu-item index="4">
                       <span @click="changeLan()">{{ $t('language') }}</span>
 
                     </el-menu-item>  

@@ -1,22 +1,22 @@
 <template>
   <div id="query">
-    <el-select v-model="typeValue" class="m-2" placeholder="测试类型" size="small">
+    <el-select v-model="typeValue" class="m-2" :placeholder="$t('testType')" size="small">
         <el-option
         v-for="item in options_type"
         :key="item"
-        :label="item"
+        :label="$t(item)"
         :value="item"
         />
     </el-select>
-    <el-select v-model="statusValue" class="m-2" placeholder="状态" size="small">
+    <el-select v-model="statusValue" class="m-2" :placeholder="$t('status')" size="small">
         <el-option
         v-for="item in options_status"
         :key="item"
-        :label="item"
+        :label="$t(item)"
         :value="item"
         />
     </el-select>
-    <el-button type="warning" size="small" @click="search" class="m-2"><el-icon><Search /></el-icon>查询</el-button>
+    <el-button type="warning" size="small" @click="search" class="m-2"><el-icon><Search /></el-icon>{{ $t('query') }}</el-button>
   </div>
   <div id="allCase">
         <el-table
@@ -37,40 +37,40 @@
             <el-table-column type="selection" width="55" />
             <el-table-column
             prop="applyNo"
-            label="申请单编号"
+            :label="$t('applyNo')"
             >
             </el-table-column>
             <el-table-column
             prop="testType"
-            label="测试类型"
+            :label="$t('testType')"
             >
             </el-table-column>
             <el-table-column
             prop="consignor"
-            label="委托人">
+            :label="$t('consignorId')">
             </el-table-column>
             <el-table-column
             prop="testInfo"
-            label="测试信息">
+            :label="$t('testInfo')">
             <template #default="scope"> 
-                <el-button type="warning" size="small" @click="view(scope.row)"><el-icon><View /></el-icon>查看</el-button>
+                <el-button type="warning" size="small" @click="view(scope.row)"><el-icon><View /></el-icon>{{ $t('view') }}</el-button>
             </template>
             </el-table-column>
             <el-table-column
             prop="sendDate"
-            label="送样日期">
+            :label="$t('sendDate')">
             </el-table-column>
             <el-table-column
             prop="status"
-            label="状态">
+            :label="$t('status')">
             </el-table-column>
             <el-table-column
             fixed="right"
             prop="action"
-            label="操作"
+            :label="$t('action')"
             >
             <template #default="scope"> 
-                <el-button type="warning" size="small" @click="action(scope.row)"><el-icon><Tools /></el-icon>操作</el-button>
+                <el-button type="warning" size="small" @click="action(scope.row)"><el-icon><Tools /></el-icon>{{ $t('action') }}</el-button>
             </template>
             </el-table-column>
         </el-table>
@@ -95,28 +95,28 @@ export default {
             tableData:[
                 {
                     applyNo:'123',
-                    testType:'样品测试',
+                    testType:this.$t('sampleTest'),
                     consignor:'zl',
                     sendDate:'2023 3 1',
                     status:'已完结',
                 },
                 {
                     applyNo:'456',
-                    testType:'纯化水测试',
+                    testType:this.$t('waterTest'),
                     consignor:'zl',
                     sendDate:'2023 3 1',
                     status:'未完结',
                 },
                 {
                     applyNo:'789',
-                    testType:'洁净室环境测试',
+                    testType:this.$t('cleanroomTest'),
                     consignor:'zl',
                     sendDate:'2023 3 1',
                     status:'未完结',
                 },
             ],
-            options_type:['样品测试','纯化水测试','洁净室环境测试'],
-            options_status:['已完结','未完结'],
+            options_type:['sampleTest','waterTest','cleanroomTest'],
+            options_status:['finished','unfinished'],
             typeValue:'',
             statusValue:'',
             currentPage:1,

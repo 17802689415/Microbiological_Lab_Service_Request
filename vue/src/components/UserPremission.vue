@@ -25,32 +25,32 @@
             style="width: 100%;">
             <el-table-column
             prop="username"
-            label="username"
+            :label="$t('username')"
             >
             </el-table-column>
             <el-table-column
             prop="jobId"
-            label="jobId"
+            :label="$t('jobId')"
             >
             </el-table-column>
             <el-table-column
             prop="role"
-            label="role">
+            :label="$t('role')">
             </el-table-column>
             <el-table-column
             prop="station"
-            label="station">
+            :label="$t('department')">
             </el-table-column>
             <el-table-column
             fixed="right"
             prop="action"
-            label="操作"
+            :label="$t('action')"
             width="300px"
             >
             <template #default="scope"> 
-                <el-button type="warning" size="small" @click="modify(scope.row)"><el-icon><Edit /></el-icon>编辑</el-button>
-                <el-button type="success" size="small" @click="add(scope.row)"><el-icon><Plus /></el-icon>添加</el-button>
-                <el-button type="danger" size="small" @click="deleteUser(scope.row)"><el-icon><Delete /></el-icon>删除</el-button>
+                <el-button type="warning" size="small" @click="modify(scope.row)"><el-icon><Edit /></el-icon>{{ $t('compile') }}</el-button>
+                <el-button type="success" size="small" @click="add(scope.row)"><el-icon><Plus /></el-icon>{{ $t('add') }}</el-button>
+                <el-button type="danger" size="small" @click="deleteUser(scope.row)"><el-icon><Delete /></el-icon>{{ $t('delete') }}</el-button>
             </template>
             </el-table-column>
         </el-table>

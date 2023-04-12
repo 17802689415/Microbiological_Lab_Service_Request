@@ -2,22 +2,22 @@
 
   <el-card class="box-card">
     <div class="clearfix">
-    <b>加急任务</b>
+    <b>{{ $t('urgentItem') }}</b>
   </div>
     <div v-for="o in urgentList" :key="o.index" class="text item">
-      {{'项目： ' + o.item }}
+      <span>{{ $t('item') }}---{{ o.item }}</span>
     </div>
   </el-card>
 
   <el-scrollbar height="600px">
-  <el-divider content-position="right">待测列表</el-divider>
+  <el-divider content-position="right">{{ $t('testList') }}</el-divider>
   <div class="block">
     <el-timeline>
       <el-timeline-item v-for="o in waitList" :key="o.index" :timestamp="o.date" placement="top">
         <el-card>
-          <h4>检测员：{{ o.user }}</h4>
-          <p>检测项目：{{ o.item }}</p>
-          <p>接收检测</p>
+          <h4>{{ $t('inspector') }}:{{ o.user }}</h4>
+          <p>{{ $t('item') }}:{{ o.item }}</p>
+          <p>{{ $t('rtbd') }}</p>
         </el-card>
       </el-timeline-item>
     </el-timeline>

@@ -3,6 +3,9 @@ export const lang = {
     login:'登录',
     logout:'退出',
     register:'注册',
+    //状态
+    finished:'已完结',
+    unfinished:'未完结',
     // 左侧菜单栏
     mainView:'主页面',
         //case
@@ -20,6 +23,12 @@ export const lang = {
         setting:'设置',
         setting1:'设置',
         setting2:'设置',
+    //主页面mainView
+    urgentItem:'加急项目',
+    item:'项目',
+    testList:'待测列表',
+    inspector:'检测员',
+    rtbd:'接收待检测',
     //提交case页面
     applyNo:'案例编号',
         //委托人信息
@@ -33,6 +42,7 @@ export const lang = {
         date:'选择日期',
         urgent:'加急?',
         //sampleTest
+        sampleTest:'样品测试',
         sampleInformation:'样品信息',
         testPurpose:'测试目的',
         sampleName:'样品名称',
@@ -48,6 +58,48 @@ export const lang = {
         condition01:'常温',
         condition02:'冷藏',
         condition03:'冷冻',
+        specifiedCondition:'指明存储条件',
+        testInfo:'测试信息',
+        specification:'规格',
+        batchNum:'批号',
+        quantity:'数量',
+        testItem:'测试项目',
+        limitValue:'接收限值',
+        wiNo:'测试方法号',
+        remark:'备注',
+        //waterTest
+        waterTest:'纯化水测试',
+        waterNo:'纯化水编号',
+        waterItem01:'全项目检测',
+        waterItem02:'性状、酸碱度、电导率、氨',
+        specifiedItem:'指明测试项目',
+        //cleanroomTest
+        cleanroomTest:'洁净室环境测试',
+        cleanroomName:'洁净室名称',
+        cleanroomItem01:'沉降菌',
+        cleanroomItem02:'浮游菌',
+        cleanroomItem03:'表面微生物',
+    submit:'提交',
+    cancel:'取消',
+    //myCase
+    testType:'测试类型',
+    status:'状态',
+    query:'查询',
+    batchReception:'批量接收',
+    view:'查看',
+    action:'操作',
+    batchAllocation:'批量分配',
+    upload:'上传',
+    print:'打印',
+    //usermanagement
+    username:'用户名',
+    jobId:'工号',
+    jobTitle:'职位',
+    responsibility:'职责',
+    compile:'编辑',
+    add:'添加',
+    delete:'删除',
+    role:'角色',
 }
 
 

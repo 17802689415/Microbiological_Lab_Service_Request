@@ -1,9 +1,9 @@
 <template>
     <div id="menu">
         <el-menu class="el-menu-demo" mode="horizontal" @select="handleSelect">
-            <el-menu-item index="SampleTest">SampleTest</el-menu-item>
-            <el-menu-item index="Purified Water Test">Purified Water Test </el-menu-item>
-            <el-menu-item index="Cleanroom Environment Test">Cleanroom Environment Test</el-menu-item>
+            <el-menu-item index="SampleTest">{{ $t('sampleTest') }}</el-menu-item>
+            <el-menu-item index="Purified Water Test">{{ $t('waterTest') }} </el-menu-item>
+            <el-menu-item index="Cleanroom Environment Test">{{ $t('cleanroomTest') }}</el-menu-item>
         </el-menu>
     </div>
     <div class="form">
@@ -104,47 +104,47 @@
                 <el-radio :label="$t('other')" name="type04"></el-radio>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item label="指明存储条件" prop="storageCondition"  v-show="sample_info.storageCondition==$t('other')">
+            <el-form-item :label="$t('specifiedCondition')" prop="storageCondition"  v-show="sample_info.storageCondition==$t('other')">
                 <el-input v-model="sample_info.storageCondition" class="item2"></el-input>
             </el-form-item>
         </el-form>
-        <h4>测试信息</h4>
+        <h4>{{ $t('testInfo') }}</h4>
         <el-form :model="sample_test_info"  label-width="150px" class="demo-ruleForm"  ref="sampleTestInfo" size="small">
             <el-row>
                 <el-col :span="6">
-                    <el-form-item label="样品名称" prop="sampleName">
+                    <el-form-item :label="$t('sampleName')" prop="sampleName">
                         <el-input v-model="sample_info.sampleName" class="item1"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="6">
-                    <el-form-item label="规格" prop="model">
+                    <el-form-item :label="$t('specification')" prop="model">
                         <el-input v-model="sample_test_info.model" class="item1"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
             <el-row>
                 <el-col :span="6">
-                    <el-form-item label="批号" prop="lotNo">
+                    <el-form-item :label="$t('batchNum')" prop="lotNo">
                         <el-input v-model="sample_test_info.lotNo" class="item1"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="6">
-                    <el-form-item label="数量" prop="quantity">
+                    <el-form-item :label="$t('quantity')" prop="quantity">
                         <el-input v-model="sample_test_info.quantity" class="item1"></el-input>
                     </el-form-item>
                 </el-col>
             </el-row>
-            <el-form-item label="测试项目" prop="testItem">
+            <el-form-item :label="$t('testItem')" prop="testItem">
                 <el-input v-model="sample_test_info.testItem" class="item3"></el-input>
             </el-form-item>
             <el-row>
                 <el-col :span="6">
-                    <el-form-item label="接收限值" prop="limitValue">
+                    <el-form-item :label="$t('limitValue')" prop="limitValue">
                         <el-input v-model="sample_test_info.limitValue" class="item1"></el-input>
                     </el-form-item>
                 </el-col>
                 <el-col :span="6">
-                    <el-form-item label="测试方法号" prop="wiNo">
+                    <el-form-item :label="$t('wiNo')" prop="wiNo">
                         <el-input v-model="sample_test_info.wiNo" class="item1"></el-input>
                     </el-form-item>
                 </el-col>
@@ -152,7 +152,7 @@
             </el-row>
             <el-row>
                 <el-col :span="12">
-                    <el-form-item label="备注" prop="remark">
+                    <el-form-item :label="$t('remark')" prop="remark">
                         <el-input v-model="sample_test_info.remark" class="item3" type="textarea"></el-input>
                     </el-form-item>
                 </el-col>
@@ -166,34 +166,34 @@
         <el-card class="box-card">
             <template #header>
                 <div class="card-header">
-                    <span>测试项目</span>
+                    <span>{{ $t('testItem') }}</span>
                 </div>
             </template>
                 <div v-for="o in test_item_list" :key="o" class="text item">
-                    <span>测试项目：{{ o.testItem }},数量：{{ o.quantity }},备注{{ o.remark }}</span>
+                    <span>{{ $t('testItem') }}:{{ o.testItem }},{{ $t('quantity') }}:{{ o.quantity }},{{ $t('remark') }}:{{ o.remark }}</span>
                     <el-button circle size="small" @click="cancel_test_info(o)"><el-icon><Close /></el-icon></el-button><br>
                 </div>
         </el-card>
     </div>
     <div id="water" v-show="isShow=='Purified Water Test'">
-        <h4>测试信息</h4>
+        <h4>{{ $t('testInfo') }}</h4>
         <el-form :model="water_test_info" label-width="150px" class="demo-ruleForm"  ref="waterTestInfo" size="small">
-            <el-form-item label="纯化水编号" prop="waterNo">
+            <el-form-item :label="$t('waterNo')" prop="waterNo">
                 <el-input v-model="water_test_info.waterNo" class="item2"></el-input>
             </el-form-item>
-            <el-form-item label="测试项目">
+            <el-form-item :label="$t('testItem')">
                 <el-radio-group v-model="water_test_info.testItem">
-                <el-radio label="Full Test Items全项目检测" name="type01"></el-radio>
-                <el-radio label="Description, Acidity or alkalinity, Conductivity, Ammonia 性状、酸碱度、电导率、氨" name="type02"></el-radio>
-                <el-radio label="other" name="type03"></el-radio>
+                <el-radio :label="$t('waterItem01')" name="type01"></el-radio>
+                <el-radio :label="$t('waterItem02')" name="type02"></el-radio>
+                <el-radio :label="$t('other')" name="type03"></el-radio>
                 </el-radio-group>
             </el-form-item>
-            <el-form-item label="指明测试项目" prop="testItem"  v-show="water_test_info.testItem=='other'">
+            <el-form-item :label="$t('specifiedItem')" prop="testItem"  v-show="water_test_info.testItem==$t('other')">
                 <el-input v-model="water_test_info.testItem" class="item2"></el-input>
             </el-form-item>
             <el-row>
                 <el-col :span="6">
-                    <el-form-item label="WINo" prop="WINo">
+                    <el-form-item :label="$t('wiNo')" prop="WINo">
                         <el-input v-model="water_test_info.WINo"></el-input>
                     </el-form-item>
                 </el-col>
@@ -207,31 +207,31 @@
         <el-card class="box-card">
             <template #header>
                 <div class="card-header">
-                    <span>测试项目</span>
+                    <span>{{ $t('testItem') }}</span>
                 </div>
             </template>
                 <div v-for="o in test_item_list" :key="o" class="text item">
-                        <span>测试项目：{{ o.testItem }},纯化水编号：{{ o.waterNo }},方法号{{ o.WINo }}</span>
+                        <span>{{ $t('testItem') }}:{{ o.testItem }},{{ $t('waterNo') }}:{{ o.waterNo }},{{ $t('wiNo') }}:{{ o.WINo }}</span>
                         <el-button circle size="small" @click="cancel_test_info(o)"><el-icon><Close /></el-icon></el-button><br>
                 </div>
         </el-card>
     </div>
     <div id="cleanroom" v-show="isShow=='Cleanroom Environment Test'">
-        <h4>测试信息</h4>
+        <h4>{{ $t('testInfo') }}</h4>
         <el-form :model="cleanroom_test_info"  label-width="150px" class="demo-ruleForm"  ref="cleanroomTestInfo" size="small">
-            <el-form-item label="洁净室名称" prop="cleanroomName">
+            <el-form-item :label="$t('cleanroomName')" prop="cleanroomName">
                 <el-input v-model="cleanroom_test_info.cleanroomName" class="item2"></el-input>
             </el-form-item>
-            <el-form-item label="测试项目">
+            <el-form-item :label="$t('testItem')">
                 <el-radio-group v-model="cleanroom_test_info.testItem">
-                <el-radio label="Settling microbe沉降菌" name="type01"></el-radio>
-                <el-radio label="Airborne Microbe浮游菌" name="type02"></el-radio>
-                <el-radio label="Microbiological of Surfaces 表面微生物" name="type03"></el-radio>
+                <el-radio :label="$t('cleanroomItem01')" name="type01"></el-radio>
+                <el-radio :label="$t('cleanroomItem02')" name="type02"></el-radio>
+                <el-radio :label="$t('cleanroomItem03')" name="type03"></el-radio>
                 </el-radio-group>
             </el-form-item>
             <el-row>
                 <el-col :span="6">
-                    <el-form-item label="WINo" prop="WINo">
+                    <el-form-item :label="$t('wiNo')" prop="WINo">
                         <el-input v-model="cleanroom_test_info.WINo"></el-input>
                     </el-form-item>
                 </el-col>
@@ -245,11 +245,11 @@
         <el-card class="box-card">
             <template #header>
                 <div class="card-header">
-                    <span>测试项目</span>
+                    <span>{{ $t('testItem') }}</span>
                 </div>
             </template>
                 <div v-for="o in test_item_list" :key="o" class="text item">
-                    <span>测试项目：{{ o.testItem }},洁净室名称：{{ o.cleanroomName }},方法号：{{ o.WINo }}</span>
+                    <span>{{ $t('testItem') }}:{{ o.testItem }},{{ $t('cleanroomName') }}:{{ o.cleanroomName }},{{ $t('wiNo') }}:{{ o.WINo }}</span>
                     <el-button circle size="small" @click="cancel_test_info"><el-icon><Close /></el-icon></el-button><br>
                 </div>
         </el-card>
@@ -257,10 +257,10 @@
     <div id="btn">
         <el-row>
             <el-col :span="6">
-                <el-button type="primary" class="sub" @click="postForm">提交</el-button>
+                <el-button type="primary" class="sub" @click="postForm">{{ $t('submit') }}</el-button>
             </el-col>
             <el-col :span="6">
-                <el-button type="primary" class="sub" @click="cancle">取消</el-button>
+                <el-button type="primary" class="sub" @click="cancle">{{ $t('cancel') }}</el-button>
             </el-col>
         </el-row>
         
