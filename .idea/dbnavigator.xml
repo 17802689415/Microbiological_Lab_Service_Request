@@ -8,8 +8,125 @@
   <component name="DBNavigator.Project.DatabaseBrowserManager">
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
-    <show-object-properties value="true" />
+    <show-object-properties value="false" />
     <loaded-nodes />
+  </component>
+  <component name="DBNavigator.Project.DatabaseConsoleManager">
+    <connection id="f5748784-42f4-4544-be0f-c4a61d864780">
+      <console name="Connection" type="STANDARD" schema="lab" session="Main"><![CDATA[create table user_info(
+id int primary key,
+username varchar(50),
+password varchar(50),
+job_id varchar(20),
+department varchar(30),
+job_title varchar(30),
+responsibility varchar(30),
+role varchar(30),
+backup varchar(30),
+status varchar(20)
+);
+
+select * from user_info;
+insert into user_info values (0,'zhanglei','123456','3554536','TE','实习生','开发','admin','mike','启用');
+
+drop table apply_form;
+create table apply_form(
+id int primary key,
+case_num varchar(20),
+test_type varchar(50),
+apply_date date,
+urgent boolean,
+step varchar(30),
+status varchar(20),
+update_time date
+);
+select * from apply_form;
+insert into apply_form values (0,'777777','sampleTest','2023-03-23',true,'提交','正常',now());
+
+drop table consignor_form;
+create table consignor_info(
+id int primary key,
+case_num varchar(20),
+job_id varchar(20),
+phone_num varchar(30),
+work_cell varchar(30)
+);
+select * from consignor_info ;
+insert into consignor_info values (0,'777777','3554536','17802689415','imed');
+
+drop table sample_form;
+drop table sample_test_info;
+drop table login;
+drop table my_case_tab;
+drop table user;
+
+create table sample_info(
+id int primary key,
+case_num varchar(20),
+sample_name varchar(200),
+test_purpose varchar(250),
+total_quantity double,
+model varchar(30),
+batch_num varchar(20),
+disposal varchar(100),
+storage_condition varchar(100),
+send_sample_date date
+);
+select * from sample_info;
+insert into sample_info values (0,'777777','样品一','测试aaa',50.77,'good','灭菌123','处理...','常温','2023-03-25');
+
+create table sample_test_info(
+id int primary key,
+case_num varchar(20),
+quantity double,
+test_item varchar(100),
+limit_value double,
+wino varchar(30),
+remark varchar(250)
+);
+select * from sample_test_info;
+insert into sample_test_info values (0,'777777',20.3,'测试一',30.00,'方法123','备注备注备注');
+insert into sample_test_info values (1,'777777',17.5,'测试二',30.00,'方法123','备注备注备注');
+
+create table water_test_info(
+id int primary key,
+case_num varchar(20),
+water_num varchar(30),
+test_item varchar(100),
+wino varchar(30)
+);
+select * from water_test_info;
+
+create table cleanroom_test_info(
+id int primary key,
+case_num varchar(20),
+cleanroom_name varchar(50),
+test_item varchar(100),
+wino varchar(30)
+);
+select * from cleanroom_test_info;
+
+create table inspector_task_info(
+id int primary key,
+case_num varchar(20),
+job_id varchar(20),
+test_type varchar(50),
+begin_date date,
+end_date date,
+status varchar(20)
+);
+select * from inspector_task_info;
+
+create table process(
+id int primary key,
+test_type varchar(50),
+urgent boolean,
+step varchar(20),
+role varchar(20),
+step_index int
+);
+select * from process;]]></console>
+    </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
     <last-used-providers />
@@ -17,8 +134,103 @@
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
   </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="f5748784-42f4-4544-be0f-c4a61d864780" dataset="lab.my_case_tab" active-filter-id="EMPTY_FILTER" />
+  </component>
+  <component name="DBNavigator.Project.ExecutionManager">
+    <retain-sticky-names value="false" />
+  </component>
+  <component name="DBNavigator.Project.ObjectQuickFilterManager">
+    <last-used-operator value="EQUAL" />
+    <filters />
+  </component>
   <component name="DBNavigator.Project.Settings">
-    <connections />
+    <connections>
+      <connection id="f5748784-42f4-4544-be0f-c4a61d864780" active="true" signed="true">
+        <database>
+          <name value="Connection" />
+          <description value="" />
+          <database-type value="MYSQL" />
+          <config-type value="BASIC" />
+          <database-version value="8.0" />
+          <driver-source value="BUILTIN" />
+          <driver-library value="" />
+          <driver value="" />
+          <url-type value="DATABASE" />
+          <host value="localhost" />
+          <port value="3306" />
+          <database value="mysql" />
+          <type value="USER_PASSWORD" />
+          <user value="root" />
+          <deprecated-pwd value="MTIzNDU2" />
+        </database>
+        <properties>
+          <auto-commit value="false" />
+        </properties>
+        <ssh-settings>
+          <active value="false" />
+          <proxy-host value="" />
+          <proxy-port value="22" />
+          <proxy-user value="" />
+          <deprecated-proxy-pwd value="" />
+          <auth-type value="PASSWORD" />
+          <key-file value="" />
+          <key-passphrase value="" />
+        </ssh-settings>
+        <ssl-settings>
+          <active value="false" />
+          <certificate-authority-file value="" />
+          <client-certificate-file value="" />
+          <client-key-file value="" />
+        </ssl-settings>
+        <details>
+          <charset value="UTF-8" />
+          <session-management value="true" />
+          <ddl-file-binding value="true" />
+          <database-logging value="true" />
+          <connect-automatically value="true" />
+          <restore-workspace value="true" />
+          <restore-workspace-deep value="false" />
+          <environment-type value="default" />
+          <connectivity-timeout value="10" />
+          <idle-time-to-disconnect value="30" />
+          <idle-time-to-disconnect-pool value="5" />
+          <credential-expiry-time value="10" />
+          <max-connection-pool-size value="7" />
+          <alternative-statement-delimiter value="" />
+        </details>
+        <object-filters hide-empty-schemas="false" hide-pseudo-columns="false">
+          <object-type-filter>
+            <object-type name="SCHEMA" enabled="true" />
+            <object-type name="USER" enabled="true" />
+            <object-type name="ROLE" enabled="true" />
+            <object-type name="PRIVILEGE" enabled="true" />
+            <object-type name="CHARSET" enabled="true" />
+            <object-type name="TABLE" enabled="true" />
+            <object-type name="VIEW" enabled="true" />
+            <object-type name="MATERIALIZED_VIEW" enabled="true" />
+            <object-type name="NESTED_TABLE" enabled="true" />
+            <object-type name="COLUMN" enabled="true" />
+            <object-type name="INDEX" enabled="true" />
+            <object-type name="CONSTRAINT" enabled="true" />
+            <object-type name="DATASET_TRIGGER" enabled="true" />
+            <object-type name="DATABASE_TRIGGER" enabled="true" />
+            <object-type name="SYNONYM" enabled="true" />
+            <object-type name="SEQUENCE" enabled="true" />
+            <object-type name="PROCEDURE" enabled="true" />
+            <object-type name="FUNCTION" enabled="true" />
+            <object-type name="PACKAGE" enabled="true" />
+            <object-type name="TYPE" enabled="true" />
+            <object-type name="TYPE_ATTRIBUTE" enabled="true" />
+            <object-type name="ARGUMENT" enabled="true" />
+            <object-type name="DIMENSION" enabled="true" />
+            <object-type name="CLUSTER" enabled="true" />
+            <object-type name="DBLINK" enabled="true" />
+          </object-type-filter>
+          <object-name-filters />
+        </object-filters>
+      </connection>
+    </connections>
     <browser-settings>
       <general>
         <display-mode value="TABBED" />
@@ -416,5 +628,8 @@
         </visibility-settings>
       </environment>
     </general-settings>
+  </component>
+  <component name="DBNavigator.Project.StatementExecutionManager">
+    <execution-variables />
   </component>
 </project>

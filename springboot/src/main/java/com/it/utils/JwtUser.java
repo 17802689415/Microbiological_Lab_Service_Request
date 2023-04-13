@@ -1,9 +1,7 @@
 package com.it.utils;
 
 
-import com.it.pojo.Login;
-import lombok.Getter;
-import lombok.Setter;
+import com.it.pojo.UserInfo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -45,7 +43,7 @@ public class JwtUser implements UserDetails {
         this.authorities = authorities;
     }
 
-    public JwtUser(Login login) {
+    public JwtUser(UserInfo login) {
         id = login.getId();
         username = login.getUsername();
         password = new BCryptPasswordEncoder().encode(login.getPassword());

@@ -2,14 +2,12 @@ package com.it.pojo;
 
 import java.io.Serializable;
 
-public class SampleTestInfo implements Serializable {
+public class WaterTestInfo implements Serializable {
     private int id;
     private String caseNum;
-    private double quantity;
+    private String waterNum;
     private String testItem;
-    private double limitValue;
     private String wino;
-    private String remark;
 
     public int getId() {
         return id;
@@ -27,12 +25,12 @@ public class SampleTestInfo implements Serializable {
         this.caseNum = caseNum;
     }
 
-    public double getQuantity() {
-        return quantity;
+    public String getWaterNum() {
+        return waterNum;
     }
 
-    public void setQuantity(double quantity) {
-        this.quantity = quantity;
+    public void setWaterNum(String waterNum) {
+        this.waterNum = waterNum;
     }
 
     public String getTestItem() {
@@ -43,27 +41,11 @@ public class SampleTestInfo implements Serializable {
         this.testItem = testItem;
     }
 
-    public double getLimitValue() {
-        return limitValue;
-    }
-
-    public void setLimitValue(double limitValue) {
-        this.limitValue = limitValue;
-    }
-
     public String getWino() {
         return wino;
     }
 
     public void setWino(String wino) {
         this.wino = wino;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
     }
 }

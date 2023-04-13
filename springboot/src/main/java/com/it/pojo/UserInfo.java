@@ -1,14 +1,17 @@
 package com.it.pojo;
 
-public class User {
+import java.io.Serializable;
+
+public class UserInfo implements Serializable {
     private int id;
     private String username;
+    private String password;
     private String jobId;
     private String department;
     private String jobTitle;
     private String responsibility;
-    private String backupFor;
-    private String premission;
+    private String role;
+    private String backup;
     private String status;
 
     public int getId() {
@@ -25,6 +28,14 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getJobId() {
@@ -59,20 +70,20 @@ public class User {
         this.responsibility = responsibility;
     }
 
-    public String getBackupFor() {
-        return backupFor;
+    public String getRole() {
+        return role;
     }
 
-    public void setBackupFor(String backupFor) {
-        this.backupFor = backupFor;
+    public void setRole(String role) {
+        this.role = role;
     }
 
-    public String getPremission() {
-        return premission;
+    public String getBackup() {
+        return backup;
     }
 
-    public void setPremission(String premission) {
-        this.premission = premission;
+    public void setBackup(String backup) {
+        this.backup = backup;
     }
 
     public String getStatus() {

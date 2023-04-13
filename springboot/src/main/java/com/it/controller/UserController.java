@@ -10,14 +10,10 @@ import com.it.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,20 +24,18 @@ import java.util.UUID;
 public class UserController {
     @Autowired
     private CacheManager cacheManager;
-    @Autowired
-    private UserService userService;
 
     @Autowired
-    private LoginService loginService;
+    private UserInfoService loginService;
 
     @Autowired
     private SampleTestInfoService testInfoService;
 
     @Autowired
-    private SampleFormService sampleFormService;
+    private SampleInfoService sampleFormService;
 
     @Autowired
-    private ConsignorFormService consignorFormService;
+    private ConsignorInfoService consignorFormService;
     @Autowired
     private CaseTabService caseTabService;
     @Autowired
@@ -60,19 +54,7 @@ public class UserController {
     @ResponseBody
 //    @CachePut(value = "userCache",key = "#log.username")
 //    @Cacheable(value = "userCache",key = "#log.username")
-    public R<UserDetails> userManager(Login log){
-//        LambdaQueryWrapper<Login> queryWrapper = new LambdaQueryWrapper<>();
-//        queryWrapper.eq(Login::getUsername,log.getUsername());
-//        Login one = loginService.getOne(queryWrapper);
-//        if (one!=null&one.getPassword().equals(log.getPassword())){
-//            return R.success(one);
-//        }
-//        UserDetails userDetails = myUserDetailsService.loadUserByUsername(log.getUsername());
-//        System.out.println(userDetails==null);
-//        if (userDetails!=null){
-//            return R.success(userDetails);
-//        }
-
+    public R<UserDetails> userManager(UserInfo log){
 
         return loginService.login(log);
     }
@@ -111,7 +93,7 @@ public class UserController {
 
     @PostMapping("/postSampleInfo")
     @ResponseBody
-    public R<String> postSampleInfo(SampleForm sampleForm){
+    public R<String> postSampleInfo(SampleInfo sampleForm){
         boolean save = sampleFormService.save(sampleForm);
         if (save){
             return R.success("success",1);
@@ -120,7 +102,7 @@ public class UserController {
     }
     @PostMapping("/postConsignorInfo")
     @ResponseBody
-    public R<String> postConsignorInfo(ConsignorForm consignorForm){
+    public R<String> postConsignorInfo(ConsignorInfo consignorForm){
         boolean save = consignorFormService.save(consignorForm);
         if (save){
             return R.success("success",1);
@@ -153,21 +135,21 @@ public class UserController {
     @PostMapping("/selectUrgentCase")
     @ResponseBody
     public R<List<SampleTestInfo>> selectUrgentCase(){
-        List<SampleTestInfo> list =new ArrayList<>();
-        LambdaQueryWrapper<ConsignorForm> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(ConsignorForm::isUrgent,true);
-        for (ConsignorForm consignorForm : consignorFormService.list(queryWrapper)) {
-            LambdaQueryWrapper<SampleTestInfo> queryWrapper1 =new LambdaQueryWrapper<>();
-            queryWrapper1.eq(SampleTestInfo::getApplyNum,consignorForm.getApplyNum());
-            for (SampleTestInfo sampleTestInfo : testInfoService.list(queryWrapper1)) {
-                boolean add = list.add(sampleTestInfo);
-                if (!add){
-                    return R.error("error",0);
-                }
-            }
+//        List<SampleTestInfo> list =new ArrayList<>();
+//        LambdaQueryWrapper<ConsignorInfo> queryWrapper = new LambdaQueryWrapper<>();
+//        queryWrapper.eq(ConsignorInfo::isUrgent,true);
+//        for (ConsignorInfo consignorForm : consignorFormService.list(queryWrapper)) {
+//            LambdaQueryWrapper<SampleTestInfo> queryWrapper1 =new LambdaQueryWrapper<>();
+//            queryWrapper1.eq(SampleTestInfo::getApplyNum,consignorForm.getApplyNum());
+//            for (SampleTestInfo sampleTestInfo : testInfoService.list(queryWrapper1)) {
+//                boolean add = list.add(sampleTestInfo);
+//                if (!add){
+//                    return R.error("error",0);
+//                }
+//            }
+//
+//        }
 
-        }
-
-        return R.success(list,1);
+        return null;
     }
 }
