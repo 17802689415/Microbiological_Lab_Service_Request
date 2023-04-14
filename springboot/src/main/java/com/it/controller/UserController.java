@@ -22,27 +22,12 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/lab")
 public class UserController {
-    @Autowired
-    private CacheManager cacheManager;
+
 
     @Autowired
     private UserInfoService loginService;
 
-    @Autowired
-    private SampleTestInfoService testInfoService;
 
-    @Autowired
-    private SampleInfoService sampleFormService;
-
-    @Autowired
-    private ConsignorInfoService consignorFormService;
-    @Autowired
-    private CaseTabService caseTabService;
-    @Autowired
-    RedisTemplate redisTemplate;
-
-    @Autowired
-    private MyUserDetailsService myUserDetailsService;
     public static String[] chars = new String[] { "a", "b", "c", "d", "e", "f",
             "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s",
             "t", "u", "v", "w", "x", "y", "z", "0", "1", "2", "3", "4", "5",
@@ -59,97 +44,19 @@ public class UserController {
         return loginService.login(log);
     }
 
-    @GetMapping("/getNo")
-//    @PreAuthorize("hasAuthority('admin')")
-    @ResponseBody
-    public R<String> getNo(){
-        StringBuffer shortBuffer = new StringBuffer();
-        String uuid = UUID.randomUUID().toString();
-        uuid=uuid.replace("-", "");
-        for (int i = 0; i < 8; i++) {
-            String str = uuid.substring(i * 4, i * 4 + 4);
-            int x = Integer.parseInt(str, 16);
-            shortBuffer.append(chars[x % 62]);
-        }
-        return R.success(shortBuffer.toString(),1);
-    }
 
-    @PostMapping("/postSampleTestInfo")
-    @ResponseBody
-    public R<String> postSampleTestInfo(@RequestBody List<SampleTestInfo> testInfo){
-        for (SampleTestInfo s: testInfo) {
-            System.out.println(s);
-            if (s.getQuantity()>s.getLimitValue()){
-                return R.error("超出接收限值",0);
-            }
-            boolean save = testInfoService.save(s);
-            if (!save){
-                return R.error("error",0);
-
-            }
-        }
-        return R.success("success",1);
-    }
-
-    @PostMapping("/postSampleInfo")
-    @ResponseBody
-    public R<String> postSampleInfo(SampleInfo sampleForm){
-        boolean save = sampleFormService.save(sampleForm);
-        if (save){
-            return R.success("success",1);
-        }
-        return R.error("error",0);
-    }
-    @PostMapping("/postConsignorInfo")
-    @ResponseBody
-    public R<String> postConsignorInfo(ConsignorInfo consignorForm){
-        boolean save = consignorFormService.save(consignorForm);
-        if (save){
-            return R.success("success",1);
-        }
-        return R.error("error",0);
-    }
-
-    @PostMapping("/postCase")
-    @ResponseBody
-    public R<String> postCase(MyCaseTab myCaseTab){
-        boolean save = caseTabService.save(myCaseTab);
-        if (save){
-            return R.success("success",1);
-        }
-        return R.error("error",0);
-    }
 
     @PostMapping("/selectCase")
     @ResponseBody
     public R<Page> selectCase(PageCommon pageCommon){
-        //分页构造器
-        Page pageInfo = new Page(pageCommon.getPage(),pageCommon.getPageSize());
-
-        LambdaQueryWrapper<MyCaseTab> queryWrapper =new LambdaQueryWrapper<>();
-        queryWrapper.orderByAsc(MyCaseTab::getSendDate);
-        caseTabService.page(pageInfo,queryWrapper);
-        return R.success(pageInfo,1);
-    }
-
-    @PostMapping("/selectUrgentCase")
-    @ResponseBody
-    public R<List<SampleTestInfo>> selectUrgentCase(){
-//        List<SampleTestInfo> list =new ArrayList<>();
-//        LambdaQueryWrapper<ConsignorInfo> queryWrapper = new LambdaQueryWrapper<>();
-//        queryWrapper.eq(ConsignorInfo::isUrgent,true);
-//        for (ConsignorInfo consignorForm : consignorFormService.list(queryWrapper)) {
-//            LambdaQueryWrapper<SampleTestInfo> queryWrapper1 =new LambdaQueryWrapper<>();
-//            queryWrapper1.eq(SampleTestInfo::getApplyNum,consignorForm.getApplyNum());
-//            for (SampleTestInfo sampleTestInfo : testInfoService.list(queryWrapper1)) {
-//                boolean add = list.add(sampleTestInfo);
-//                if (!add){
-//                    return R.error("error",0);
-//                }
-//            }
+//        //分页构造器
+//        Page pageInfo = new Page(pageCommon.getPage(),pageCommon.getPageSize());
 //
-//        }
-
+//        LambdaQueryWrapper<ApplyForm> queryWrapper =new LambdaQueryWrapper<>();
+//        queryWrapper.orderByAsc(ApplyForm::getUpdateTime);
+//        applyFormService.page(pageInfo,queryWrapper);
         return null;
     }
+
+
 }

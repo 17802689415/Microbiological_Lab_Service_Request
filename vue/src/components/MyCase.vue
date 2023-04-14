@@ -4,7 +4,7 @@
         <el-option
         v-for="item in options_type"
         :key="item"
-        :label="item"
+        :label="$t(item)"
         :value="item"
         />
     </el-select>
@@ -12,7 +12,7 @@
         <el-option
         v-for="item in options_status"
         :key="item"
-        :label="item"
+        :label="$t(item)"
         :value="item"
         />
     </el-select>
@@ -96,8 +96,8 @@ export default {
             tableData:[
                
             ],
-            options_type:['样品测试','纯化水测试','洁净室环境测试'],
-            options_status:['已完结','未完结'],
+            options_type:['sampleTest','waterTest','cleanroomTest'],
+            options_status:['finished','unfinished'],
             typeValue:'',
             statusValue:'',
             currentPage:1,
@@ -131,6 +131,14 @@ export default {
         search(){
             console.log(this.typeValue)
             console.log(this.statusValue)
+            let formData = new FormData()
+            formData.append('typeValue',this.typeValue)
+            formData.append('statusValue',this.statusValue)
+            this.$axios.post('http://localhost:8099/lab/selectMyCaseBy',formData).then(function (res){
+                if(res.data.code==1){
+                    console.log(res)
+                }
+            })
         },
         handleSizeChange(val){
             console.log(val)

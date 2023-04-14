@@ -38,7 +38,7 @@ public class MyUserDetailsService implements UserDetailsService {
         }
 
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + one.getPremission()));
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + one.getRole()));
 
         return new JwtUser(one);
     }

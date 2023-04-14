@@ -25,6 +25,7 @@ role varchar(30),
 backup varchar(30),
 status varchar(20)
 );
+alter table user_info modify id int auto_increment;
 
 select * from user_info;
 insert into user_info values (0,'zhanglei','123456','3554536','TE','实习生','开发','admin','mike','启用');
@@ -38,10 +39,12 @@ apply_date date,
 urgent boolean,
 step varchar(30),
 status varchar(20),
-update_time date
+update_time timestamp default CURRENT_TIMESTAMP
 );
+alter table apply_form modify id int auto_increment;
+alter table apply_form alter column update_time set default CURRENT_TIMESTAMP;
 select * from apply_form;
-insert into apply_form values (0,'777777','sampleTest','2023-03-23',true,'提交','正常',now());
+insert into apply_form (id,case_num,test_type,apply_date,urgent,step,status) values (0,'777777','sampleTest','2023-03-23',true,'提交','正常');
 
 drop table consignor_form;
 create table consignor_info(
@@ -51,6 +54,7 @@ job_id varchar(20),
 phone_num varchar(30),
 work_cell varchar(30)
 );
+alter table consignor_info modify id int auto_increment;
 select * from consignor_info ;
 insert into consignor_info values (0,'777777','3554536','17802689415','imed');
 
@@ -72,6 +76,7 @@ disposal varchar(100),
 storage_condition varchar(100),
 send_sample_date date
 );
+alter table sample_info modify id int auto_increment;
 select * from sample_info;
 insert into sample_info values (0,'777777','样品一','测试aaa',50.77,'good','灭菌123','处理...','常温','2023-03-25');
 
@@ -84,9 +89,11 @@ limit_value double,
 wino varchar(30),
 remark varchar(250)
 );
+alter table sample_test_info modify id int auto_increment;
 select * from sample_test_info;
-insert into sample_test_info values (0,'777777',20.3,'测试一',30.00,'方法123','备注备注备注');
-insert into sample_test_info values (1,'777777',17.5,'测试二',30.00,'方法123','备注备注备注');
+insert into sample_test_info values (10,'777777',20.3,'测试一',30.00,'方法123','备注备注备注');
+insert into sample_test_info values ('777777',17.5,'测试二',30.00,'方法123','备注备注备注');
+delete from sample_test_info where id=1;
 
 create table water_test_info(
 id int primary key,
@@ -95,6 +102,7 @@ water_num varchar(30),
 test_item varchar(100),
 wino varchar(30)
 );
+alter table water_test_info modify id int auto_increment;
 select * from water_test_info;
 
 create table cleanroom_test_info(
@@ -104,6 +112,7 @@ cleanroom_name varchar(50),
 test_item varchar(100),
 wino varchar(30)
 );
+alter table cleanroom_test_info modify id int auto_increment;
 select * from cleanroom_test_info;
 
 create table inspector_task_info(
@@ -115,7 +124,9 @@ begin_date date,
 end_date date,
 status varchar(20)
 );
+alter table inspector_task_info modify id int auto_increment;
 select * from inspector_task_info;
+insert into inspector_task_info values (2,'tnKbkSQi','3554536','sampleTest','2023-03-01','2023-05-03','待检测');
 
 create table process(
 id int primary key,
@@ -125,6 +136,7 @@ step varchar(20),
 role varchar(20),
 step_index int
 );
+alter table process modify id int auto_increment;
 select * from process;]]></console>
     </connection>
   </component>

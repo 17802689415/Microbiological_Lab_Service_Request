@@ -20,7 +20,7 @@
     <el-row>
         <el-col :span="6" v-for="o in list" :key="o.index" :offset=1>
                 <el-card :body-style="{ padding: '0px' }">
-                <div style="padding: 14px;">
+                <div style="padding: 14px;margin: auto;width: 200px;">
                     <span>{{ o.testNo }}</span>
                     <div>{{ $t('') }}
                         <span>{{ $t('consignorId') }}:{{ o.consignorId }}</span>
@@ -28,6 +28,7 @@
                         <sapn>{{ $t('testType') }}:{{ o.testTypeValue }}</sapn>
                         <br>
                         <el-upload
+                        class="upload"
                             action="http://localhost:8080/#/reportCase"
                             multiple
                             :limit="3"
@@ -85,5 +86,8 @@ export default {
 .m-2{
     margin-bottom: 10px;
     margin-right: 10px;
+}
+.upload{
+    margin-top: 10px;
 }
 </style>

@@ -48,7 +48,7 @@ public class JwtUser implements UserDetails {
         username = login.getUsername();
         password = new BCryptPasswordEncoder().encode(login.getPassword());
         //这里说明一下，必须要加上ROLE_开头，或者在数据库直接以这个开头
-        authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_"+login.getPremission()));
+        authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_"+login.getRole()));
     }
 
     // 获取权限信息

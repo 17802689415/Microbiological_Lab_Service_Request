@@ -46,11 +46,12 @@ export default {
     data(){
         return{
             value:0,
-            username:sessionStorage.getItem('username')
+            username:''
         }
     },
     created(){
       this.init()
+      this.username=sessionStorage.getItem('username')
       console.log(this.username)
     },
     methods:{

@@ -47,12 +47,12 @@ export default {
             formData.append('username',this.ruleForm.username)
             formData.append('password',this.ruleForm.password)
             this.$axios.post('http://localhost:8099/lab/login',formData).then(function (res){
-                // console.log(res)
+                console.log(res)
                 if(res.data.code==200){
                     console.log(JSON.stringify(that.ruleForm.username))
                     // localStorage.setItem('username',that.ruleForm.username)
                     sessionStorage.setItem('username',that.ruleForm.username)
-                    that.$router.push('myHome')
+                    that.$router.push('mainView')
                 }else{
                     alert(res.data.msg)
                 }

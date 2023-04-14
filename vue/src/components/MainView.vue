@@ -4,8 +4,8 @@
     <div class="clearfix">
     <b>{{ $t('urgentItem') }}</b>
   </div>
-    <div v-for="o in urgentList" :key="o.index" class="text item">
-      <span>{{ $t('item') }}---{{ o.item }}</span>
+    <div v-for="o in urgentList" :key="o.id" class="text item">
+      <span>{{ $t('item') }}---<el-tag class="tag">{{ o.caseNum }} / {{ o.testType }} / {{ o.applyDate }}</el-tag></span>
     </div>
   </el-card>
 
@@ -13,10 +13,14 @@
   <el-divider content-position="right">{{ $t('testList') }}</el-divider>
   <div class="block">
     <el-timeline>
-      <el-timeline-item v-for="o in waitList" :key="o.index" :timestamp="o.date" placement="top">
+      <el-timeline-item v-for="o in waitList" :key="o.id" :timestamp="o.beginDate" placement="top">
         <el-card>
-          <h4>{{ $t('inspector') }}:{{ o.user }}</h4>
-          <p>{{ $t('item') }}:{{ o.item }}</p>
+          <h4>{{ $t('inspector') }}:{{ o.jobId }}</h4>
+          <p>{{ $t('testType') }}:{{ o.testType }}</p>
+          <p>{{ $t('applyNo') }}:{{ o.caseNum }}</p>
+          <p>{{ $t('item') }}:
+            <el-tag v-for="o in itemList" :key="o.id">{{ o.testItem }}</el-tag>
+          </p>
           <p>{{ $t('rtbd') }}</p>
         </el-card>
       </el-timeline-item>
@@ -31,36 +35,47 @@ export default {
     name:'mainView',
     data(){
       return{
-            urgentList:[{index:0,item:'test01'},{index:1,item:'test02'}],
-            waitList:[{index:0,date:'2023 3 1',user:'zl',item:'test01'},{index:1,date:'2023 3 5',user:'zl',item:'test01'},{index:2,date:'2023 3 10',user:'zl',item:'test01'},
-            {index:3,date:'2023 3 12',user:'zl',item:'test01'},{index:4,date:'2023 3 15',user:'zl',item:'test01'},{index:5,date:'2023 3 19',user:'zl',item:'test01'}
-          ]
+            urgentList:[],
+            waitList:[],
+            itemList:[]
       }
     },
     created(){
-      // this.init()
+      this.init()
     },
     methods:{
-      // init(){
-      //   let that = this
-      //   this.$axios.post('http://localhost:8099/lab/selectUrgentCase').then(function (res){
-      //           if(res.data.code==1){
-      //               that.urgentList = res.data.data;
-      //               console.log(res)
-      //               for (let i = 0; i <= res.data.data.length; i++) {
-      //                 that.data.push({
-      //                   key: i,
-      //                   label: res.data.data[i].testItem,
-      //                 });
-      //               }
-      //           }
-      //       })
-      // },
-    }
+      init(){
+        let that = this
+        this.$axios.post('http://localhost:8099/lab/selectUrgentCase').then(function (res){
+                if(res.data.code==1){
+                    that.urgentList = res.data.data;
+                    console.log(res)
+                   
+                }
+            })
+        this.$axios.post('http://localhost:8099/lab/selectWaitCase').then(function (res){
+            if(res.data.code==1){
+                that.waitList = res.data.data;
+                that.waitList.forEach(item => {
+                  let formData = new FormData()
+                  formData.append('caseNum',item.caseNum)
 
+                  that.$axios.post('http://localhost:8099/lab/selectItem',formData).then(function (res){
+                    that.itemList=res.data.data
+                    console.log(res)
+                  })
+                });
+                console.log(res)
+            }
+        })
+
+      }
+    }
 }
 </script>
 
-<style>
-
+<style scoped>
+.tag{
+  margin-top: 5px ;
+}
 </style>

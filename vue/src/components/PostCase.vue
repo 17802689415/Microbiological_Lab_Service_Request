@@ -10,7 +10,7 @@
     <div id="consignor">
         <h6>{{ $t('applyNo') }}:  {{ applyNo }}</h6>
         <h4>{{ $t('consignorInformation') }}</h4>
-        <el-form :model="consignor_info" label-width="150px" class="demo-ruleForm" size="small">
+        <el-form :model="consignor_info" label-width="150px" class="demo-ruleForm" ref="consignorInfo" size="small">
             <el-row>
                 <el-col :span="6">
                     <el-form-item :label="$t('consignorId')" prop="consignorId">
@@ -64,7 +64,7 @@
     </div>
     <div id="sample" v-show="isShow=='SampleTest'">
         <h4>{{ $t('sampleInformation') }}</h4>
-        <el-form :model="sample_info"  label-width="150px" class="demo-ruleForm" size="small">
+        <el-form :model="sample_info"  label-width="150px" class="demo-ruleForm" ref="sampleInfo" size="small">
             <el-form-item :label="$t('testPurpose')" prop="testPurpose">
                 <el-input v-model="sample_info.testPurpose" type="textarea" class="item3"></el-input>
             </el-form-item>
@@ -88,8 +88,8 @@
             <el-form-item :label="$t('sampleTreatment')">
                 <el-radio-group v-model="sample_info.disposal">
                 <el-radio :label="$t('treatment01')" name="type01"></el-radio>
-                <el-radio :label="$t('treatment01')" name="type02"></el-radio>
-                <el-radio :label="$t('treatment01')" name="type03"></el-radio>
+                <el-radio :label="$t('treatment02')" name="type02"></el-radio>
+                <el-radio :label="$t('treatment03')" name="type03"></el-radio>
                 <el-radio :label="$t('other')" name="type04"></el-radio>
                 </el-radio-group>
             </el-form-item>
@@ -347,14 +347,11 @@ export default {
                 return
             }
             let obj={
-                sampleName:this.sample_info.sampleName,
-                applyNum:this.applyNo,
-                model:this.sample_test_info.model,
-                lotNo:this.sample_test_info.lotNo,
+                caseNum:this.applyNo,
                 quantity:this.sample_test_info.quantity,
                 testItem:this.sample_test_info.testItem,
-                wiNo:this.sample_test_info.wiNo,
                 limitValue:this.sample_test_info.limitValue,
+                wino:this.sample_test_info.wiNo,
                 remark:this.sample_test_info.remark,
             }
             this.test_item_list.push(obj)
@@ -363,18 +360,20 @@ export default {
 
         postWaterTestInfo(waterTestInfo){
             let obj={
-                waterNo:this.water_test_info.waterNo,
+                caseNum:this.consignor_info.applyNo,
+                waterNum:this.water_test_info.waterNo,
                 testItem:this.water_test_info.testItem,
-                WINo:this.water_test_info.WINo,
+                wino:this.water_test_info.WINo,
             }
             this.test_item_list.push(obj)
             this.$refs[waterTestInfo].resetFields();
         },
         postCleanroomTestInfo(cleanroomInfo){
             let obj={
+                caseNum:this.consignor_info.applyNo,
                 cleanroomName:this.cleanroom_test_info.cleanroomName,
                 testItem:this.cleanroom_test_info.testItem,
-                WINo:this.cleanroom_test_info.WINo,
+                wino:this.cleanroom_test_info.WINo,
             }
             this.test_item_list.push(obj)
 
@@ -391,29 +390,30 @@ export default {
             
             // 委托人数据
             let consignorInfo = new FormData()
-            consignorInfo.append('applyNum',this.applyNo)
-            consignorInfo.append('consignorId',this.consignor_info.consignorId)
+            consignorInfo.append('caseNum',this.applyNo)
+            consignorInfo.append('jobId',this.consignor_info.consignorId)
             consignorInfo.append('phoneNum',this.consignor_info.phoneNum)
             consignorInfo.append('workCell',this.consignor_info.workCell)
-            consignorInfo.append('department',this.consignor_info.department)
-            consignorInfo.append('applyDate',this.consignor_info.applyDate)
-            consignorInfo.append('sendDate',this.consignor_info.sendDate)
-            consignorInfo.append('urgent',this.consignor_info.urgent)
             // 样品信息
             let sampleInfo = new FormData()
-            sampleInfo.append('applyNum',this.applyNo)
-            sampleInfo.append('testPurpose',this.sample_info.testPurpose)
+            sampleInfo.append('caseNum',this.applyNo)
             sampleInfo.append('sampleName',this.sample_info.sampleName)
-            sampleInfo.append('sampleQuantity',this.sample_info.sampleQuantity)
-            sampleInfo.append('batchNo',this.sample_info.batchNo)
+            sampleInfo.append('testPurpose',this.sample_info.testPurpose)
+            sampleInfo.append('totalQuantity',this.sample_info.sampleQuantity)
+            sampleInfo.append('model',this.sample_test_info.model)
+            sampleInfo.append('batchNum',this.sample_info.batchNo)
             sampleInfo.append('disposal',this.sample_info.disposal)
             sampleInfo.append('storageCondition',this.sample_info.storageCondition)
+            sampleInfo.append('sendSampleDate',this.consignor_info.sendDate)
             //mycaseTable信息
             let caseTable = new FormData()
-            caseTable.append('applyNum',this.applyNo)
+            caseTable.append('caseNum',this.applyNo)
             caseTable.append('testType',this.isShow)
-            caseTable.append('consignor',this.consignor_info.consignorId)
-            caseTable.append('sendDate',this.consignor_info.sendDate)
+            caseTable.append('applyDate',this.consignor_info.applyDate)
+            caseTable.append('urgent',this.consignor_info.urgent)
+            caseTable.append('step','submitted')
+            caseTable.append('status','unfinished')
+            
             
             
             that.$axios.post('http://localhost:8099/lab/postSampleTestInfo',this.test_item_list).then(function (res){
@@ -445,7 +445,21 @@ export default {
             })
 
             alert('success')
-        }
+            this.$refs['consignorInfo'].resetFields();
+            if(this.isShow=='Cleanroom Environment Test'){
+                this.$refs['cleanroomInfo'].resetFields();
+            }
+            if(this.isShow=='Purified Water Test'){
+                this.$refs['waterTestInfo'].resetFields();
+            }
+            if(this.isShow=='SampleTest'){
+                this.$refs['sampleTestInfo'].resetFields();
+                this.$refs['sampleInfo'].resetFields();
+            }
+            this.test_item_list=[]   
+            
+        },
+
         
     }
 }
