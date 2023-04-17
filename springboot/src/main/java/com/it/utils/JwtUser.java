@@ -1,6 +1,7 @@
 package com.it.utils;
 
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.it.pojo.UserInfo;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -9,19 +10,19 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
-/**
- * @program com.example.network.framework.jwt
- * @description jwtUserInfo
- * @auther Mr.Xiong
- * @create 2021-08-14 13:17:07
- */
 
 public class JwtUser implements UserDetails {
     private Integer id;
     private String username;
     private String password;
-    private Collection<? extends GrantedAuthority> authorities;
+    private List<String> permissions;
+//    private Collection<? extends GrantedAuthority> authorities;
+    @JSONField(serialize = false)
+    private List<GrantedAuthority> authorities;
+
 
     public Integer getId() {
         return id;
@@ -39,21 +40,22 @@ public class JwtUser implements UserDetails {
         this.password = password;
     }
 
-    public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
-        this.authorities = authorities;
-    }
 
-    public JwtUser(UserInfo login) {
+
+    public JwtUser(UserInfo login, List<String> list) {
         id = login.getId();
         username = login.getUsername();
         password = new BCryptPasswordEncoder().encode(login.getPassword());
-        //这里说明一下，必须要加上ROLE_开头，或者在数据库直接以这个开头
-        authorities = Collections.singleton(new SimpleGrantedAuthority("ROLE_"+login.getRole()));
+        permissions = list;
     }
 
     // 获取权限信息
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (authorities!=null){
+            return authorities;
+        }
+        authorities = permissions.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
         return authorities;
     }
 

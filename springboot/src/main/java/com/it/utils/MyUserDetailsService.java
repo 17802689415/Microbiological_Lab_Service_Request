@@ -5,6 +5,7 @@ import com.it.pojo.UserInfo;
 import com.it.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,16 +13,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 
-/**
- * @program com.example.network.framework.security
- * @description 系统用户登录验证对象
- * @auther Mr.Xiong
- * @create 2021-05-13 21:45:39
- */
+
 @Service
 public class MyUserDetailsService implements UserDetailsService {
 
@@ -37,9 +34,18 @@ public class MyUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("用戶不存在");
         }
 
-        List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_" + one.getRole()));
+//        List<GrantedAuthority> authorities = new ArrayList<>();
+//        authorities.add(new SimpleGrantedAuthority("ROLE_"+one.getRole()));
+        List<String> list = new ArrayList<>();
+        list.add(one.getRole());
+        return new JwtUser(one,list);
+    }
 
-        return new JwtUser(one);
+
+    public List<GrantedAuthority> getAuthority(String username){
+        LambdaQueryWrapper<UserInfo> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(UserInfo::getUsername,username);
+        UserInfo one = loginService.getOne(queryWrapper);
+        return AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_"+one.getRole());
     }
 }

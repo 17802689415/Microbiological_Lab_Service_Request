@@ -42,7 +42,7 @@ public class PostCaseController {
     private RedisCache redisCache;
 
     @GetMapping("/getNo")
-//    @PreAuthorize("hasAuthority('ROLE_admin')")
+    @PreAuthorize("hasAuthority('ROLE_admin')")
     @ResponseBody
     public R<String> getNo(){
         StringBuffer shortBuffer = new StringBuffer();

@@ -17,7 +17,7 @@
         />
     </el-select>
     <el-button type="warning" size="small" @click="search" class="m-2"><el-icon><Search /></el-icon>{{ $t('query') }}</el-button>
-    <el-button @click="toggleSelection()" class="m-2" size="small">{{ $t('batchReception') }}</el-button>
+    
   </div>
   <div id="allCase">
         <el-table
@@ -37,7 +37,7 @@
             style="width: 100%;">
             <el-table-column type="selection" width="55" />
             <el-table-column
-            prop="applyNum"
+            prop="caseNum"
             :label="$t('applyNo')"
             >
             </el-table-column>
@@ -47,7 +47,7 @@
             >
             </el-table-column>
             <el-table-column
-            prop="consignor"
+            prop="jobId"
             :label="$t('consignorId')">
             </el-table-column>
             <el-table-column
@@ -57,10 +57,10 @@
                 <el-button type="warning" size="small" @click="view(scope.row)"><el-icon><View /></el-icon>{{ $t('view') }}</el-button>
             </template>
             </el-table-column>
-            <el-table-column
+            <!-- <el-table-column
             prop="sendDate"
             :label="$t('sendDate')">
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column
             prop="status"
             :label="$t('status')">
@@ -115,7 +115,9 @@ export default {
             let pageInfo = new FormData()
             pageInfo.append('page',this.currentPage)
             pageInfo.append('pageSize',this.pageSize)
-            that.$axios.post('http://localhost:8099/lab/selectCase',pageInfo).then(function (res){
+            pageInfo.append('username',sessionStorage.getItem('username'))
+            that.$axios.post('http://localhost:8099/lab/selectMyCase',pageInfo).then(function (res){
+                console.log(res)
                 if(res.data.code==1){
                     that.tableData = res.data.data.records;
                     that.total = res.data.data.total;
@@ -129,14 +131,19 @@ export default {
             console.log(row)
         },
         search(){
+            let that = this
             console.log(this.typeValue)
             console.log(this.statusValue)
-            let formData = new FormData()
-            formData.append('typeValue',this.typeValue)
-            formData.append('statusValue',this.statusValue)
-            this.$axios.post('http://localhost:8099/lab/selectMyCaseBy',formData).then(function (res){
+            let pageInfo = new FormData()
+            pageInfo.append('page',this.currentPage)
+            pageInfo.append('pageSize',this.pageSize)
+            pageInfo.append('username',sessionStorage.getItem('username'))
+            pageInfo.append('typeValue',this.typeValue)
+            pageInfo.append('statusValue',this.statusValue)
+            this.$axios.post('http://localhost:8099/lab/selectMyCaseBy',pageInfo).then(function (res){
                 if(res.data.code==1){
-                    console.log(res)
+                    that.tableData = res.data.data.records;
+                    that.total = res.data.data.total;
                 }
             })
         },
@@ -154,9 +161,7 @@ export default {
             this.multipleSelection=val
             console.log(this.multipleSelection)
         },
-        toggleSelection(){
-            console.log(this.multipleSelection)
-        }
+
     }
 
 }

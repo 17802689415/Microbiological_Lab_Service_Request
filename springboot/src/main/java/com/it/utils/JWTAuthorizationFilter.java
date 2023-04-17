@@ -33,6 +33,8 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     @Autowired
     private RedisCache redisCache;
 
+    @Autowired
+    private MyUserDetailsService myUserDetailsService;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         //获取token
@@ -50,6 +52,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
             Claims claims = JwtTokenUtils.parseJWT(token);
             userid = claims.getSubject();
             System.out.println(3+userid);
+            System.out.println(myUserDetailsService.getAuthority(userid));
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("token非法");
@@ -63,8 +66,9 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
         }
         //存入SecurityContextHolder
         //TODO 获取权限信息封装到Authentication中
+
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginUser,null,null);
+                new UsernamePasswordAuthenticationToken(loginUser,null,myUserDetailsService.getAuthority(userid));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
         //放行
         filterChain.doFilter(request, response);

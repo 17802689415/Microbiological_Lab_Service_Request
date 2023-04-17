@@ -1,24 +1,25 @@
 <template>
-  <div id="query">
-    <el-select v-model="typeValue" class="m-2" :placeholder="$t('testType')" size="small">
-        <el-option
-        v-for="item in options_type"
-        :key="item"
-        :label="$t(item)"
-        :value="item"
-        />
-    </el-select>
-    <el-select v-model="statusValue" class="m-2" :placeholder="$t('status')" size="small">
-        <el-option
-        v-for="item in options_status"
-        :key="item"
-        :label="$t(item)"
-        :value="item"
-        />
-    </el-select>
-    <el-button type="warning" size="small" @click="search" class="m-2"><el-icon><Search /></el-icon>{{ $t('query') }}</el-button>
-    <div></div>
-    <el-select v-model="testUserValue" class="m-2" :placeholder="$t('inspector')" size="small">
+    <div id="query">
+        <el-select v-model="typeValue" class="m-2" :placeholder="$t('testType')" size="small">
+            <el-option
+            v-for="item in options_type"
+            :key="item"
+            :label="$t(item)"
+            :value="item"
+            />
+        </el-select>
+        <el-select v-model="statusValue" class="m-2" :placeholder="$t('status')" size="small">
+            <el-option
+            v-for="item in options_status"
+            :key="item"
+            :label="$t(item)"
+            :value="item"
+            />
+        </el-select>
+        <el-button type="warning" size="small" @click="search" class="m-2"><el-icon><Search /></el-icon>{{ $t('query') }}</el-button>
+    </div>
+    <div>
+        <el-select v-model="testUserValue" class="m-2" :placeholder="$t('inspector')" size="small">
         <el-option
         v-for="item in testUser"
         :key="item"
@@ -27,7 +28,13 @@
         />
     </el-select>
     <el-button @click="toggleSelection()" class="m-2" size="small">{{ $t('batchAllocation') }}</el-button>
-  </div>
+    </div>
+    
+    <div>
+        <el-button @click="toggleSelection2()" class="m-2" size="small">{{ $t('batchReception') }}</el-button>
+    </div>
+    
+
     
 
   <div id="allCase">
@@ -152,6 +159,9 @@ export default {
         toggleSelection(){
             console.log(this.multipleSelection)
             console.log(this.testUserValue)
+        },
+        toggleSelection2(){
+            console.log(this.multipleSelection)
         }
     }
 

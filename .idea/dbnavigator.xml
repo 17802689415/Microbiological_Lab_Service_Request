@@ -47,6 +47,7 @@ select * from apply_form;
 insert into apply_form (id,case_num,test_type,apply_date,urgent,step,status) values (0,'777777','sampleTest','2023-03-23',true,'提交','正常');
 
 drop table consignor_form;
+drop table consignor_info;
 create table consignor_info(
 id int primary key,
 case_num varchar(20),
