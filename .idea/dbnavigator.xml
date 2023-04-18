@@ -44,7 +44,7 @@ update_time timestamp default CURRENT_TIMESTAMP
 alter table apply_form modify id int auto_increment;
 alter table apply_form alter column update_time set default CURRENT_TIMESTAMP;
 select * from apply_form;
-insert into apply_form (id,case_num,test_type,apply_date,urgent,step,status) values (0,'777777','sampleTest','2023-03-23',true,'提交','正常');
+insert into apply_form (id,case_num,test_type,apply_date,urgent,step,status) values (12,'dnKbkSQ5','waterTest','2023-03-23',true,'提交','unfinished');
 
 drop table consignor_form;
 drop table consignor_info;
@@ -58,6 +58,16 @@ work_cell varchar(30)
 alter table consignor_info modify id int auto_increment;
 select * from consignor_info ;
 insert into consignor_info values (0,'777777','3554536','17802689415','imed');
+insert into consignor_info values (2,'FWZ7W6zc','3554536','17802689415','imed');
+insert into consignor_info values (3,'mzJz7bmr','3554536','17802689415','imed');
+insert into consignor_info values (4,'wUIKzoTf','3554536','17802689415','imed');
+insert into consignor_info values (5,'tnKbkSQi','3554536','17802689415','imed');
+insert into consignor_info values (6,'pnKbkSQ5','3554536','17802689415','imed');
+insert into consignor_info values (7,'xnKbkSQ5','3554536','17802689415','imed');
+insert into consignor_info values (8,'anKbkSQ5','3554536','17802689415','imed');
+insert into consignor_info values (9,'bnKbkSQ5','3554536','17802689415','imed');
+insert into consignor_info values (10,'cnKbkSQ5','3554536','17802689415','imed');
+insert into consignor_info values (11,'dnKbkSQ5','3554536','17802689415','imed');
 
 drop table sample_form;
 drop table sample_test_info;

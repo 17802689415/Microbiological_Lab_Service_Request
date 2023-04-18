@@ -1,4 +1,4 @@
-package com.it.utils;
+package com.it.pojo;
 
 public class PageCommon {
     private int page;

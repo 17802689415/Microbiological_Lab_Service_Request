@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.it.pojo.*;
 import com.it.service.*;
-import com.it.utils.PageCommon;
+import com.it.pojo.PageCommon;
 import com.it.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +35,8 @@ public class SelectCaseController {
     @Autowired
     private UserInfoService userInfoService;
 
+
+
     @PostMapping("/selectUrgentCase")
     @ResponseBody
     public R<List<ApplyForm>> selectUrgentCase(){
@@ -51,14 +53,14 @@ public class SelectCaseController {
     public R<List<InspectorTaskInfo>> selectWaitCase(){
 
         LambdaQueryWrapper<InspectorTaskInfo> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(InspectorTaskInfo::getStatus,"待检测");
+        queryWrapper.eq(InspectorTaskInfo::getStatus,"待检测").or().eq(InspectorTaskInfo::getStatus,"检测中");
         List<InspectorTaskInfo> list = inspectorTaskInfoService.list(queryWrapper);
         return R.success(list,1);
     }
 
-    @PostMapping("/selectItem")
+    @PostMapping("/selectSampleTestInfo")
     @ResponseBody
-    public R<List<SampleTestInfo>> selectItem(String caseNum){
+    public R<List<SampleTestInfo>> selectSampleTestInfo(String caseNum){
 
         LambdaQueryWrapper<SampleTestInfo> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(SampleTestInfo::getCaseNum,caseNum);
@@ -141,4 +143,65 @@ public class SelectCaseController {
         List<ConsignorInfo> list = consignorInfoService.list(queryWrapper);
         return R.success(list,1);
     }
+
+
+    @PostMapping("/selectHandleCase")
+    @ResponseBody
+    public R<Page> selectHandleCase(PageCommon pageCommon){
+        Page pageInfo = new Page(pageCommon.getPage(),pageCommon.getPageSize());
+        List list = new ArrayList();
+
+        LambdaQueryWrapper<ApplyForm> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.and(i -> i.like(ApplyForm::getTestType,pageCommon.getTypeValue()).likeRight(ApplyForm::getStatus,pageCommon.getStatusValue()));
+        Page page = applyFormService.page(pageInfo, queryWrapper);
+
+        for (ApplyForm applyForm : applyFormService.list(queryWrapper)) {
+            MyCaseCommon myCaseCommon = new MyCaseCommon();
+            myCaseCommon.setCaseNum(applyForm.getCaseNum());
+            myCaseCommon.setStatus(applyForm.getStatus());
+            myCaseCommon.setTestType(applyForm.getTestType());
+
+            LambdaQueryWrapper<ConsignorInfo> queryWrapper2 = new LambdaQueryWrapper<>();
+            queryWrapper2.eq(ConsignorInfo::getCaseNum,applyForm.getCaseNum());
+            for (ConsignorInfo consignorInfo : consignorInfoService.list(queryWrapper2)) {
+
+                myCaseCommon.setJobId(consignorInfo.getJobId());
+                list.add(myCaseCommon);
+            }
+        }
+        page.setRecords(list);
+
+        return R.success(page,1);
+    }
+
+    @PostMapping("/selectHandleCaseBy")
+    @ResponseBody
+    public R<Page> selectHandleCaseBy(PageCommon pageCommon){
+        Page pageInfo = new Page(pageCommon.getPage(),pageCommon.getPageSize());
+        List list = new ArrayList();
+
+        LambdaQueryWrapper<ApplyForm> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.and(i -> i.like(ApplyForm::getTestType,pageCommon.getTypeValue()).likeRight(ApplyForm::getStatus,pageCommon.getStatusValue()));
+        Page page = applyFormService.page(pageInfo, queryWrapper);
+
+        for (ApplyForm applyForm : applyFormService.list(queryWrapper)) {
+            MyCaseCommon myCaseCommon = new MyCaseCommon();
+            myCaseCommon.setCaseNum(applyForm.getCaseNum());
+            myCaseCommon.setStatus(applyForm.getStatus());
+            myCaseCommon.setTestType(applyForm.getTestType());
+
+            LambdaQueryWrapper<ConsignorInfo> queryWrapper2 = new LambdaQueryWrapper<>();
+            queryWrapper2.eq(ConsignorInfo::getCaseNum,applyForm.getCaseNum());
+            for (ConsignorInfo consignorInfo : consignorInfoService.list(queryWrapper2)) {
+
+                myCaseCommon.setJobId(consignorInfo.getJobId());
+                list.add(myCaseCommon);
+            }
+        }
+        page.setRecords(list);
+        return R.success(page,1);
+    }
+
+
+
 }

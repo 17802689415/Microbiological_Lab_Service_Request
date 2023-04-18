@@ -1,21 +1,14 @@
 package com.it.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.it.pojo.*;
 import com.it.service.*;
-import com.it.utils.MyUserDetailsService;
-import com.it.utils.PageCommon;
+import com.it.pojo.PageCommon;
 import com.it.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 //@CrossOrigin

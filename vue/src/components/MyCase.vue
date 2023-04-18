@@ -54,8 +54,10 @@
             prop="testInfo"
             :label="$t('testInfo')">
             <template #default="scope"> 
-                <el-button type="warning" size="small" @click="view(scope.row)"><el-icon><View /></el-icon>{{ $t('view') }}</el-button>
+                <el-button type="warning" size="small" @click="view(scope.row)"><el-icon><View /></el-icon>{{ $t('view') }}</el-button>   
+                
             </template>
+            
             </el-table-column>
             <!-- <el-table-column
             prop="sendDate"
@@ -84,6 +86,17 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         />
+        <el-drawer v-model="drawer" title="Test Info">
+            <div v-for="o in viewItem" :key="o.id">
+                <p>testItem:{{ o.testItem }}</p>
+                <p>quantity:{{ o.quantity }}</p>
+                <p>limitValue:{{ o.limitValue }}</p>
+                <p>wino:{{ o.wino }}</p>
+                <p>remark:{{ o.remark }}</p>
+                <el-divider />
+            </div>
+            
+        </el-drawer>
     </div>
 </template>
 
@@ -101,9 +114,11 @@ export default {
             typeValue:'',
             statusValue:'',
             currentPage:1,
-            pageSize:1,
+            pageSize:10,
             total:0,
-            multipleSelection:[]
+            multipleSelection:[],
+            drawer:false,
+            viewItem:[]
         }
     },
     created(){
@@ -116,7 +131,7 @@ export default {
             pageInfo.append('page',this.currentPage)
             pageInfo.append('pageSize',this.pageSize)
             pageInfo.append('username',sessionStorage.getItem('username'))
-            that.$axios.post('http://localhost:8099/lab/selectMyCase',pageInfo).then(function (res){
+            this.$axios.post('http://localhost:8099/lab/selectMyCase',pageInfo).then(function (res){
                 console.log(res)
                 if(res.data.code==1){
                     that.tableData = res.data.data.records;
@@ -126,6 +141,20 @@ export default {
         },
         view(row){
             console.log(row)
+            console.log(row.testType)
+            let that = this
+            this.drawer=true
+            let formData = new FormData()
+            formData.append('caseNum',row.caseNum)
+            if(row.testType=='sampleTest'){
+                this.$axios.post('http://localhost:8099/lab/selectSampleTestInfo',formData).then(function (res){
+                    console.log(res)
+                    if(res.data.code==1){
+                        that.viewItem=res.data.data
+                    }
+                })
+            }
+            
         },
         action(row){
             console.log(row)

@@ -27,10 +27,12 @@
         :value="item"
         />
     </el-select>
+    <!-- 批量分配 -->
     <el-button @click="toggleSelection()" class="m-2" size="small">{{ $t('batchAllocation') }}</el-button>
     </div>
     
     <div>
+        <!-- 批量接收 -->
         <el-button @click="toggleSelection2()" class="m-2" size="small">{{ $t('batchReception') }}</el-button>
     </div>
     
@@ -56,7 +58,7 @@
             style="width: 100%;">
             <el-table-column type="selection" width="55" />
             <el-table-column
-            prop="applyNo"
+            prop="caseNum"
             :label="$t('applyNo')"
             >
             </el-table-column>
@@ -66,7 +68,7 @@
             >
             </el-table-column>
             <el-table-column
-            prop="consignor"
+            prop="jobId"
             :label="$t('consignorId')">
             </el-table-column>
             <el-table-column
@@ -76,10 +78,10 @@
                 <el-button type="warning" size="small" @click="view(scope.row)"><el-icon><View /></el-icon>{{ $t('view') }}</el-button>
             </template>
             </el-table-column>
-            <el-table-column
+            <!-- <el-table-column
             prop="sendDate"
             :label="$t('sendDate')">
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column
             prop="status"
             :label="$t('status')">
@@ -103,6 +105,17 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         />
+        <el-drawer v-model="drawer" title="Test Info">
+            <div v-for="o in viewItem" :key="o.id">
+                <p>testItem:{{ o.testItem }}</p>
+                <p>quantity:{{ o.quantity }}</p>
+                <p>limitValue:{{ o.limitValue }}</p>
+                <p>wino:{{ o.wino }}</p>
+                <p>remark:{{ o.remark }}</p>
+                <el-divider />
+            </div>
+            
+        </el-drawer>
     </div>
 </template>
 
@@ -113,29 +126,57 @@ export default {
         return{
             isBorder:true,
             tableData:[
-                {
-                    applyNo:'123',
-                    testType:'sampleTest',
-                    consignor:'zl',
-                    sendDate:'2023 3 1',
-                    status:'finished',
-                }
+             
             ],
             options_type:['sampleTest','waterTest','cleanroomTest'],
             options_status:['finished','unfinished'],
             testUser:['zl','leo'],
             typeValue:'',
-            statusValue:'',
+            statusValue:'unfinished',
             testUserValue:'',
             currentPage:1,
-            pageSize:1,
+            pageSize:10,
             total:0,
-            multipleSelection:[]
+            multipleSelection:[],
+            drawer:false,
+            viewItem:[]
         }
     },
+    created(){
+        this.init()
+    },
     methods:{
+        init(){
+            let that = this
+            let pageInfo = new FormData()
+            pageInfo.append('page',this.currentPage)
+            pageInfo.append('pageSize',this.pageSize)
+            pageInfo.append('typeValue',this.typeValue)
+            pageInfo.append('statusValue',this.statusValue)
+            this.$axios.post('http://localhost:8099/lab/selectHandleCase',pageInfo).then(function (res){
+                console.log(res)
+                if(res.data.code==1){
+                    that.tableData = res.data.data.records;
+                    that.total = res.data.data.total;
+                }
+            })
+        },
         view(row){
             console.log(row)
+            console.log(row)
+            console.log(row.testType)
+            let that = this
+            this.drawer=true
+            let formData = new FormData()
+            formData.append('caseNum',row.caseNum)
+            if(row.testType=='sampleTest'){
+                this.$axios.post('http://localhost:8099/lab/selectSampleTestInfo',formData).then(function (res){
+                    console.log(res)
+                    if(res.data.code==1){
+                        that.viewItem=res.data.data
+                    }
+                })
+            }
         },
         action(row){
             console.log(row)
@@ -143,6 +184,20 @@ export default {
         search(){
             console.log(this.typeValue)
             console.log(this.statusValue)
+            let that = this
+            console.log(this.typeValue)
+            console.log(this.statusValue)
+            let pageInfo = new FormData()
+            pageInfo.append('page',this.currentPage)
+            pageInfo.append('pageSize',this.pageSize)
+            pageInfo.append('typeValue',this.typeValue)
+            pageInfo.append('statusValue',this.statusValue)
+            this.$axios.post('http://localhost:8099/lab/selectHandleCaseBy',pageInfo).then(function (res){
+                if(res.data.code==1){
+                    that.tableData = res.data.data.records;
+                    that.total = res.data.data.total;
+                }
+            })
         },
         handleSizeChange(val){
             console.log(val)
@@ -159,9 +214,47 @@ export default {
         toggleSelection(){
             console.log(this.multipleSelection)
             console.log(this.testUserValue)
+            if(this.testUserValue==''){
+                alert("请选择操作员")
+                return
+            }
+            let that = this
+            let caseList =[]
+            this.multipleSelection.forEach(element => {
+                caseList.push(element.caseNum)
+            });
+            console.log(caseList)
+            let formData = new FormData()
+            formData.append('caseList',caseList)
+            formData.append('testUserValue',this.testUserValue)
+            this.$axios.post('http://localhost:8099/lab/batchAllocation',formData).then(function (res){
+                if(res.data.code==1){
+                    console.log("测试")
+                    alert("success")
+                    that.init()
+                }
+            })
+
         },
         toggleSelection2(){
             console.log(this.multipleSelection)
+            console.log(sessionStorage.getItem('username'))
+            let that = this
+            let caseList =[]
+            this.multipleSelection.forEach(element => {
+                caseList.push(element.caseNum)
+            });
+            console.log(caseList)
+            let formData = new FormData()
+            formData.append('caseList',caseList)
+            formData.append('testUserValue',sessionStorage.getItem('username'))
+            this.$axios.post('http://localhost:8099/lab/batchReception',formData).then(function (res){
+                if(res.data.code==1){
+                    console.log("测试")
+                    alert("success")
+                    that.init()
+                }
+            })
         }
     }
 

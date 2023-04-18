@@ -60,7 +60,7 @@ export default {
                   let formData = new FormData()
                   formData.append('caseNum',item.caseNum)
 
-                  that.$axios.post('http://localhost:8099/lab/selectItem',formData).then(function (res){
+                  that.$axios.post('http://localhost:8099/lab/selectSampleTestInfo',formData).then(function (res){
                     that.itemList=res.data.data
                     console.log(res)
                   })
