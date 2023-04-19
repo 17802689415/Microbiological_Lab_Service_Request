@@ -35,6 +35,8 @@ create table apply_form(
 id int primary key,
 case_num varchar(20),
 test_type varchar(50),
+consignor_id varchar(20),
+inspector_id varchar(20),
 apply_date date,
 urgent boolean,
 step varchar(30),
@@ -44,7 +46,7 @@ update_time timestamp default CURRENT_TIMESTAMP
 alter table apply_form modify id int auto_increment;
 alter table apply_form alter column update_time set default CURRENT_TIMESTAMP;
 select * from apply_form;
-insert into apply_form (id,case_num,test_type,apply_date,urgent,step,status) values (12,'dnKbkSQ5','waterTest','2023-03-23',true,'提交','unfinished');
+insert into apply_form (case_num,test_type,consignor_id,inspector_id,apply_date,urgent,step,status) values ('12dnKbkSQ5','waterTest','3554536','034534','2023-03-23',true,'提交','unfinished');
 
 drop table consignor_form;
 drop table consignor_info;
@@ -148,7 +150,24 @@ role varchar(20),
 step_index int
 );
 alter table process modify id int auto_increment;
-select * from process;]]></console>
+select * from process;
+
+drop table files;
+create table files(
+id int primary key,
+case_num varchar(20),
+files_name varchar(255),
+type varchar(255),
+size double,
+url varchar(255),
+md5 varchar(255),
+enable boolean,
+is_delete boolean,
+create_time timestamp default CURRENT_TIMESTAMP
+);
+alter table files modify id int auto_increment;
+select * from files;
+delete from files;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">

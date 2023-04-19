@@ -6,11 +6,29 @@ public class ApplyForm implements Serializable {
     private int id;
     private String caseNum;
     private String testType;
+    private String consignorId;
+    private String inspectorId;
     private String applyDate;
     private boolean urgent;
     private String step;
     private String status;
     private String updateTime;
+
+    public String getConsignorId() {
+        return consignorId;
+    }
+
+    public void setConsignorId(String consignorId) {
+        this.consignorId = consignorId;
+    }
+
+    public String getInspectorId() {
+        return inspectorId;
+    }
+
+    public void setInspectorId(String inspectorId) {
+        this.inspectorId = inspectorId;
+    }
 
     public int getId() {
         return id;

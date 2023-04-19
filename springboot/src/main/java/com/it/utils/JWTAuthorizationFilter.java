@@ -37,6 +37,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
     private MyUserDetailsService myUserDetailsService;
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        System.out.println(request);
         //获取token
         String token = request.getHeader("Authorization");
         System.out.println("1"+token);

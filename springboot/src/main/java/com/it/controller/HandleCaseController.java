@@ -21,7 +21,6 @@ import java.util.Date;
 import java.util.List;
 
 @Slf4j
-//@CrossOrigin
 @RestController
 @RequestMapping("/lab")
 public class HandleCaseController {

@@ -47,7 +47,7 @@
             >
             </el-table-column>
             <el-table-column
-            prop="jobId"
+            prop="consignorId"
             :label="$t('consignorId')">
             </el-table-column>
             <el-table-column
@@ -169,7 +169,7 @@ export default {
             pageInfo.append('username',sessionStorage.getItem('username'))
             pageInfo.append('typeValue',this.typeValue)
             pageInfo.append('statusValue',this.statusValue)
-            this.$axios.post('http://localhost:8099/lab/selectMyCaseBy',pageInfo).then(function (res){
+            this.$axios.post('http://localhost:8099/lab/selectMyCase',pageInfo).then(function (res){
                 if(res.data.code==1){
                     that.tableData = res.data.data.records;
                     that.total = res.data.data.total;
@@ -189,6 +189,7 @@ export default {
         handleSelectionChange(val){
             this.multipleSelection=val
             console.log(this.multipleSelection)
+            this.init()
         },
 
     }

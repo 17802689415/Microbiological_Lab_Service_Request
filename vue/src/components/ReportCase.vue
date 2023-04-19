@@ -18,33 +18,38 @@
 
   </div>
     <el-row>
-        <el-col :span="6" v-for="o in list" :key="o.index" :offset=1>
-                <el-card :body-style="{ padding: '0px' }">
+        <el-col :span="4" v-for="o in list" :key="o.index" :offset=1>
+                <el-card :body-style="{ padding: '0px' }" class="card">
                 <div style="padding: 14px;margin: auto;width: 200px;">
                     <span>{{ o.testNo }}</span>
-                    <div>{{ $t('') }}
+                    <div>
                         <span>{{ $t('consignorId') }}:{{ o.consignorId }}</span>
                         <br>
-                        <sapn>{{ $t('testType') }}:{{ o.testTypeValue }}</sapn>
+                        <span>{{ $t('testType') }}:{{ o.testTypeValue }}</span>
                         <br>
                         <el-upload
                         class="upload"
-                            action="http://localhost:8080/#/reportCase"
+                            action="http://localhost:8099/lab/upload"
+                            :headers="header"
+                            :on-success="upload"
+                            :on-progress="getCaseNum(o.testNo)"
                             multiple
-                            :limit="3"
+                            :limit="1"
                          
                         >
                         <el-button class="m-2" size="small" type="success" round>{{ $t('upload') }}</el-button>
                         </el-upload>
-                    <el-button type="text" class="button">{{ $t('print') }}</el-button>
                     </div>
                 </div>
                 </el-card>
+                <el-button class="m-2" size="small" type="success" round @click="download()">{{ $t('print') }}</el-button>
+                
         </el-col>
     </el-row>
 </template>
 
 <script>
+
 export default {
     name:'reportCase',
     data(){
@@ -52,6 +57,9 @@ export default {
             testNo:'',
             consignorId:'',
             testTypeValue:'',
+            header:{
+                Authorization:window.sessionStorage.getItem('token')
+            },
             testTypeList:[
                 {index:0,item:'SampleTest'},
                 {index:1,item:'Purified Water Test'},
@@ -62,22 +70,27 @@ export default {
                 {index:1,testNo:'456',consignorId:'3554536',testTypeValue:'sampleTest'},
                 {index:2,testNo:'789',consignorId:'3554536',testTypeValue:'sampleTest'},
                 {index:3,testNo:'159',consignorId:'3554536',testTypeValue:'sampleTest'},
-            ]
+                {index:3,testNo:'159',consignorId:'3554536',testTypeValue:'sampleTest'},
+                {index:3,testNo:'159',consignorId:'3554536',testTypeValue:'sampleTest'},
+            ],
+            url:''
         }
     },
     methods:{
-        // handlePreview(){
+        upload(res){
+            console.log(res)
+            let formData = new FormData()
+            formData.append('caseNum',)
+           
+        },
+        download(url){
+            console.log(url)
+            
+        },
+        getCaseNum(caseNum){
+            console.log(caseNum)
+        }
 
-        // },
-        // handleRemove(file, uploadFiles){
-        //     console.log(file, uploadFiles)
-        // },
-        // beforeRemove(){
-
-        // },
-        // handleExceed(){
-
-        // }
     }
 }
 </script>
@@ -89,5 +102,8 @@ export default {
 }
 .upload{
     margin-top: 10px;
+}
+.card{
+    margin-top:5px
 }
 </style>

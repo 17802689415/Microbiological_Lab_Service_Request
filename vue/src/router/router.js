@@ -10,7 +10,6 @@ import modifyUser from '../components/ModifyUser.vue'
 import addUser from '../components/AddUser.vue'
 import userPremission from '../components/UserPremission.vue'
 import allCase from '../components/AllCase.vue'
-import testInfo from '../components/TestInfo.vue'
 import mainHome from '../components/zl/MainHome.vue'
 import myMain from '../components/zl/MainContainer.vue'
 import mainLogin from '../components/zl/MainLogin.vue'
@@ -40,7 +39,6 @@ const router = createRouter({
         {name:'addUser',path:'/addUser',component:addUser},
         {name:'userPremission',path:'/userPremission',component:userPremission},
         {name:'allCase',path:'/allCase',component:allCase},
-        {name:'testInfo',path:'/testInfo',component:testInfo},
         {name:'mainHome',path:'/mainHome',component:mainHome},
         {name:'myHome',path:'/myHome',component:myHome},
         {name:'myMain',path:'/myMain',component:myMain},

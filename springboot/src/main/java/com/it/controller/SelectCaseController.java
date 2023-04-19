@@ -69,7 +69,7 @@ public class SelectCaseController {
     }
 
 
-    @PostMapping("/selectMyCaseBy")
+    @PostMapping("/selectMyCase")
     @ResponseBody
     public R<Page> selectMyCaseBy(PageCommon pageCommon){
         Page pageInfo = new Page(pageCommon.getPage(),pageCommon.getPageSize());
@@ -79,59 +79,16 @@ public class SelectCaseController {
         queryWrapper.eq(UserInfo::getUsername,pageCommon.getUsername());
         UserInfo one = userInfoService.getOne(queryWrapper);
 
-        LambdaQueryWrapper<ConsignorInfo> queryWrapper1 =new LambdaQueryWrapper<>();
-        queryWrapper1.eq(ConsignorInfo::getJobId,one.getJobId());
+        LambdaQueryWrapper<ApplyForm> queryWrapper1 =new LambdaQueryWrapper<>();
+        queryWrapper1.and(i -> i.like(ApplyForm::getTestType,pageCommon.getTypeValue()).like(ApplyForm::getStatus,pageCommon.getStatusValue()).eq(ApplyForm::getConsignorId,one.getJobId()));
+        
 
-        Page page = consignorInfoService.page(pageInfo, queryWrapper1);
-        System.out.println(page.getRecords());
-        for (ConsignorInfo consignorInfo : consignorInfoService.list(queryWrapper1)) {
-            MyCaseCommon myCaseCommon = new MyCaseCommon();
-            myCaseCommon.setCaseNum(consignorInfo.getCaseNum());
-            myCaseCommon.setJobId(consignorInfo.getJobId());
-            LambdaQueryWrapper<ApplyForm> queryWrapper2 = new LambdaQueryWrapper<>();
-            queryWrapper2.and(i -> i.like(ApplyForm::getTestType,pageCommon.getTypeValue()).like(ApplyForm::getStatus,pageCommon.getStatusValue()).eq(ApplyForm::getCaseNum,consignorInfo.getCaseNum()));
-            for (ApplyForm applyForm : applyFormService.list(queryWrapper2)) {
-                myCaseCommon.setStatus(applyForm.getStatus());
-                myCaseCommon.setTestType(applyForm.getTestType());
-                list.add(myCaseCommon);
-            }
-        }
-        page.setRecords(list);
+        Page page = applyFormService.page(pageInfo, queryWrapper1);
+
         return R.success(page,1);
     }
 
-    @PostMapping("/selectMyCase")
-    @ResponseBody
-    public R<Page> selectMyCase(PageCommon pageCommon){
 
-        System.out.println(pageCommon);
-        Page pageInfo = new Page(pageCommon.getPage(),pageCommon.getPageSize());
-        List list = new ArrayList();
-
-        LambdaQueryWrapper<UserInfo> queryWrapper =new LambdaQueryWrapper<>();
-        queryWrapper.eq(UserInfo::getUsername,pageCommon.getUsername());
-        UserInfo one = userInfoService.getOne(queryWrapper);
-
-        LambdaQueryWrapper<ConsignorInfo> queryWrapper1 =new LambdaQueryWrapper<>();
-        queryWrapper1.eq(ConsignorInfo::getJobId,one.getJobId());
-
-        Page page = consignorInfoService.page(pageInfo, queryWrapper1);
-        System.out.println(page.getRecords());
-        for (ConsignorInfo consignorInfo : consignorInfoService.list(queryWrapper1)) {
-            MyCaseCommon myCaseCommon = new MyCaseCommon();
-            myCaseCommon.setCaseNum(consignorInfo.getCaseNum());
-            myCaseCommon.setJobId(consignorInfo.getJobId());
-            LambdaQueryWrapper<ApplyForm> queryWrapper2 = new LambdaQueryWrapper<>();
-            queryWrapper2.eq(ApplyForm::getCaseNum,consignorInfo.getCaseNum());
-            for (ApplyForm applyForm : applyFormService.list(queryWrapper2)) {
-                myCaseCommon.setStatus(applyForm.getStatus());
-                myCaseCommon.setTestType(applyForm.getTestType());
-                list.add(myCaseCommon);
-            }
-        }
-        page.setRecords(list);
-        return R.success(page,1);
-    }
 
 
     @PostMapping("/selectConsignor")
@@ -149,59 +106,31 @@ public class SelectCaseController {
     @ResponseBody
     public R<Page> selectHandleCase(PageCommon pageCommon){
         Page pageInfo = new Page(pageCommon.getPage(),pageCommon.getPageSize());
-        List list = new ArrayList();
+
 
         LambdaQueryWrapper<ApplyForm> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.and(i -> i.like(ApplyForm::getTestType,pageCommon.getTypeValue()).likeRight(ApplyForm::getStatus,pageCommon.getStatusValue()));
         Page page = applyFormService.page(pageInfo, queryWrapper);
 
-        for (ApplyForm applyForm : applyFormService.list(queryWrapper)) {
-            MyCaseCommon myCaseCommon = new MyCaseCommon();
-            myCaseCommon.setCaseNum(applyForm.getCaseNum());
-            myCaseCommon.setStatus(applyForm.getStatus());
-            myCaseCommon.setTestType(applyForm.getTestType());
-
-            LambdaQueryWrapper<ConsignorInfo> queryWrapper2 = new LambdaQueryWrapper<>();
-            queryWrapper2.eq(ConsignorInfo::getCaseNum,applyForm.getCaseNum());
-            for (ConsignorInfo consignorInfo : consignorInfoService.list(queryWrapper2)) {
-
-                myCaseCommon.setJobId(consignorInfo.getJobId());
-                list.add(myCaseCommon);
-            }
-        }
-        page.setRecords(list);
 
         return R.success(page,1);
     }
 
-    @PostMapping("/selectHandleCaseBy")
+
+
+
+    @PostMapping("/selectAllCase")
     @ResponseBody
-    public R<Page> selectHandleCaseBy(PageCommon pageCommon){
+    public R<Page> selectAllCase(PageCommon pageCommon){
         Page pageInfo = new Page(pageCommon.getPage(),pageCommon.getPageSize());
-        List list = new ArrayList();
+
 
         LambdaQueryWrapper<ApplyForm> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.and(i -> i.like(ApplyForm::getTestType,pageCommon.getTypeValue()).likeRight(ApplyForm::getStatus,pageCommon.getStatusValue()));
         Page page = applyFormService.page(pageInfo, queryWrapper);
 
-        for (ApplyForm applyForm : applyFormService.list(queryWrapper)) {
-            MyCaseCommon myCaseCommon = new MyCaseCommon();
-            myCaseCommon.setCaseNum(applyForm.getCaseNum());
-            myCaseCommon.setStatus(applyForm.getStatus());
-            myCaseCommon.setTestType(applyForm.getTestType());
-
-            LambdaQueryWrapper<ConsignorInfo> queryWrapper2 = new LambdaQueryWrapper<>();
-            queryWrapper2.eq(ConsignorInfo::getCaseNum,applyForm.getCaseNum());
-            for (ConsignorInfo consignorInfo : consignorInfoService.list(queryWrapper2)) {
-
-                myCaseCommon.setJobId(consignorInfo.getJobId());
-                list.add(myCaseCommon);
-            }
-        }
-        page.setRecords(list);
         return R.success(page,1);
     }
-
 
 
 }

@@ -36,7 +36,7 @@
             style="width: 100%;">
             <el-table-column type="selection" width="55" />
             <el-table-column
-            prop="applyNo"
+            prop="caseNum"
             :label="$t('applyNo')"
             >
             </el-table-column>
@@ -46,7 +46,7 @@
             >
             </el-table-column>
             <el-table-column
-            prop="consignor"
+            prop="consignorId"
             :label="$t('consignorId')">
             </el-table-column>
             <el-table-column
@@ -55,10 +55,6 @@
             <template #default="scope"> 
                 <el-button type="warning" size="small" @click="view(scope.row)"><el-icon><View /></el-icon>{{ $t('view') }}</el-button>
             </template>
-            </el-table-column>
-            <el-table-column
-            prop="sendDate"
-            :label="$t('sendDate')">
             </el-table-column>
             <el-table-column
             prop="status"
@@ -83,6 +79,17 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         />
+        <el-drawer v-model="drawer" title="Test Info">
+            <div v-for="o in viewItem" :key="o.id">
+                <p>testItem:{{ o.testItem }}</p>
+                <p>quantity:{{ o.quantity }}</p>
+                <p>limitValue:{{ o.limitValue }}</p>
+                <p>wino:{{ o.wino }}</p>
+                <p>remark:{{ o.remark }}</p>
+                <el-divider />
+            </div>
+            
+        </el-drawer>
     </div>
 </template>
 
@@ -93,60 +100,88 @@ export default {
         return{
             isBorder:true,
             tableData:[
-                {
-                    applyNo:'123',
-                    testType:this.$t('sampleTest'),
-                    consignor:'zl',
-                    sendDate:'2023 3 1',
-                    status:'已完结',
-                },
-                {
-                    applyNo:'456',
-                    testType:this.$t('waterTest'),
-                    consignor:'zl',
-                    sendDate:'2023 3 1',
-                    status:'未完结',
-                },
-                {
-                    applyNo:'789',
-                    testType:this.$t('cleanroomTest'),
-                    consignor:'zl',
-                    sendDate:'2023 3 1',
-                    status:'未完结',
-                },
+
             ],
             options_type:['sampleTest','waterTest','cleanroomTest'],
             options_status:['finished','unfinished'],
             typeValue:'',
             statusValue:'',
             currentPage:1,
-            pageSize:1,
-            total:0
+            pageSize:10,
+            total:0,
+            drawer:false,
+            viewItem:[]
         }
     },
+    created(){
+        this.init()
+    },
     methods:{
+        init(){
+            let that = this
+            let pageInfo = new FormData()
+            pageInfo.append('page',this.currentPage)
+            pageInfo.append('pageSize',this.pageSize)
+            pageInfo.append('typeValue',this.typeValue)
+            pageInfo.append('statusValue',this.statusValue)
+            this.$axios.post('http://localhost:8099/lab/selectAllCase',pageInfo).then(function (res){
+                console.log(res)
+                if(res.data.code==1){
+                    that.tableData = res.data.data.records;
+                    that.total = res.data.data.total;
+                }
+            })
+        },
         view(row){
             console.log(row)
-            this.$router.push({name:'testInfo',query:{testType:JSON.stringify(row.testType)}})
+            console.log(row)
+            console.log(row.testType)
+            let that = this
+            this.drawer=true
+            let formData = new FormData()
+            formData.append('caseNum',row.caseNum)
+            if(row.testType=='sampleTest'){
+                this.$axios.post('http://localhost:8099/lab/selectSampleTestInfo',formData).then(function (res){
+                    console.log(res)
+                    if(res.data.code==1){
+                        that.viewItem=res.data.data
+                    }
+                })
+            }
         },
         action(row){
             console.log(row)
         },
         search(){
+            let that = this
             console.log(this.typeValue)
             console.log(this.statusValue)
+            let pageInfo = new FormData()
+            pageInfo.append('page',this.currentPage)
+            pageInfo.append('pageSize',this.pageSize)
+            pageInfo.append('typeValue',this.typeValue)
+            pageInfo.append('statusValue',this.statusValue)
+            this.$axios.post('http://localhost:8099/lab/selectAllCase',pageInfo).then(function (res){
+                if(res.data.code==1){
+                    that.tableData = res.data.data.records;
+                    that.total = res.data.data.total;
+                }
+            })
         },
         handleSizeChange(val){
             console.log(val)
             this.pageSize=val
+            this.init()
         },
         handleCurrentChange(val){
             console.log(val)
             this.currentPage=val
+            this.init()
         },
         handleSelectionChange(val){
             this.multipleSelection=val
             console.log(this.multipleSelection)
+            this.init()
         },
     }
 
