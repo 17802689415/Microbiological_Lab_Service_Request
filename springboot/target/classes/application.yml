@@ -39,3 +39,5 @@ mybatis-plus:
     db-config:
       id-type: ASSIGN_ID
 
+
+

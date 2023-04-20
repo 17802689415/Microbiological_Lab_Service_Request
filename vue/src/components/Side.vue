@@ -1,5 +1,5 @@
 <template>
-  <div id="aa">
+  <!-- <div id="aa"> -->
   <el-menu class="el-menu-vertical-demo" 
         :collapse="this.$store.state.isCollapse" 
         :router="isRouter"
@@ -10,6 +10,7 @@
         >
           <el-sub-menu index="1">
             <template #title>
+              
               <img src="../icons/001-home.svg" class="icon" >
               <span class="span">{{ $t('case') }}</span>
             </template>
@@ -86,7 +87,7 @@
             </el-menu-item-group>
           </el-sub-menu>
         </el-menu>
-        </div>
+        <!-- </div> -->
 </template>
 
 <script>
@@ -102,8 +103,8 @@ export default {
 </script>
 
 <style scoped>
-#aa{
-  display: flex;
-}
+
+
+
 </style>
 

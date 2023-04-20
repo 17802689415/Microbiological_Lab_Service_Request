@@ -100,4 +100,6 @@ export const lang = {
     add:'Add',
     delete:'Delete',
     role:'Role',
+    //report
+    reportInfo:'Uploaded'
 }

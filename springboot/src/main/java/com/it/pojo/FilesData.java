@@ -1,10 +1,8 @@
 package com.it.pojo;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import java.io.Serializable;
 
-public class Files implements Serializable {
+public class FilesData implements Serializable {
     private int id;
     private String caseNum;
     private String filesName;

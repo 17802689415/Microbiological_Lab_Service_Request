@@ -153,7 +153,7 @@ alter table process modify id int auto_increment;
 select * from process;
 
 drop table files;
-create table files(
+create table files_data(
 id int primary key,
 case_num varchar(20),
 files_name varchar(255),
@@ -165,8 +165,8 @@ enable boolean,
 is_delete boolean,
 create_time timestamp default CURRENT_TIMESTAMP
 );
-alter table files modify id int auto_increment;
-select * from files;
+alter table files_data modify id int auto_increment;
+select * from files_data;
 delete from files;]]></console>
     </connection>
   </component>

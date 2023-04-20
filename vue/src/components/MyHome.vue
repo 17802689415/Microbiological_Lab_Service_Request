@@ -3,17 +3,17 @@
   <el-container class="layout-container-demo">
         <sideBar></sideBar>
       
-    <el-container>
-      <el-header  >
-            <topBar></topBar>
-      </el-header>
+      <el-container>
+        <el-header  >
+              <topBar></topBar>
+        </el-header>
 
 
-      <el-main id="main">
-        <router-view></router-view>
-      </el-main>
-      <el-footer id="footer">Footer</el-footer>
-    </el-container>
+        <el-main id="main">
+          <router-view></router-view>
+        </el-main>
+        <el-footer id="footer">Footer</el-footer>
+      </el-container>
   </el-container>
 
 </template>

@@ -78,6 +78,9 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder());
     }
 
+    private static final String[] PATH = {
+            "/lab/login","/files/*"
+    };
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
@@ -88,7 +91,7 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 // 对于登录接口 允许匿名访问
-                .antMatchers("/lab/login").anonymous()
+                .antMatchers(PATH).anonymous()
                 // 除上面外的所有请求全部需要鉴权认证
                 .anyRequest().authenticated();
 

@@ -18,7 +18,7 @@
 
   </div>
     <el-row>
-        <el-col :span="4" v-for="o in list" :key="o.index" :offset=1>
+        <el-col :span="5" v-for="o in list" :key="o.index" :offset=1>
                 <el-card :body-style="{ padding: '0px' }" class="card">
                 <div style="padding: 14px;margin: auto;width: 200px;">
                     <span>{{ o.testNo }}</span>
@@ -29,10 +29,10 @@
                         <br>
                         <el-upload
                         class="upload"
-                            action="http://localhost:8099/lab/upload"
+                            :action="url+o.testNo"
                             :headers="header"
-                            :on-success="upload"
-                            :on-progress="getCaseNum(o.testNo)"
+                            :on-success="upload()"
+                            :data="{'caseNum':o.testNo}"
                             multiple
                             :limit="1"
                          
@@ -40,15 +40,18 @@
                         <el-button class="m-2" size="small" type="success" round>{{ $t('upload') }}</el-button>
                         </el-upload>
                     </div>
+                    <el-button class="m-2" size="small" type="success" round @click="download(o.testNo)">{{ $t('print') }}</el-button>
+                    <el-tag type="info" v-show="isUpload(o.testNo)">{{ $t('reportInfo') }}</el-tag>
                 </div>
                 </el-card>
-                <el-button class="m-2" size="small" type="success" round @click="download()">{{ $t('print') }}</el-button>
+                
                 
         </el-col>
     </el-row>
 </template>
 
 <script>
+
 
 export default {
     name:'reportCase',
@@ -73,23 +76,47 @@ export default {
                 {index:3,testNo:'159',consignorId:'3554536',testTypeValue:'sampleTest'},
                 {index:3,testNo:'159',consignorId:'3554536',testTypeValue:'sampleTest'},
             ],
-            url:''
+            url:'http://localhost:8099/lab/upload',
+            caseNumList:[]
         }
     },
+    created(){
+        this.init()
+    },
     methods:{
-        upload(res){
-            console.log(res)
-            let formData = new FormData()
-            formData.append('caseNum',)
-           
+        init(){
+            let that = this
+            this.$axios.get('http://localhost:8099/lab/selectFiles').then(function (res){
+                console.log(res)
+                if(res.data.code==1){
+                    res.data.data.forEach(element => {
+                        that.caseNumList.push(element.caseNum)
+                    });
+                }
+            })
         },
-        download(url){
-            console.log(url)
+        isUpload(caseNum){
+            let index = this.caseNumList.indexOf(caseNum)
+            if(index==-1){
+                return false
+            }
+            return true
+        },
+        upload(res){
+            console.log(res)     
+        },
+        download(caseNum){
+            console.log(caseNum)
+            
+            this.$axios.get('http://localhost:8099/lab/download'+caseNum).then(function (res){
+                console.log(res)
+                if(res.data.code==1){
+                    window.open('http://localhost:8099'+res.data.data,'Report')
+                }
+            })
             
         },
-        getCaseNum(caseNum){
-            console.log(caseNum)
-        }
+      
 
     }
 }

@@ -100,6 +100,8 @@ export const lang = {
     add:'添加',
     delete:'删除',
     role:'角色',
+    //report
+    reportInfo:'已上传'
 }
 
 
